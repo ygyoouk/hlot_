@@ -20,6 +20,7 @@ public class CompanyController {
     /* company 상세 조회 */
     @GetMapping("/company/{id}")
     public ResponseEntity<Result> one(@PathVariable String id) throws Exception {
+        log.info("test");
         return ResponseEntity.ok()
                 .body(Result.resSuccess(companyService.one(id)));
     }

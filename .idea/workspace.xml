@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a393df6-5c55-464a-aca5-6d270d1ef878" name="변경" comment="" />
+    <list default="true" id="3a393df6-5c55-464a-aca5-6d270d1ef878" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hlot_be_service/ManagementService/.idea/dataSources/5196783c-8fe2-40f3-b246-2f49c8628300.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hlot_be_service/ManagementService/.idea/dataSources/5196783c-8fe2-40f3-b246-2f49c8628300.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hlot_be_service/ManagementService/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hlot_be_service/ManagementService/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,6 +50,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/hlot_/hlot_be_service/ManagementService",
@@ -81,7 +86,7 @@
       <workItem from="1714353589996" duration="284000" />
       <workItem from="1714353938144" duration="501000" />
       <workItem from="1714357139455" duration="23000" />
-      <workItem from="1714363684570" duration="103000" />
+      <workItem from="1714363684570" duration="1216000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -99,7 +104,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714363739893</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="commit test">
+      <option name="closed" value="true" />
+      <created>1714363863854</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714363863854</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

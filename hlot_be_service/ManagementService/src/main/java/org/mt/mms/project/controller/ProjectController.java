@@ -29,6 +29,7 @@ public class ProjectController {
         log.info("testtesttest");
         log.info("testetsetse");
      log.info("selectProjectList");
+
      
      /* 프로젝트 리스트 조회*/
      return ResponseEntity.ok()

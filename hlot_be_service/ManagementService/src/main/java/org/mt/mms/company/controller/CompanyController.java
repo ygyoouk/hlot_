@@ -20,15 +20,16 @@ public class CompanyController {
     /* company 상세 조회 */
     @GetMapping("/company/{id}")
     public ResponseEntity<Result> one(@PathVariable String id) throws Exception {
-            return ResponseEntity.ok()
-                    .body(Result.resSuccess(companyService.one(id)));
+        log.info("test");
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(companyService.one(id)));
     }
 
     /* company 목록 조회 */
     @GetMapping("/companys")
     public ResponseEntity<Result> all() throws Exception{
-            return ResponseEntity.ok()
-                    .body(Result.resSuccess(companyService.all()));
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(companyService.all()));
     }
 
     /* company 등록 */
@@ -41,8 +42,8 @@ public class CompanyController {
     /* company 삭제 */
     @DeleteMapping("/company/{id}")
     public ResponseEntity<Result> deleteCompany(@PathVariable String id) throws Exception {
-            return ResponseEntity.ok()
-                    .body(Result.resSuccess(companyService.deleteCompany(id)));
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(companyService.deleteCompany(id)));
     }
 
     /* company_manager 등록 */

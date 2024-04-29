@@ -26,7 +26,7 @@ public class ProjectController {
 
     @GetMapping("/project")
     public ResponseEntity<List<ProjectVO>> all() throws Exception{
-
+        log.info("testetsetse");
      log.info("selectProjectList");
      
      /* 프로젝트 리스트 조회*/

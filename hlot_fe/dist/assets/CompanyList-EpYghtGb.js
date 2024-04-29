@@ -1,0 +1,1 @@
+import{_ as e,c as t,w as a,V as s,o,a as n,b as c,d as r}from"./index-D0SR6vLb.js";const i={name:"CompanyList"};function p(_,d,l,f,m,u){return o(),t(s,{class:"bg-grey-lighten-2"},{default:a(()=>[n(r,null,{default:a(()=>[c(" CompanyList!! ")]),_:1})]),_:1})}const C=e(i,[["render",p]]);export{C as default};

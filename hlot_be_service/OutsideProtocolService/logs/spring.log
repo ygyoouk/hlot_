@@ -1,0 +1,17 @@
+2024-04-18T11:21:16.537+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.m.o.OutsideProtocolServiceApplication  : Starting OutsideProtocolServiceApplication using Java 17.0.10 with PID 9884 (C:\hlot\hlot_be_service\OutsideProtocolService\build\classes\java\main started by jeewo in C:\hlot\hlot_be_service\OutsideProtocolService)
+2024-04-18T11:21:16.544+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.m.o.OutsideProtocolServiceApplication  : No active profile set, falling back to 1 default profile: "default"
+2024-04-18T11:21:16.588+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-04-18T11:21:16.588+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-04-18T11:21:17.751+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+2024-04-18T11:21:17.759+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-18T11:21:17.760+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-04-18T11:21:17.801+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-18T11:21:17.801+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1213 ms
+2024-04-18T11:21:18.349+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-18T11:21:18.352+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-04-18T11:21:18.396+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path ''
+2024-04-18T11:21:18.410+09:00  INFO 9884 --- [OutsideProtocolService] [restartedMain] o.m.o.OutsideProtocolServiceApplication  : Started OutsideProtocolServiceApplication in 2.248 seconds (process running for 2.72)
+2024-04-18T11:21:19.032+09:00  INFO 9884 --- [OutsideProtocolService] [RMI TCP Connection(3)-192.168.0.15] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-18T11:21:19.033+09:00  INFO 9884 --- [OutsideProtocolService] [RMI TCP Connection(3)-192.168.0.15] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-04-18T11:21:19.034+09:00  INFO 9884 --- [OutsideProtocolService] [RMI TCP Connection(3)-192.168.0.15] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-04-18T11:21:57.824+09:00  INFO 9884 --- [OutsideProtocolService] [http-nio-8082-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 100 ms

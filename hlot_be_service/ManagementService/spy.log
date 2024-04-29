@@ -1,0 +1,33 @@
+[statement] | 3 ms | SELECT /* org.mt.mms.company.mapper.CompanyMapper.selectCompanys : COMPANY 목록조회 */
+            COMPANY_ID
+             , COMPANY_NAME
+             , BUSINESS_REGIST_NUMB
+             , COMPANY_TEL
+             , REMARK
+             , REGIST_USER_NAME
+             , REGIST_DATE
+        FROM COMPANY
+        WHERE DEL_YN = 'N'
+        ORDER BY REGIST_DATE DESC
+[statement] | 2 ms | SELECT /* org.mt.mms.company.mapper.CompanyMapper.selectCompanys : COMPANY 목록조회 */
+            COMPANY_ID
+             , COMPANY_NAME
+             , BUSINESS_REGIST_NUMB
+             , COMPANY_TEL
+             , REMARK
+             , REGIST_USER_NAME
+             , REGIST_DATE
+        FROM COMPANY
+        WHERE DEL_YN = 'N'
+        ORDER BY REGIST_DATE DESC
+[statement] | 2 ms | SELECT /* org.mt.mms.company.mapper.CompanyMapper.selectCompanys : COMPANY 목록조회 */
+            COMPANY_ID
+             , COMPANY_NAME
+             , BUSINESS_REGIST_NUMB
+             , COMPANY_TEL
+             , REMARK
+             , REGIST_USER_NAME
+             , REGIST_DATE
+        FROM COMPANY
+        WHERE DEL_YN = 'N'
+        ORDER BY REGIST_DATE DESC

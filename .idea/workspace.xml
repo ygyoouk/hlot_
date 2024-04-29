@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3a393df6-5c55-464a-aca5-6d270d1ef878" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hlot_be_service/ManagementService/.idea/dataSources/5196783c-8fe2-40f3-b246-2f49c8628300.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hlot_be_service/ManagementService/.idea/dataSources/5196783c-8fe2-40f3-b246-2f49c8628300.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hlot_be_service/ManagementService/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hlot_be_service/ManagementService/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +57,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
@@ -87,6 +85,7 @@
       <workItem from="1714353938144" duration="501000" />
       <workItem from="1714357139455" duration="23000" />
       <workItem from="1714363684570" duration="1216000" />
+      <workItem from="1714368333754" duration="61000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -119,6 +118,9 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
     <MESSAGE value="first commit" />
     <MESSAGE value="commit test" />
     <option name="LAST_COMMIT_MESSAGE" value="commit test" />

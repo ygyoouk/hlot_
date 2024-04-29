@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="825f91e6-75b4-4db1-af1f-f1b9cc8dad69" name="변경" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;ygyoo&quot;,
+      &quot;fullname&quot;: &quot;ygyoo&quot;
+    }
+  }
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;http://61.109.236.72:8929/ygyoo/hlot_be_system.git&quot;,
+    &quot;second&quot;: &quot;abf91ca1-614a-442b-b013-33ae1d8d1089&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2ecCQYhzHEIxfxEzCd8EawDBtII" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="825f91e6-75b4-4db1-af1f-f1b9cc8dad69" name="변경" comment="" />
+      <created>1712194463498</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712194463498</updated>
+      <workItem from="1712194464614" duration="1000" />
+      <workItem from="1712194495227" duration="2000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

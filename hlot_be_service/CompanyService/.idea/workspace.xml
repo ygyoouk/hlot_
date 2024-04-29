@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="468d1231-d087-4fdf-a90c-672f22824f28" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/../ManagementService/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ManagementService/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ManagementService/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ManagementService/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ManagementService/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ManagementService/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ManagementService/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ManagementService/src/main/java/org/mt/mange/managementservice/ManagementServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ManagementService/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ManagementService/src/test/java/org/mt/mange/managementservice/ManagementServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/spring.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/spring.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutsideProtocolService/logs/spring.log" beforeDir="false" afterPath="$PROJECT_DIR$/../OutsideProtocolService/logs/spring.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutsideProtocolService/src/main/java/org/mt/ops/chatGPT/controller/ChatGPTController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../OutsideProtocolService/src/main/java/org/mt/ops/chatGPT/controller/ChatGPTController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutsideProtocolService/src/main/java/org/mt/ops/chatGPT/dto/ChatGPTDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../OutsideProtocolService/src/main/java/org/mt/ops/chatGPT/dto/ChatGPTDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutsideProtocolService/src/main/java/org/mt/ops/chatGPT/service/ChatGPTService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../OutsideProtocolService/src/main/java/org/mt/ops/chatGPT/service/ChatGPTService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutsideProtocolService/src/main/java/org/mt/ops/chatGPT/service/impl/ChatGPTServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../OutsideProtocolService/src/main/java/org/mt/ops/chatGPT/service/impl/ChatGPTServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutsideProtocolService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../OutsideProtocolService/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="ygyoo &lt;ygyoo@mtdata.co.kr&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;ygyoo&quot;,
+      &quot;fullname&quot;: &quot;ygyoo&quot;
+    }
+  }
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;http://61.109.236.72:8929/ygyoo/hlot_be_service.git&quot;,
+    &quot;second&quot;: &quot;abf91ca1-614a-442b-b013-33ae1d8d1089&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2ecDYTG6ht2mueF6d8QmOkE1L02" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.CompanyService 빌드.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.CompanyServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/hlot/hlot_be_service/CompanyService&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.mt.company.service" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="CompanyServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="CompanyService.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.mt.company.CompanyServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="468d1231-d087-4fdf-a90c-672f22824f28" name="변경" comment="" />
+      <created>1712195019300</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712195019300</updated>
+      <workItem from="1712195020295" duration="9054000" />
+      <workItem from="1712556993641" duration="16000" />
+      <workItem from="1713405668102" duration="1254000" />
+    </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <option name="closed" value="true" />
+      <created>1712195041162</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712195041162</updated>
+    </task>
+    <task id="LOCAL-00002" summary="file logic 추가">
+      <option name="closed" value="true" />
+      <created>1712197118669</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1712197118669</updated>
+    </task>
+    <task id="LOCAL-00003" summary="plane 생성 방지">
+      <option name="closed" value="true" />
+      <created>1712197357947</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1712197357947</updated>
+    </task>
+    <task id="LOCAL-00004" summary="port 변경">
+      <option name="closed" value="true" />
+      <created>1712203880440</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712203880440</updated>
+    </task>
+    <task id="LOCAL-00005" summary="log 경로설정">
+      <option name="closed" value="true" />
+      <created>1712206772729</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712206772729</updated>
+    </task>
+    <task id="LOCAL-00006" summary="에러로그추가">
+      <option name="closed" value="true" />
+      <created>1712208038497</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1712208038497</updated>
+    </task>
+    <task id="LOCAL-00007" summary="file storage 변경">
+      <option name="closed" value="true" />
+      <created>1712208509478</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712208509478</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <MESSAGE value="file logic 추가" />
+    <MESSAGE value="plane 생성 방지" />
+    <MESSAGE value="port 변경" />
+    <MESSAGE value="log 경로설정" />
+    <MESSAGE value="에러로그추가" />
+    <MESSAGE value="file storage 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="file storage 변경" />
+  </component>
+</project>

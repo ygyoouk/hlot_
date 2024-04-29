@@ -1,0 +1,1 @@
+import{_ as t,c as a,w as e,V as s,o,a as c,b as r,d as n}from"./index-D0SR6vLb.js";const i={name:"ProjectList"};function _(d,l,f,p,u,x){return o(),a(s,{class:"bg-grey-lighten-2"},{default:e(()=>[c(n,null,{default:e(()=>[r(" ProjectList!! ")]),_:1})]),_:1})}const m=t(i,[["render",_]]);export{m as default};

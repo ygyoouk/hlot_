@@ -1,0 +1,144 @@
+Index: src/App.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><template>\r\n  \r\n  <div>\r\n    <a v-for=\"a in 메뉴들\" :key=\"a\">{{a}}</a>\r\n  </div>\r\n  \r\n  <div>\r\n   <h1 @click=\"click\" ref=\"msg\">{{message}}</h1>\r\n   <input type=\"text\" :value=\"message\" >\r\n  </div>\r\n  \r\n  <div class=\"black-bg\" v-if=\"status == ture\">\r\n    <div class=\"white-bg\">\r\n      <h4>상세페이지</h4>\r\n      <p>상세 페이지 내용임</p>\r\n      <button @click=\"status=false\">닫기</button>\r\n    </div>\r\n  </div>\r\n  \r\n <div id=\"example\">\r\n  <p>원본 메시지: {{ message }}</p>\r\n  <p>역순으로 표시한 메시지: {{ reversedMessage }}</p>\r\n</div>\r\n\r\n  <div>\r\n    <img src=\"./assets/room1.png\">\r\n    <h4 @click=\"this.status = ture\">{{product[0].content}}</h4>\r\n    <p>{{product[0].price}}</p>\r\n    <button @click=\"clickButton1()\">허위매물신고</button> <span>신고수 : {{신고수[0]}}</span>\r\n  </div>\r\n  <br>\r\n  <div>\r\n    <img src=\"./assets/room2.png\">\r\n    <h4>{{product[1].content}}</h4>\r\n    <p>{{product[1].price}}</p>\r\n    <button>허위매물신고</button> <span>신고수 : {{신고수[1]}}</span>\r\n  </div>\r\n  <br>\r\n  <div>\r\n    <img src=\"./assets/room3.png\">\r\n    <h4>{{product[2].content}}</h4>\r\n    <p>{{product[2].price}}</p>\r\n    <button @click=\"clickButton2()\" ref=\"click_btn\">허위매물신고</button> <span>신고수 : {{신고수[2]}}</span>\r\n  </div>\r\n\r\n\r\n  <div v-for=\"(item,i) in product\" :key=\"i\">\r\n    <img :src=\"item.image\">\r\n    <h4>{{item.content}}</h4>\r\n    <p>{{item.price}}</p>\r\n  </div> \r\n\r\n  <!-- <div>\r\n    <h4 v-for=\" (item ,i) in product\" :key=\"i\">{{item}}</h4>\r\n  </div> -->\r\n</template>\r\n\r\n<script>\r\n\r\n\r\nimport product from './oneroom';\r\n\r\nexport default {\r\n  name: 'App',\r\n\r\n  data(){\r\n    return{\r\n      메뉴들 : ['home', 'shop', 'about'],\r\n      product : product,\r\n      신고수 : [0,0,0],\r\n      status : false,\r\n      message : '안녕하세요',\r\n      \r\n    }\r\n\r\n  },\r\n\r\n   computed : {\r\n    reversedMessage(){\r\n      return this.message.split('').reverse().join('');\r\n    },\r\n    \r\n  },\r\n\r\n  \r\n\r\n  methods : {\r\n    clickButton1: function(){\r\n      this.신고수[0]++\r\n\r\n      \r\n      console.log(\"!!!!!!!\");\r\n    },\r\n    clickButton2 : function(){\r\n      \r\n      this.신고수[2]++\r\n      console.log(\"!!!!!!!\"); \r\n    },\r\n\r\n    click(){\r\n      this.message  = \"바뀜\";\r\n\r\n    }\r\n\r\n  }\r\n}\r\n\r\n</script>\r\n\r\n<style>\r\n  body {\r\n    margin: 0\r\n  }\r\n\r\n  div{\r\n    box-sizing: border-box;\r\n  }\r\n\r\n  .black-bg{\r\n    widows: 100%; \r\n    background: black;\r\n    position: fixed; padding: 20px;\r\n  }\r\n\r\n  \r\n  .white-bg{\r\n    widows: 100%; background: white;\r\n    border-radius: 8px;\r\n    padding: 20px;\r\n  }\r\n</style>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.vue b/src/App.vue
+--- a/src/App.vue	
++++ b/src/App.vue	
+@@ -1,131 +1,9 @@
+ <template>
+-  
+-  <div>
+-    <a v-for="a in 메뉴들" :key="a">{{a}}</a>
+-  </div>
+-  
+-  <div>
+-   <h1 @click="click" ref="msg">{{message}}</h1>
+-   <input type="text" :value="message" >
+-  </div>
+-  
+-  <div class="black-bg" v-if="status == ture">
+-    <div class="white-bg">
+-      <h4>상세페이지</h4>
+-      <p>상세 페이지 내용임</p>
+-      <button @click="status=false">닫기</button>
+-    </div>
+-  </div>
+-  
+- <div id="example">
+-  <p>원본 메시지: {{ message }}</p>
+-  <p>역순으로 표시한 메시지: {{ reversedMessage }}</p>
+-</div>
+-
+-  <div>
+-    <img src="./assets/room1.png">
+-    <h4 @click="this.status = ture">{{product[0].content}}</h4>
+-    <p>{{product[0].price}}</p>
+-    <button @click="clickButton1()">허위매물신고</button> <span>신고수 : {{신고수[0]}}</span>
+-  </div>
+-  <br>
+-  <div>
+-    <img src="./assets/room2.png">
+-    <h4>{{product[1].content}}</h4>
+-    <p>{{product[1].price}}</p>
+-    <button>허위매물신고</button> <span>신고수 : {{신고수[1]}}</span>
+-  </div>
+-  <br>
+-  <div>
+-    <img src="./assets/room3.png">
+-    <h4>{{product[2].content}}</h4>
+-    <p>{{product[2].price}}</p>
+-    <button @click="clickButton2()" ref="click_btn">허위매물신고</button> <span>신고수 : {{신고수[2]}}</span>
+-  </div>
+-
+-
+-  <div v-for="(item,i) in product" :key="i">
+-    <img :src="item.image">
+-    <h4>{{item.content}}</h4>
+-    <p>{{item.price}}</p>
+-  </div> 
+-
+-  <!-- <div>
+-    <h4 v-for=" (item ,i) in product" :key="i">{{item}}</h4>
+-  </div> -->
++test
+ </template>
+ 
+ <script>
+-
+-
+-import product from './oneroom';
+-
+ export default {
+-  name: 'App',
+-
+-  data(){
+-    return{
+-      메뉴들 : ['home', 'shop', 'about'],
+-      product : product,
+-      신고수 : [0,0,0],
+-      status : false,
+-      message : '안녕하세요',
+-      
+-    }
+-
+-  },
+-
+-   computed : {
+-    reversedMessage(){
+-      return this.message.split('').reverse().join('');
+-    },
+-    
+-  },
+-
+-  
+-
+-  methods : {
+-    clickButton1: function(){
+-      this.신고수[0]++
+-
+-      
+-      console.log("!!!!!!!");
+-    },
+-    clickButton2 : function(){
+-      
+-      this.신고수[2]++
+-      console.log("!!!!!!!"); 
+-    },
+-
+-    click(){
+-      this.message  = "바뀜";
+-
+-    }
+-
+-  }
++  name: 'App'
+ }
+-
+ </script>
+-
+-<style>
+-  body {
+-    margin: 0
+-  }
+-
+-  div{
+-    box-sizing: border-box;
+-  }
+-
+-  .black-bg{
+-    widows: 100%; 
+-    background: black;
+-    position: fixed; padding: 20px;
+-  }
+-
+-  
+-  .white-bg{
+-    widows: 100%; background: white;
+-    border-radius: 8px;
+-    padding: 20px;
+-  }
+-</style>

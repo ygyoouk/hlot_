@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BeansEndpointTabSettings">
+    <option name="diagramMode" value="true" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1bfe6401-6f10-4c65-9075-baf7a98eef9a" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/../ManagementService/src/main/java/org/mt/mms/company/controller/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ManagementService/src/main/java/org/mt/mms/company/controller/CompanyController.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="OutsideProtocolService" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;ygyoo&quot;,
+      &quot;fullname&quot;: &quot;ygyoo&quot;
+    }
+  }
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;http://61.109.236.72:8929/ygyoo/hlot_be_service.git&quot;,
+    &quot;second&quot;: &quot;abf91ca1-614a-442b-b013-33ae1d8d1089&quot;
+  }
+}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2ef5nr68pGg2h2wzPYgdw9c2OUj" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.OutsideProtocolService 빌드.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP 요청.OutsideProtocolServiceApplication | #1.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.OutsideProtocolServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/hlot/hlot_be_service/OutsideProtocolService&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.mt.ops.chatGPT.service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.OutsideProtocolServiceApplication">
+    <configuration name="OutsideProtocolServiceApplication | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/OutsideProtocolServiceApplication.http" requestIdentifier="#1" runType="단일 요청 실행">
+      <method v="2" />
+    </configuration>
+    <configuration name="OutsideProtocolServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="OutsideProtocolService.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.mt.ops.OutsideProtocolServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP 요청.OutsideProtocolServiceApplication | #1" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="1bfe6401-6f10-4c65-9075-baf7a98eef9a" name="변경" comment="" />
+      <created>1712282962054</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712282962054</updated>
+      <workItem from="1712282963091" duration="9203000" />
+      <workItem from="1712537580570" duration="5346000" />
+      <workItem from="1712553219832" duration="11000" />
+      <workItem from="1712556972573" duration="17000" />
+      <workItem from="1713406869278" duration="260000" />
+      <workItem from="1713407269040" duration="661000" />
+      <workItem from="1713413626398" duration="122000" />
+      <workItem from="1713416901396" duration="3050000" />
+    </task>
+    <task id="LOCAL-00001" summary="ops 최초등록">
+      <option name="closed" value="true" />
+      <created>1712282987849</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712282987849</updated>
+    </task>
+    <task id="LOCAL-00002" summary="ChatGPT Api 요청 추가">
+      <option name="closed" value="true" />
+      <created>1712300084290</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1712300084290</updated>
+    </task>
+    <task id="LOCAL-00003" summary="ChatGPT Api prompt 구현">
+      <option name="closed" value="true" />
+      <created>1712304053523</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1712304053523</updated>
+    </task>
+    <task id="LOCAL-00004" summary="-">
+      <option name="closed" value="true" />
+      <created>1712537738923</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712537738923</updated>
+    </task>
+    <task id="LOCAL-00005" summary="-">
+      <option name="closed" value="true" />
+      <created>1713413652046</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713413652046</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ops 최초등록" />
+    <MESSAGE value="ChatGPT Api 요청 추가" />
+    <MESSAGE value="ChatGPT Api prompt 구현" />
+    <MESSAGE value="-" />
+    <option name="LAST_COMMIT_MESSAGE" value="-" />
+  </component>
+</project>

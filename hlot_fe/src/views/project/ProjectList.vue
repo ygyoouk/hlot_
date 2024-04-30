@@ -88,16 +88,9 @@ export default {
   data() {
     return {
       search: '',
-      projects: [
-
-      ],
-
-      selected : []
-
-      ,
-      
+      projects: [],
+      selected : [],
       popUpValue : false,
-      
     };
   },
   methods: {

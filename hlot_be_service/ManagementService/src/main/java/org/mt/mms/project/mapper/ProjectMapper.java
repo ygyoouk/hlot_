@@ -1,7 +1,9 @@
 package org.mt.mms.project.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.mt.mms.company.common.dto.Result;
 import org.mt.mms.project.vo.ProjectVO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +14,11 @@ public interface ProjectMapper {
 
     List<ProjectVO> getProjects() throws Exception;
 
-    void newProject(ProjectVO data) throws Exception;
+    int newProject(ProjectVO data) throws Exception;
 
     ProjectVO one(String projectId) throws Exception;
 
-    void updateProject(ProjectVO data) throws Exception;
+    int updateProject(ProjectVO data) throws Exception;
 
-    void deleteProject(ArrayList<String> deldata) throws Exception;
+    int deleteProject(ArrayList<String> deldata) throws Exception;
 }

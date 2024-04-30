@@ -16,7 +16,7 @@
         FROM
         PROJECT
         WHERE DEL_YN = 'N'
-        ORDER BY REGIST_DATE
+        ORDER BY REGIST_DATE DESC
     </select>
 
     <insert id="newProject" parameterType="org.mt.mms.project.vo.ProjectVO">

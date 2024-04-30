@@ -2,9 +2,11 @@ package org.mt.mms.project.service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mt.mms.company.common.dto.Result;
 import org.mt.mms.project.mapper.ProjectMapper;
 import org.mt.mms.project.service.ProjectService;
 import org.mt.mms.project.vo.ProjectVO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,13 +33,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void newProject(ProjectVO data) throws Exception{
+    public int newProject(ProjectVO data) throws Exception{
         String projectId = data.getProjectId();
 
         // 프로젝트ID가 없는 경우(신규)
-        if(projectId.isEmpty()){
-            projectMapper.newProject(data);
-        }
+        return projectMapper.newProject(data);
+
     }
 
     @Override
@@ -56,15 +57,15 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void updateProject(ProjectVO data) throws Exception{
+    public int updateProject(ProjectVO data) throws Exception{
 
-        projectMapper.updateProject(data);
+        return projectMapper.updateProject(data);
     }
 
     @Override
-    public void deleteProject(ArrayList<String> deldata) throws Exception{
+    public int deleteProject(ArrayList<String> deldata) throws Exception{
 
-        projectMapper.deleteProject(deldata);
+       return  projectMapper.deleteProject(deldata);
 
     }
 }

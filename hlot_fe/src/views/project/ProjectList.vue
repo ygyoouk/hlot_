@@ -1,5 +1,5 @@
 <template>
-  <ProjectModal v-if="store.getters.isOpenModal"  :projectId='this.projects.projectId'/>
+  <ProjectModal v-if="store.getters.isOpenModal"/>
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
@@ -44,11 +44,11 @@
 </template>
 
 <script setup>
-  import cmm from '@/util/cmm.js'
+  
   import ProjectModal from "@/components/modal/ProjectModal.vue";
   import {ITEMS_PER_PAGE_OPTIONS} from "@/util/config";
 
-  const itemsPerPageOptions = cmm.cmmConfig.itemsPerPageOptions;
+  
 
   const headers = [
     { title: '프로젝트명', key:'projectName' },
@@ -65,9 +65,9 @@
 
 
 import store from "@/store/store";
-import api from '@/util/apiUtil.js';
 import axios from "axios";
 import {MODAL_MODE} from "@/util/config";
+import projectApi from '@/api/project.js'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_PORT = import.meta.env.VITE_BE_PORT;
@@ -76,7 +76,7 @@ export default {
   mounted() {
     // this.projects = api.projectSampleData();
 
-    this.selectProjectList(); // 프로젝트리스트 조회
+    this.getProjects(); // 프로젝트리스트 조회
 
 
   },
@@ -101,71 +101,34 @@ export default {
     };
   },
   methods: {
-    saveItem() {
-      // 등록 로직
-    },
+    
     popUpOpen(event,{item}){
       console.log(item.projectId);
 
       this.projects.projectId = item.projectId;
 
-      this.$store.commit("toggleModal");
-
+      this.$store.commit("toggleModal", {key: this.projects.projectId, mode: MODAL_MODE.DETAIL});
+      
     },
 
     pushRegPop: () => {
-      store.commit("toggleModal");
+      store.commit("toggleModal", {key: '', mode: MODAL_MODE.REG});
 
     },
 
-     selectProjectList(){ // 프로젝트 리스트 조회
-
-       axios.get(BASE_URL + ':' + 8081 + '/'  + 'api/project').then((response)=>{
-
-        // reponse
-        this.projects = response.data;        
-      }).catch((error)=>{
-          // 오류발생
-      }).then(function(){
-         // 항상 실행
-
-        this.projects = response.data;
-
-
-      })
-
+    async getProjects(){ // 프로젝트 리스트 조회  
+      this.projects = await projectApi.projects();
     },
 
 
-    deleteProject(){ // 프로젝트 삭제
-    
-      const deldata = this.selected;
-
+    async deleteProject(){ // 프로젝트 삭제
       if(this.selected.length <= 0){
-
         alert("삭제할 행을 선택하세요");
-
       }else{
+       const res =  await projectApi.deleteProject(this.selected);
         
-        axios.delete(BASE_URL + ':' + 8081 + '/'  + 'api/project' ,{data : deldata}).then((response)=>{
-          // reponse
-          this.selectProjectList();
-          this.$router.go();
-        }).catch((error)=>{
-            // 오류발생
-        }).then(function(){
-           // 항상 실행
-        });
-
       }
-      
-
     }
-
-  
-
-
-
   }
 };
 </script>

@@ -38,7 +38,7 @@
               
               <v-text-field
               label="고객사"
-              :readonly="mode === 'R'"
+              :readonly="mode === 'D'"
               v-model="project.customer">
               </v-text-field>
               
@@ -63,7 +63,7 @@
                 　
                 <v-btn
                   color="green"
-                  @click="registProject"
+                  @click="newProject"
                 >저장</v-btn>
                 　
                 <v-btn
@@ -87,7 +87,7 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_PORT = import.meta.env.VITE_BE_PORT;
 import {MODAL_MODE} from "@/util/config";
-
+import projectApi from '@/api/project.js'
 
 export default {
   name: "ProjectModal",
@@ -96,7 +96,7 @@ export default {
     //상세조회
     if(this.mode == 'D'){
         /** 프로젝트 단건 조회*/
-        this.selectProject();
+        this.getProject();
     }
 
   },
@@ -108,8 +108,6 @@ export default {
       
     }
     
-
-
     if(this.project.projectName !== ''){
       this.visible = true;
     }
@@ -123,6 +121,7 @@ export default {
       mode: store.getters.getParams.mode,
       key:store.getters.getParams.key,
       project : {
+        projectId : '',
         projectName : '', // 프로젝트명
         projectStDate : '', // 프로젝트 시작일
         projectEndDate : '', // 프로젝트 종료일
@@ -139,28 +138,15 @@ export default {
       },
 
       // 프로젝트 정보 등록
-      async registProject(){
-       await axios.post(BASE_URL + ':' + 8081 + '/'  + 'api/project',this.project).then((response)=>{
-          alert("저장되었습니다.");
-          
-      }).catch(function(error){
-
-      }).then(function(){
-        console.log("부모로 넘어가라 !!!!!!");
-        
-      });
-      
+      async newProject(){
+       await projectApi.newProject(this.project);
+       this.close();
       },
 
       // 프로젝트 단건조회
-      selectProject(){ 
+      async getProject(){ 
         
-        axios.get(BASE_URL + ':' + 8081 + '/'  + 'api/project/' + this.key).then((response)=>{
-          
-          this.project = response.data;
-          
-        })
-
+         this.project = await projectApi.project(this.key);
       },
 
       // 모드 변경

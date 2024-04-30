@@ -15,3 +15,6 @@ out/
 /hlot_be_service/ManagementService/logs/
 /hlot_be_service/ManagementService/gradle/
 /hlot_be_service/ManagementService/.gradle/
+
+## hlot_fe
+/hlot_fe/node_modules/

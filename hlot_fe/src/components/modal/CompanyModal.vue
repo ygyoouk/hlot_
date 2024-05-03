@@ -130,7 +130,6 @@
         >저장</v-btn>
         　
         <v-btn
-          v-if="companyManager.compId"
           color="red"
           @click="deleteManager"
         >삭제</v-btn>
@@ -186,10 +185,14 @@ export default {
     /* company 등록 */
     async newCompany() {
       await companyApi.newCompany(this.company);
+      this.$emit('update');
+      store.commit('toggleModal');
     },
     /* company 삭제 */
     async deleteCompany() {
       await companyApi.deleteCompany(this.key);
+      this.$emit('update');
+      store.commit('toggleModal');
     },
     /* company_manager 추가 */
     async addManager() {
@@ -197,25 +200,27 @@ export default {
 
       if(validUtil.isNull(this.key)){
         this.company.companyManagers.push(this.companyManager);
-        this.managerModal = false;
       } else {
-          await companyApi.newCompanyManager(this.companyManager)
-          await this.getCompany();
-          this.managerModal = false;
+        await companyApi.newCompanyManager(this.companyManager);
+        await this.getCompany();
       }
-
+      this.closeManagerModal();
     },
     /* company_manager 삭제 */
     async deleteManager() {
-      if(!this.companyManager.compMngerId) {
-        return false;
-      }
 
-      if( await companyApi.deleteCompanyManager(this.companyManager.compMngerId) > 0 ) {
-        this.companyManager = {};
-        this.managerModal = false;
+      if(!this.companyManager.compMngerId) {
+        this.company.companyManagers.forEach((v, i)=> {
+          if(v.compMngerName === this.companyManager.compMngerName
+            && v.compMngerTel === this.companyManager.compMngerTel) {
+            this.company.companyManagers.splice(i, 1);
+          }
+        });
+      } else {
+        await companyApi.deleteCompanyManager(this.companyManager.compMngerId);
         await this.getCompany();
       }
+      this.closeManagerModal();
     },
     /* company_manager modal 열기 */
     openManagerModal(manager = {}) {

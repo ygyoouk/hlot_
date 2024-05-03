@@ -33,7 +33,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public int newCompany(CompanyVO companyVO) throws Exception {
-        if(companyVO.getCompanyId() == null || companyVO.getCompanyId().isEmpty()){
+        if(companyVO.getCompId() == null || companyVO.getCompId().isEmpty()){
             return companyMapper.insertCompany(companyVO);
         } else {
             return companyMapper.updateCompany(companyVO);
@@ -57,7 +57,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public int newCompanyManager(CompanyManagerVO companyManagerVO) throws Exception {
-        if(companyManagerVO.getCompanyManagerId() == null) {
+        if(companyManagerVO.getCompMngerId() == null) {
             return companyMapper.insertCompanyManager(companyManagerVO);
         } else {
             return companyMapper.updateCompanyManager(companyManagerVO);

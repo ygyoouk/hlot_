@@ -1,9 +1,8 @@
-package org.mt.mms.company.common.dto;
+package org.mt.cmm.dto;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 @Data
 @NoArgsConstructor

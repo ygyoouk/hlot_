@@ -2,7 +2,7 @@ package org.mt.mms.company.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mt.mms.company.common.dto.Result;
+import org.mt.cmm.dto.Result;
 import org.mt.mms.company.service.CompanyService;
 import org.mt.mms.company.vo.CompanyManagerVO;
 import org.mt.mms.company.vo.CompanyVO;

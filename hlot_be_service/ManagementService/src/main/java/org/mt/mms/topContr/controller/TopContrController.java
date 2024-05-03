@@ -3,7 +3,7 @@ package org.mt.mms.topContr.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.mt.mms.company.common.dto.Result;
+import org.mt.cmm.dto.Result;
 import org.mt.mms.topContr.service.TopContrService;
 
 import org.mt.mms.topContr.vo.TopContrVO;

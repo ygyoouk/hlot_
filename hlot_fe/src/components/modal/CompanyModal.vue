@@ -10,7 +10,7 @@
         <v-row>
           <v-col>
             <v-text-field
-              v-model="company.companyName"
+              v-model="company.compName"
               label="업체명"
               :readonly="mode === MODAL_MODE.DETAIL"
             />
@@ -20,25 +20,24 @@
           <v-col>
             <v-text-field
               :readonly="mode === MODAL_MODE.DETAIL"
-              v-model="company.businessRegistNumb"
-              label="사업자번호"
+              v-model="company.compCeoNm"
+              label="업체대표"
             />
           </v-col>
           <v-col>
             <v-text-field
               :readonly="mode === MODAL_MODE.DETAIL"
-              v-model="company.companyTel"
+              v-model="company.compTel"
               label="전화번호"
             />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <v-textarea
+            <v-text-field
               :readonly="mode === MODAL_MODE.DETAIL"
-              filled
-              label="비고"
-              v-model="company.remark"
+              v-model="company.compAddr"
+              label="업체주소"
             />
           </v-col>
         </v-row>
@@ -65,15 +64,13 @@
                 <tr>
                   <th>담당자명</th>
                   <th>전화번호</th>
-                  <th>비　　고</th>
                   <th>등록일자</th>
                 </tr>
               </thead>
               <tbody>
                   <tr v-for="manager in company.companyManagers" @click="openManagerModal(manager)">
-                    <td>{{ manager.companyManagerName }}</td>
-                    <td>{{ manager.companyManagerTel }}</td>
-                    <td>{{ manager.remark }}</td>
+                    <td>{{ manager.compMngerName }}</td>
+                    <td>{{ manager.compMngerTel }}</td>
                     <td>{{ manager.registDate }}</td>
                   </tr>
               </tbody>
@@ -115,23 +112,14 @@
       <v-row>
         <v-col>
           <v-text-field
-            v-model="companyManager.companyManagerName"
+            v-model="companyManager.compMngerName"
             label="업체담당자"
           />
         </v-col>
         <v-col>
           <v-text-field
-            v-model="companyManager.companyManagerTel"
+            v-model="companyManager.compMngerTel"
             label="전화번호"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-text-field
-            v-model="companyManager.remark"
-            label="비고"
-            filled
           />
         </v-col>
       </v-row>
@@ -142,7 +130,7 @@
         >저장</v-btn>
         　
         <v-btn
-          v-if="companyManager.companyId"
+          v-if="companyManager.compId"
           color="red"
           @click="deleteManager"
         >삭제</v-btn>
@@ -173,20 +161,19 @@ export default {
       key:store.getters.getParams.key,
 
       company: {  // 업체
-        companyId: '',          // 업체ID
-        companyName: '',        // 업체명
-        businessRegistNumb: '', // 사업자번호
-        companyTel: '',         // 업체번호
-        remark: '',             // 비고
+        compId: '',          // 업체ID
+        compName: '',        // 업체명
+        compCeoNm: '',       // 업체대표명
+        compTel: '',         // 업체번호
+        compAddr: '',         // 업체주소
         registUserName: '관리자',// 등록자
 
         companyManagers: [] // 업체담당자
       },
 
       companyManager: {   // 업체담당자
-        companyManagerName: '', // 업체담당자명
-        companyManagerTel: '',  // 업체담당자번호
-        remark: '',             // 비고
+        compMngerName: '', // 업체담당자명
+        compMngerTel: '',  // 업체담당자번호
         registDate : ''         // 등록일자
       }
     }
@@ -205,20 +192,26 @@ export default {
       await companyApi.deleteCompany(this.key);
     },
     /* company_manager 추가 */
-    addManager() {
-      this.companyManager.companyId = this.company.companyId;
-      if(companyApi.newCompanyManager(this.companyManager) > 0){
-        this.getCompany();
+    async addManager() {
+      this.companyManager.compId = this.company.compId;
+
+      if(validUtil.isNull(this.key)){
+        this.company.companyManagers.push(this.companyManager);
         this.managerModal = false;
+      } else {
+          await companyApi.newCompanyManager(this.companyManager)
+          await this.getCompany();
+          this.managerModal = false;
       }
+
     },
     /* company_manager 삭제 */
     async deleteManager() {
-      if(!this.companyManager.companyManagerId) {
+      if(!this.companyManager.compMngerId) {
         return false;
       }
 
-      if( await companyApi.deleteCompanyManager(this.companyManager.companyManagerId) > 0 ) {
+      if( await companyApi.deleteCompanyManager(this.companyManager.compMngerId) > 0 ) {
         this.companyManager = {};
         this.managerModal = false;
         await this.getCompany();

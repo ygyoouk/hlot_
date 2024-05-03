@@ -10,6 +10,7 @@ export default {
   /* COMPANY 상세조회 */
   company(id) {
     return axios.get(REQUEST_URL + `/api/company/${id}`).then(res => {
+      console.log(res);
       return res.data.data;
     });
   },
@@ -17,7 +18,6 @@ export default {
   /* COMPANY 목록조회 */
   companys(){
     return axios.get(REQUEST_URL + '/api/companys').then(res => {
-      console.log(res);
       return res.data.data;
     });
   },
@@ -33,7 +33,7 @@ export default {
   /* COMPANY 삭제 */
   deleteCompany(id) {
     return axios.delete(REQUEST_URL + `/api/company/${id}`, id).then(res => {
-      return res.data;
+      store.commit('toggleModal');
     });
   },
 

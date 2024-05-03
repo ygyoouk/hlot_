@@ -74,7 +74,7 @@ export default {
 
     /* 상세조회화면 */
     openDetail(item, row) {
-      store.commit('toggleModal', {key: row.item.companyId, mode: MODAL_MODE.DETAIL});
+      store.commit('toggleModal', {key: row.item.compId, mode: MODAL_MODE.DETAIL});
     }
   }
 };

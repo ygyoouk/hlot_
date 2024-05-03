@@ -40,12 +40,10 @@ import store from "@/store/store";
 import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
 
 const headers = [
-  { title: '업체명', key:'companyName' },
-  { title: '사업자번호', key:'businessRegistNumb'},
-  { title: '전화번호', key:'companyTel'},
-  { title: '비고',  key:'remark'},
-  { title: '등록일자',  key:'registDate'},
-  { title: '등록자',  key:'registUserName'},
+  { title: '업체 명', key:'compName' },
+  { title: '업체 대표', key:'compCeoNm'},
+  { title: '업체 전화번호', key:'compTel'},
+  { title: '업체 주소',  key:'compAddr'}
 ];
 </script>
 

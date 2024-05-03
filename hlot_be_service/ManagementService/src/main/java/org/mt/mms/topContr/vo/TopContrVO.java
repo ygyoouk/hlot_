@@ -23,6 +23,6 @@ public class TopContrVO {
     private String contrAmount;
     private String deliveryDeadline;
     private String demandInstNm;
-
+    private String topContrFileId;
 
 }

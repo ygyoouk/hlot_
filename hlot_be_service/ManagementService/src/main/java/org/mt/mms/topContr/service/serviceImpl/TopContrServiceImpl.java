@@ -32,7 +32,6 @@ public class TopContrServiceImpl implements TopContrService {
 
     @Override
     public int newTopContr(TopContrVO data) throws Exception{
-        String projectId = data.getTopContrId();
 
         // 프로젝트ID가 없는 경우(신규)
         return topContrMapper.newTopContr(data);

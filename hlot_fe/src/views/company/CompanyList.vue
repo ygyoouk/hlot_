@@ -1,6 +1,7 @@
 <template>
   <CompanyModal
     v-if="store.getters.isOpenModal"
+    @update="getCompanys"
   />
 
   <v-card class="table-container_mt">
@@ -64,6 +65,7 @@ export default {
   methods: {
     /* company 목록 조회 */
     async getCompanys(){
+      console.log("!@#!@#!@#!@#");
       this.companys = await companyApi.companys();
     },
 

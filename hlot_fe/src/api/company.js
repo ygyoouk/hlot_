@@ -10,7 +10,6 @@ export default {
   /* COMPANY 상세조회 */
   company(id) {
     return axios.get(REQUEST_URL + `/api/company/${id}`).then(res => {
-      console.log(res);
       return res.data.data;
     });
   },
@@ -26,14 +25,12 @@ export default {
   newCompany(company) {
     company.registUserName = '유영국';
     return axios.post(REQUEST_URL + '/api/company', company).then(res => {
-      store.commit('toggleModal');
     });
   },
 
   /* COMPANY 삭제 */
   deleteCompany(id) {
     return axios.delete(REQUEST_URL + `/api/company/${id}`, id).then(res => {
-      store.commit('toggleModal');
     });
   },
 

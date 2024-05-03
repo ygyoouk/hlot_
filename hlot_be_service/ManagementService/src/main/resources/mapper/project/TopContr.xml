@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.mt.mms.project.mapper.ProjectMapper">
-    <select id="getProjects" resultType="org.mt.mms.project.vo.ProjectVO">
-        <!--        -->
+<mapper namespace="org.mt.mms.topContr.mapper.TopContrMapper">
+    <select id="getTopContrs" resultType="org.mt.mms.topContr.vo.TopContrVO">
+
         SELECT
-            PROJECT_ID,
-            PROJECT_NAME,
-            DATE_FORMAT(PROJECT_ST_DATE, '%Y-%m-%d') AS PROJECT_ST_DATE ,
-            DATE_FORMAT(PROJECT_END_DATE, '%Y-%m-%d') AS PROJECT_END_DATE ,
-            PROJECT_STATUS,
-            CUSTOMER,
-            REMARK,
+            TOP_CONTR_ID,
+            TOP_CONTR_NM,
+            TOP_CONTR_DIV,
+            CLIENT_COMP,
+            TOP_CONTR_DATE,
+            CONTR_ST_DATE,
+            CONTR_END_DATE,
+            PROD_NM,
+            CONTR_AMOUNT,
+            DELIVERY_DEADLINE,
+            DEMAND_INST_NM,
             REGIST_USER_NAME,
-            REGIST_DATE
+            REGIST_DATE,
+            DEL_YN,
+            TOP_CONTR_FILE_ID
         FROM
-        PROJECT
+            TOP_CONTR
         WHERE DEL_YN = 'N'
-        ORDER BY REGIST_DATE DESC
     </select>
 
-    <insert id="newProject" parameterType="org.mt.mms.project.vo.ProjectVO">
+    <insert id="newTopContr" parameterType="org.mt.mms.topContr.vo.TopContrVO">
         INSERT INTO PROJECT
         (
             PROJECT_ID,
@@ -46,7 +51,7 @@
         )
     </insert>
 
-    <select id="one" resultType="org.mt.mms.project.vo.ProjectVO" parameterType="string">
+    <select id="one" resultType="org.mt.mms.topContr.vo.TopContrVO" parameterType="string">
         SELECT
             PROJECT_ID,
             PROJECT_NAME,
@@ -62,7 +67,7 @@
         WHERE PROJECT_ID  = #{projectId}
     </select>
 
-    <update id="updateProject" parameterType="org.mt.mms.project.vo.ProjectVO">
+    <update id="updateTopContr" parameterType="org.mt.mms.topContr.vo.TopContrVO">
         UPDATE PROJECT
         SET
         PROJECT_NAME 		= #{projectName},
@@ -77,7 +82,7 @@
         PROJECT_ID = #{projectId}
     </update>
 
-    <update id="deleteProject" parameterType="java.util.ArrayList">
+    <update id="deleteTopContr" parameterType="java.util.ArrayList">
 
             UPDATE PROJECT SET
             DEL_YN = 'Y'

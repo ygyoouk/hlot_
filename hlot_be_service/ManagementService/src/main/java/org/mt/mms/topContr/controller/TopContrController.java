@@ -1,58 +1,53 @@
-package org.mt.mms.project.controller;
+package org.mt.mms.topContr.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.mt.mms.company.common.dto.Result;
-import org.mt.mms.project.service.ProjectService;
+import org.mt.mms.topContr.service.TopContrService;
 
-import org.mt.mms.project.vo.ProjectVO;
+import org.mt.mms.topContr.vo.TopContrVO;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @Slf4j // log용도
 @RequestMapping(value = "/api")
 @RequiredArgsConstructor // autowired 대체자
-public class ProjectController {
+public class TopContrController {
 
 
-    private final ProjectService projectService;
+    private final TopContrService topContrService;
 
-    @GetMapping("/project")
+    @GetMapping("/topContr")
     public ResponseEntity<Result> all() throws Exception{
 
-     log.info("selectProjectList");
-    log.info("test");
      /* 프로젝트 리스트 조회*/
      return ResponseEntity.ok()
-             .body(Result.resSuccess(projectService.all()));
+             .body(Result.resSuccess(topContrService.all()));
 
     }
 
-    @PostMapping("/project")
-    public ResponseEntity<Result> newProject(@RequestBody ProjectVO data) throws Exception{
-        log.info("newProject-Controller");
+
+    @PostMapping("/topContr")
+    public ResponseEntity<Result> newContr(@RequestBody TopContrVO data) throws Exception{
         log.info(data.toString());
-        
+
         // 프로젝트 Id
-        String projectId = data.getProjectId();
+        String topContrId = data.getTopContrId();
 
         // 수정
-        if(!projectId.isEmpty()){
+        if(!topContrId.isEmpty()){
             log.info("프로젝트 수정");
             return ResponseEntity.ok()
-                    .body(Result.resSuccess(projectService.updateProject(data)));
+                    .body(Result.resSuccess(topContrService.updateTopContr(data)));
         }else{
             /* 프로젝트 단건 등록*/
             return ResponseEntity.ok()
-                    .body(Result.resSuccess(projectService.newProject(data)));
+                    .body(Result.resSuccess(topContrService.newTopContr(data)));
         }
 
     }
@@ -62,16 +57,16 @@ public class ProjectController {
         log.info("projectId ==>" + projectId);
 
         return ResponseEntity.ok()
-                .body(Result.resSuccess(projectService.one(projectId)));
+                .body(Result.resSuccess(topContrService.one(projectId)));
     }
 
     @PutMapping("/project")
-    public void updateProject(@RequestBody ProjectVO data) throws Exception{
+    public void updateProject(@RequestBody TopContrVO data) throws Exception{
         log.info("update-project");
         log.info("info {}", data.toString());
 
         // 프로젝트 관리 수정
-        projectService.updateProject(data);
+        topContrService.updateTopContr(data);
 
     }
 
@@ -81,7 +76,7 @@ public class ProjectController {
         log.info("info {}", deldata.toString());
 
 
-        projectService.deleteProject(deldata);
+        topContrService.deleteTopContr(deldata);
     }
 
 }

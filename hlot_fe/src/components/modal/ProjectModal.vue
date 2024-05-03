@@ -1,7 +1,7 @@
 <template>
   <ModalLayout>
     <div class="modal-title">
-      프로젝트 관리{{ mode === MODAL_MODE.DETAIL ? '상세'
+      원계약 관리{{ mode === MODAL_MODE.DETAIL ? '상세'
                 : mode === MODAL_MODE.REG ? '등록' : '수정' }}
     </div>
 
@@ -11,42 +11,71 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="project.projectName"
-                label="프로젝트 이름"
+                v-model="topContr.topContrNm"
+                label="원계약명"
                 :readonly="mode === 'D'"
               ></v-text-field>
             </v-col>
             <v-col>
-              <label> 프로젝트 기간</label><br>
-              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="project.projectStDate"/>  ~
-              <input type="date" id="endDate" :readonly="mode === 'D'" v-model="project.projectEndDate"/>  
+              <label> 원계약 기간</label><br>
+              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.contrStDate"/>  ~
+              <input type="date" id="endDate" :readonly="mode === 'D'" v-model="topContr.contrEndDate"/>  
             </v-col>
           </v-row>
           <v-row>
            <v-col>
              <v-select
-            label="진행상태"
-            :items="['진행', '완료', '연장']"
-            v-model="project.projectStatus"
+            label="구분"
+            :items="['유지관리', '구축', '개발']"
+            v-model="topContr.topContrDiv"
             :readonly="mode === 'D'"
             >
             </v-select>
            </v-col>
+           <v-col>
+              <v-text-field
+              label="발주처"
+              :readonly="mode === 'D'"
+              v-model="topContr.clientComp">
+              </v-text-field>
+            </v-col>
           </v-row>
           <v-row >
             <v-col>
-              
+              <label> 원계약일자</label><br>
+              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.topContrDate"/> 
+            </v-col>
+             <v-col>
               <v-text-field
-              label="고객사"
+              label="품명"
               :readonly="mode === 'D'"
-              v-model="project.customer">
+              v-model="topContr.prodNm">
               </v-text-field>
-              
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <v-textarea v-model="project.remark" :readonly="mode === 'D'" label="비고" variant="outlined" rows="10"></v-textarea>
+              <v-text-field
+              label="계약금액"
+              :readonly="mode === 'D'"
+              v-model="topContr.contrAmount">
+              </v-text-field>
+            </v-col>
+            <v-col>
+              <label>납품기한</label><br>
+              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.deliveryDeadline"/> 
+            </v-col>
+          </v-row>
+          <v-row>
+          <v-col>
+              <v-text-field
+              label="수요기관명"
+              :readonly="mode === 'D'"
+              v-model="topContr.demandInstNm">
+              </v-text-field>
+            </v-col>
+            <v-col>
+              <v-file-input label="원계약파일" @change="selectFile"></v-file-input>
             </v-col>
           </v-row>
           <v-row>
@@ -104,7 +133,6 @@ export default {
   mounted(){
     
     if(this.mode == 'D'){
-      console.log("@@@@@@@@@@@@@@");
       
     }
     
@@ -113,22 +141,27 @@ export default {
     }
   },  
 
-
-
   data() {
     return {
       visible : false,
+
       mode: store.getters.getParams.mode,
+
       key:store.getters.getParams.key,
-      project : {
-        projectId : '',
-        projectName : '', // 프로젝트명
-        projectStDate : '', // 프로젝트 시작일
-        projectEndDate : '', // 프로젝트 종료일
-        projectStatus : '', // 프로젝트 상태
-        customer : '', // 고객사
-        remark : '', // 비고
-      }
+
+      topContr : {
+        topContrNm : '',  // 원계약명
+        topContrDiv : '', // 원계약구분
+        clientComp : '', // 발주처
+        topContrDate : '', // 원계약일자
+        contrStDate : '', // 계약시작일자
+        contrEndDate : '', // 계약종료일자
+        prodNm : '', // 품명
+        contrAmount : '', // 계약금액 
+        deliveryDeadline : '', // 납품기한
+        demandInstNm : '', // 수요기관명
+      },
+      image : '', 
     }
   },
 
@@ -139,8 +172,11 @@ export default {
 
       // 프로젝트 정보 등록
       async newProject(){
-       await projectApi.newProject(this.project);
-       this.close();
+        const formData = new FormData();
+        formData.append('image',this.image);
+        
+        await projectApi.newProject(this.project,formData);
+        this.close();
       },
 
       // 프로젝트 단건조회
@@ -153,6 +189,12 @@ export default {
       updateMode(){
           this.mode = 'M';
       },
+
+      selectFile(file){
+        console.log("!!!!!!!!!!!!");
+        console.log(file);
+        this.image = file;
+      }
      
 
     }

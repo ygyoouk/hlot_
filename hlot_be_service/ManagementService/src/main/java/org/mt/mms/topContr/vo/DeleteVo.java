@@ -1,4 +1,4 @@
-package org.mt.mms.project.vo;
+package org.mt.mms.topContr.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

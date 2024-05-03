@@ -22,8 +22,9 @@ export default {
   },
 
   // PROJECT 등록
-  newProject(projectData){
-    return axios.post(REQUEST_URL + '/api/project',projectData).then(res => {
+  newProject(projectData,formData){
+    console.log("formData=>" + formData);
+    return axios.post(REQUEST_URL + '/api/project',formData,{headers:{'Content-Type' : 'multipart/form-data'}}).then(res => {
       alert("등록되었습니다");
 
       return res.data.data;

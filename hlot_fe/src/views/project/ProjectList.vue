@@ -3,7 +3,7 @@
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
-      프로젝트 관리
+      원계약 관리
     </div>
 
     <v-card-title>
@@ -25,8 +25,8 @@
 
     <v-data-table
       :headers="headers"
-      :items="projects"
-      item-value="projectId"
+      :items="topContrs"
+      item-value="topContrId"
       v-model="selected"
       :search="search"
       select-strategy="page"
@@ -51,13 +51,16 @@
   
 
   const headers = [
-    { title: '프로젝트명', key:'projectName' },
-    { title: '프로젝트시작일자', key:'projectStDate'},
-    { title: '프로젝트종료일자', key:'projectEndDate'},
-    { title: '프로젝트상태', key:'projectStatus'},
-    { title: '고객사',  key:'customer'},
-    { title: '비고',  key:'remark'},
-
+    { title: '원계약명', key:'topContrNm' },
+    { title: '원계약구분', key:'topContrDiv'},
+    { title: '발주처', key:'clientComp'},
+    { title: '원계약일자', key:'topContrDate'},
+    { title: '계약시작일자',  key:'contrStDate'},
+    { title: '계약종료일자',  key:'contrEndDate'},
+    { title: '품명',  key:'prodNm'},
+    { title: '계약금액',  key:'contrAmount'},
+    { title: '납품기한',  key:'deliveryDeadline'},
+    { title: '수요기관명',  key:'demandInstNm'},
   ];
 </script>
 
@@ -76,7 +79,7 @@ export default {
   mounted() {
     // this.projects = api.projectSampleData();
 
-    this.getProjects(); // 프로젝트리스트 조회
+    this.getTopContrs(); // 프로젝트리스트 조회
 
 
   },
@@ -88,7 +91,7 @@ export default {
   data() {
     return {
       search: '',
-      projects: [],
+      topContrs: [],
       selected : [],
       popUpValue : false,
     };
@@ -96,11 +99,11 @@ export default {
   methods: {
     
     popUpOpen(event,{item}){
-      console.log(item.projectId);
+      console.log(item.topContrId);
 
-      this.projects.projectId = item.projectId;
+      this.topContrs.topContrId = item.topContrId;
 
-      this.$store.commit("toggleModal", {key: this.projects.projectId, mode: MODAL_MODE.DETAIL});
+      this.$store.commit("toggleModal", {key: this.topContrs.topContrId, mode: MODAL_MODE.DETAIL});
       
     },
 
@@ -109,8 +112,8 @@ export default {
 
     },
 
-    async getProjects(){ // 프로젝트 리스트 조회  
-      this.projects = await projectApi.projects();
+    async getTopContrs(){ // 원계약 리스트 조회  
+      this.topContrs = await projectApi.projects();
     },
 
 

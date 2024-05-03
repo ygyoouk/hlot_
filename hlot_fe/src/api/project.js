@@ -8,14 +8,14 @@ export default {
 
   // PROJECT 조회
   projects(){
-    return axios.get(REQUEST_URL + '/api/project').then(res => {
+    return axios.get(REQUEST_URL + '/api/topContr').then(res => {
       return res.data.data;
     });
   },
 
   // PROJECT 상세조회
   project(projectId){
-    return axios.get(REQUEST_URL + '/api/project/'+projectId).then(res => {
+    return axios.get(REQUEST_URL + '/api/topContr/'+projectId).then(res => {
       console.log(res.data.data);
       return res.data.data;
     });
@@ -24,7 +24,7 @@ export default {
   // PROJECT 등록
   newProject(projectData,formData){
     console.log("formData=>" + formData);
-    return axios.post(REQUEST_URL + '/api/project',formData,{headers:{'Content-Type' : 'multipart/form-data'}}).then(res => {
+    return axios.post(REQUEST_URL + '/api/topContr',formData,{headers:{'Content-Type' : 'multipart/form-data'}}).then(res => {
       alert("등록되었습니다");
 
       return res.data.data;
@@ -33,7 +33,7 @@ export default {
 
   // PROJECT 삭제
   deleteProject(selectedProjectData){
-    return axios.delete(REQUEST_URL + '/api/project',{data : selectedProjectData}).then(res => {
+    return axios.delete(REQUEST_URL + '/api/topContr',{data : selectedProjectData}).then(res => {
         return res;
     });
   },

@@ -136,7 +136,7 @@ export default {
       
     }
     
-    if(this.project.projectName !== ''){
+    if(this.topContr.topContrNm !== ''){
       this.visible = true;
     }
   },  

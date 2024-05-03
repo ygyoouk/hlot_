@@ -53,18 +53,24 @@
 
     <select id="one" resultType="org.mt.mms.topContr.vo.TopContrVO" parameterType="string">
         SELECT
-            PROJECT_ID,
-            PROJECT_NAME,
-            PROJECT_ST_DATE,
-            PROJECT_END_DATE,
-            PROJECT_STATUS,
-            CUSTOMER,
-            REMARK,
+            TOP_CONTR_ID,
+            TOP_CONTR_NM,
+            TOP_CONTR_DIV,
+            CLIENT_COMP,
+            TOP_CONTR_DATE,
+            CONTR_ST_DATE,
+            CONTR_END_DATE,
+            PROD_NM,
+            CONTR_AMOUNT,
+            DELIVERY_DEADLINE,
+            DEMAND_INST_NM,
             REGIST_USER_NAME,
-            REGIST_DATE
+            REGIST_DATE,
+            DEL_YN,
+            TOP_CONTR_FILE_ID
         FROM
-            PROJECT
-        WHERE PROJECT_ID  = #{projectId}
+            TOP_CONTR
+        WHERE TOP_CONTR_ID  = #{projectId}
     </select>
 
     <update id="updateTopContr" parameterType="org.mt.mms.topContr.vo.TopContrVO">

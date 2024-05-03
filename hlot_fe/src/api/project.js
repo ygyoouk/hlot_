@@ -6,32 +6,32 @@ const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
 
 export default {
 
-  // PROJECT 조회
+  // TOP_CONTR 조회
   projects(){
     return axios.get(REQUEST_URL + '/api/topContr').then(res => {
       return res.data.data;
     });
   },
 
-  // PROJECT 상세조회
-  project(projectId){
-    return axios.get(REQUEST_URL + '/api/topContr/'+projectId).then(res => {
+  // TOP_CONTR 상세조회
+  project(topContrId){
+    return axios.get(REQUEST_URL + '/api/topContr/'+topContrId).then(res => {
       console.log(res.data.data);
       return res.data.data;
     });
   },
 
-  // PROJECT 등록
-  newProject(projectData,formData){
-    console.log("formData=>" + formData);
-    return axios.post(REQUEST_URL + '/api/topContr',formData,{headers:{'Content-Type' : 'multipart/form-data'}}).then(res => {
+  // TOP_CONTR 등록
+  newProject(projectData){
+    console.log(projectData);
+    return axios.post(REQUEST_URL + '/api/topContr',projectData).then(res => {
       alert("등록되었습니다");
 
       return res.data.data;
     });
   },
 
-  // PROJECT 삭제
+  // TOP_CONTR 삭제
   deleteProject(selectedProjectData){
     return axios.delete(REQUEST_URL + '/api/topContr',{data : selectedProjectData}).then(res => {
         return res;

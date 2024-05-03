@@ -34,7 +34,7 @@ public class TopContrController {
 
     @PostMapping("/topContr")
     public ResponseEntity<Result> newContr(@RequestBody TopContrVO data) throws Exception{
-        log.info(data.toString());
+        log.info("!!!!!!!!!");
 
         // 프로젝트 Id
         String topContrId = data.getTopContrId();
@@ -46,21 +46,22 @@ public class TopContrController {
                     .body(Result.resSuccess(topContrService.updateTopContr(data)));
         }else{
             /* 프로젝트 단건 등록*/
+            log.info("===========원계약 등록==========");
             return ResponseEntity.ok()
                     .body(Result.resSuccess(topContrService.newTopContr(data)));
         }
 
     }
 
-    @GetMapping("/project/{projectId}")
-    public ResponseEntity<Result> one(@PathVariable String projectId) throws Exception{
-        log.info("projectId ==>" + projectId);
+    @GetMapping("/topContr/{topContrId}")
+    public ResponseEntity<Result> one(@PathVariable String topContrId) throws Exception{
+        log.info("TOP_CONTR_ID ==>" + topContrId);
 
         return ResponseEntity.ok()
-                .body(Result.resSuccess(topContrService.one(projectId)));
+                .body(Result.resSuccess(topContrService.one(topContrId)));
     }
 
-    @PutMapping("/project")
+    @PutMapping("/topContr")
     public void updateProject(@RequestBody TopContrVO data) throws Exception{
         log.info("update-project");
         log.info("info {}", data.toString());
@@ -70,7 +71,7 @@ public class TopContrController {
 
     }
 
-    @DeleteMapping("/project")
+    @DeleteMapping("/topContr")
     public void deleteProject(@RequestBody ArrayList<String> deldata) throws Exception{
         log.info("delete-project");
         log.info("info {}", deldata.toString());

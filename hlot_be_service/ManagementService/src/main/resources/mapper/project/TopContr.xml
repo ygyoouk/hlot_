@@ -25,29 +25,41 @@
     </select>
 
     <insert id="newTopContr" parameterType="org.mt.mms.topContr.vo.TopContrVO">
-        INSERT INTO PROJECT
+        INSERT INTO TOP_CONTR
         (
-            PROJECT_ID,
-            PROJECT_NAME,
-            PROJECT_ST_DATE,
-            PROJECT_END_DATE,
-            PROJECT_STATUS,
-            CUSTOMER,
-            REMARK,
+            TOP_CONTR_ID,
+            TOP_CONTR_NM,
+            TOP_CONTR_DIV,
+            CLIENT_COMP,
+            TOP_CONTR_DATE,
+            CONTR_ST_DATE,
+            CONTR_END_DATE,
+            PROD_NM,
+            CONTR_AMOUNT,
+            DELIVERY_DEADLINE,
+            DEMAND_INST_NM,
             REGIST_USER_NAME,
-            REGIST_DATE
+            REGIST_DATE,
+            DEL_YN,
+            TOP_CONTR_FILE_ID
         )
         VALUES
         (
-            CONCAT('HLOTP',NEXTVAL(HLOT_SEQ)),
-            #{projectName},
-            #{projectStDate},
-            #{projectEndDate},
-            #{projectStatus},
-            #{customer},
-            #{remark},
+            CONCAT('20240402BTCO',NEXTVAL(HLOT_SEQ)),
+            #{topContrNm},
+            #{topContrDiv},
+            #{clientComp},
+            #{topContrDate},
+            #{contrStDate},
+            #{contrEndDate},
+            #{prodNm},
+            #{contrAmount},
+            #{deliveryDeadline},
+            #{demandInstNm},
             '최성주',
-            sysdate()
+            sysdate(),
+            'N',
+            #{topContrFileId}
         )
     </insert>
 
@@ -74,26 +86,31 @@
     </select>
 
     <update id="updateTopContr" parameterType="org.mt.mms.topContr.vo.TopContrVO">
-        UPDATE PROJECT
+        UPDATE TOP_CONTR
         SET
-        PROJECT_NAME 		= #{projectName},
-        PROJECT_ST_DATE 	= #{projectStDate},
-        PROJECT_END_DATE	= #{projectEndDate},
-        PROJECT_STATUS 		= #{projectStatus},
-        CUSTOMER 			= #{customer},
-        REMARK 				= #{remark},
-        MODIFY_DATE = SYSDATE(),
-        MODIFY_USER_NAME = '최성주'
+        TOP_CONTR_NM 	= #{topContrNm},
+        TOP_CONTR_DIV 	= #{topContrDiv},
+        CLIENT_COMP	    = #{clientComp},
+        TOP_CONTR_DATE 	= #{topContrDate},
+        CONTR_ST_DATE 	= #{contrStDate},
+        CONTR_END_DATE 	= #{contrEndDate},
+        PROD_NM 		= #{prodNm},
+        CONTR_AMOUNT 	= #{contrAmount},
+        DELIVERY_DEADLINE   = #{deliveryDeadline},
+        DEMAND_INST_NM 	    = #{demandInstNm},
+        TOP_CONTR_FILE_ID   = #{topContrFileId},
+        MODIFY_DATE         = SYSDATE(),
+        MODIFY_USER_NAME    = '최성주'
         WHERE
-        PROJECT_ID = #{projectId}
+        TOP_CONTR_ID = #{topContrId}
     </update>
 
     <update id="deleteTopContr" parameterType="java.util.ArrayList">
 
-            UPDATE PROJECT SET
+            UPDATE TOP_CONTR SET
             DEL_YN = 'Y'
             WHERE
-            PROJECT_ID IN
+            TOP_CONTR_ID IN
         <foreach collection="deldata" open="(" close=")" separator="," item="item">
             #{item}
         </foreach>

@@ -116,7 +116,9 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_PORT = import.meta.env.VITE_BE_PORT;
 import {MODAL_MODE} from "@/util/config";
+import utils from "@/util/validUtil";
 import projectApi from '@/api/project.js'
+
 
 export default {
   name: "ProjectModal",
@@ -149,7 +151,9 @@ export default {
 
       key:store.getters.getParams.key,
 
+
       topContr : {
+        topContrId : '',
         topContrNm : '',  // 원계약명
         topContrDiv : '', // 원계약구분
         clientComp : '', // 발주처
@@ -172,17 +176,29 @@ export default {
 
       // 프로젝트 정보 등록
       async newProject(){
-        const formData = new FormData();
-        formData.append('image',this.image);
+        // const formData = new FormData();
+        // formData.append('image',this.image);
+
+        this.topContr.contrStDate = utils.saveDate(this.topContr.contrStDate);
+        this.topContr.contrEndDate = utils.saveDate(this.topContr.contrEndDate);
+        this.topContr.topContrDate = utils.saveDate(this.topContr.topContrDate);
+        this.topContr.deliveryDeadline = utils.saveDate(this.topContr.deliveryDeadline);
+
         
-        await projectApi.newProject(this.project,formData);
+        await projectApi.newProject(this.topContr);
         this.close();
       },
 
       // 프로젝트 단건조회
       async getProject(){ 
         
-         this.project = await projectApi.project(this.key);
+        this.topContr = await projectApi.project(this.key);
+         
+        this.topContr.contrStDate = utils.formatDate(this.topContr.contrStDate); // 원계약시작일자
+        this.topContr.contrEndDate = utils.formatDate(this.topContr.contrEndDate); // 원계약종료일자
+        this.topContr.topContrDate = utils.formatDate(this.topContr.topContrDate);  // 원계약일자
+        this.topContr.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한 
+
       },
 
       // 모드 변경

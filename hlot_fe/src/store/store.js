@@ -11,6 +11,7 @@ const store = createStore({
       isLogin: false,
       userId: '',
       userNm: '관리자',
+      token: 'abcd'
     }
   },
 

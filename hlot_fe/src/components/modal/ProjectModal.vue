@@ -6,6 +6,7 @@
     </div>
 
     <div class="modal-content">
+    
       <v-container>
         
           <v-row>
@@ -101,6 +102,7 @@
             </div>
           </v-row>
       </v-container>
+      
     </div>
   </ModalLayout>
 </template>
@@ -176,16 +178,30 @@ export default {
 
       // 프로젝트 정보 등록
       async newProject(){
-        // const formData = new FormData();
-        // formData.append('image',this.image);
+        const formData = new FormData();
+        formData.append('file' ,this.image);
+        
 
         this.topContr.contrStDate = utils.saveDate(this.topContr.contrStDate);
         this.topContr.contrEndDate = utils.saveDate(this.topContr.contrEndDate);
         this.topContr.topContrDate = utils.saveDate(this.topContr.topContrDate);
         this.topContr.deliveryDeadline = utils.saveDate(this.topContr.deliveryDeadline);
-
         
-        await projectApi.newProject(this.topContr);
+        // formData.append('contrStDate' ,this.topContr.contrStDate);
+        const blob = new Blob([JSON.stringify(this.topContr)],{type:'application/json'});
+
+        formData.append('data' ,blob);
+
+        // for (let key of formData.keys()) {
+        //   console.log(key);
+        // }
+
+        // for (let value of formData.values()) {
+        //   console.log(JSON.stringify(value));
+        // }
+
+        // await projectApi.newProject(this.topContr);
+        await projectApi.newProject(formData);
         this.close();
       },
 
@@ -207,9 +223,8 @@ export default {
       },
 
       selectFile(file){
-        console.log("!!!!!!!!!!!!");
-        console.log(file);
-        this.image = file;
+        console.log(file.target.files[0]);
+        this.image = file.target.files[0];
       }
      
 

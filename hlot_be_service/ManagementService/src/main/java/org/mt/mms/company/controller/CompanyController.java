@@ -31,8 +31,6 @@ public class CompanyController {
     /* company 목록 조회 */
     @GetMapping("/companys")
     public ResponseEntity<Result> all() throws Exception{
-        log.info(uploadPath);
-
         return ResponseEntity.ok()
                 .body(Result.resSuccess(companyService.all()));
     }

@@ -6,6 +6,7 @@ import org.mt.cmm.dto.Result;
 import org.mt.mms.company.service.CompanyService;
 import org.mt.mms.company.vo.CompanyManagerVO;
 import org.mt.mms.company.vo.CompanyVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,9 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
+    @Value("${hlot.file.upload.path}")
+    String uploadPath;
+
     /* company 상세 조회 */
     @GetMapping("/company/{id}")
     public ResponseEntity<Result> one(@PathVariable String id) throws Exception {
@@ -27,6 +31,8 @@ public class CompanyController {
     /* company 목록 조회 */
     @GetMapping("/companys")
     public ResponseEntity<Result> all() throws Exception{
+        log.info(uploadPath);
+
         return ResponseEntity.ok()
                 .body(Result.resSuccess(companyService.all()));
     }

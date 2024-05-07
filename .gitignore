@@ -11,6 +11,7 @@ out/
 
 
 ## hlot_be_service
+/hlot_be_service/**/src/main/resources/application-sec.properties
 /hlot_be_service/**/src/main/resources/application.properties
 
 /hlot_be_service/ManagementService/build/

@@ -1,4 +1,4 @@
-package org.mt.cmm.dto;
+package org.mt.mms.cmm.dto;
 
 import lombok.Builder;
 import lombok.Data;

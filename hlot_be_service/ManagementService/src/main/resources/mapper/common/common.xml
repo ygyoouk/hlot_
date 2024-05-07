@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mt.mms.cmm.mapper.CommonMapper">
+
+    <insert id="insertFile" parameterType="hashMap">
+        INSERT INTO ATTACHMENT
+            (
+                FILE_ID,
+                FILE_PATH,
+                ORIGN_FILE_NAME,
+                CHANGE_FILE_NAME,
+                FILE_SIZE,
+                REGIST_USER_NAME,
+                REGIST_DATE,
+                DEL_YN
+            )
+        VALUES
+            (
+                #{fileId},
+                #{filePath},
+                #{orignFileName},
+                #{changeFileName},
+                #{fileSize},
+                #{registUserName},
+                sysdate(),
+                'N'
+            )
+    </insert>
+
+</mapper>

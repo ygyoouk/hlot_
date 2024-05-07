@@ -1,6 +1,6 @@
-package org.mt.mms.config;
+package org.mt.mms.cmm.config;
 
-import org.mt.cmm.handler.CommonInterceptor;
+import org.mt.mms.cmm.handler.CommonInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

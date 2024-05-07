@@ -2,23 +2,28 @@ package org.mt.mms.topContr.service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mt.mms.cmm.mapper.CommonMapper;
 import org.mt.mms.topContr.mapper.TopContrMapper;
 import org.mt.mms.topContr.service.TopContrService;
 import org.mt.mms.topContr.vo.TopContrVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class TopContrServiceImpl implements TopContrService {
 
-    private  final TopContrMapper topContrMapper;
+    private final TopContrMapper topContrMapper;
+    private final CommonMapper commonMapper;
+
+    @Value("${hlot.file.upload.path}")
+    String filePath;
+
     @Override
     public List<TopContrVO> all() throws Exception{
 
@@ -46,13 +51,34 @@ public class TopContrServiceImpl implements TopContrService {
             // 1-1-a 파일명이 중복되지않도록 변경
             String uploadFileName = UUID.randomUUID() + "_" + originFileName;
             // 1-1-b 폴더 위치
-            File uploadFilePath = new File("C:" + File.separator + "fileUploadTest");
+            File saveFilePath = new File(filePath + File.separator + file.getOriginalFilename()); // 파일이 저장될 위치
+            File uploadPath = new File(filePath); // 파일 폴더가 없을 경우 대비
 
-            // 1-2 파일을 해당 경로에 업로드
-            file.transferTo(uploadFilePath);
+            if(!uploadPath.mkdirs()){
+                log.info("uploadpath : {}" ,  uploadPath);
+                // 1-2 파일을 해당 경로에 업로드
+                file.transferTo(saveFilePath);
+
+                HashMap<String, Object> paramMap = new HashMap<>();
+                paramMap.put("fileId",uploadFileName);
+                paramMap.put("filePath",uploadPath);
+                paramMap.put("orignFileName",originFileName);
+                paramMap.put("changeFileName",uploadFileName);
+                paramMap.put("registUserName","tester");
+                paramMap.put("fileSize",file.getSize());
+
+                data.setTopContrId(uploadFileName);
+
+                log.info("paramMap : {}", paramMap);
+
+                return commonMapper.insertFile(paramMap);
+
+            }
+
         }
 
         // 프로젝트ID가 없는 경우(신규)
+
         return topContrMapper.newTopContr(data);
 
     }

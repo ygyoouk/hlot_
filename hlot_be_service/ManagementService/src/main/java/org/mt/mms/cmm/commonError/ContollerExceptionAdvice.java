@@ -1,8 +1,8 @@
-package org.mt.cmm.commonError;
+package org.mt.mms.cmm.commonError;
 
 import org.apache.coyote.BadRequestException;
 import org.apache.ibatis.javassist.NotFoundException;
-import org.mt.cmm.dto.Result;
+import org.mt.mms.cmm.dto.Result;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

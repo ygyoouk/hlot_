@@ -1,4 +1,4 @@
-package org.mt.cmm.config;
+package org.mt.mms.cmm.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

@@ -11,10 +11,14 @@ out/
 
 
 ## hlot_be_service
+/hlot_be_service/**/src/main/resources/application.properties
+
 /hlot_be_service/ManagementService/build/
 /hlot_be_service/ManagementService/logs/
 /hlot_be_service/ManagementService/gradle/
 /hlot_be_service/ManagementService/.gradle/
+
+
 
 ## hlot_fe
 /hlot_fe/node_modules/

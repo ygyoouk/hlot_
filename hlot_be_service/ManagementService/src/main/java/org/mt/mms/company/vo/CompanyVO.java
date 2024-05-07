@@ -3,12 +3,14 @@ package org.mt.mms.company.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class CompanyVO {
 
     private String compId;          // 업체ID

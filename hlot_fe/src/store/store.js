@@ -6,6 +6,12 @@ const store = createStore({
     params: {
       key : '',
       mode : '',
+    },
+    user: {
+      isLogin: false,
+      userId: '',
+      userNm: '관리자',
+      token: 'abcd'
     }
   },
 
@@ -16,6 +22,10 @@ const store = createStore({
 
     getParams(state) {
       return state.params;
+    },
+
+    getUser(state){
+      return state.user;
     }
   },
 
@@ -24,7 +34,11 @@ const store = createStore({
     toggleModal(state, params = {}){
       state.params = params;
       state.isOpenModal = !state.isOpenModal;
-    }
+    },
+
+    setUser(state, params = {}) {
+      state.user = params;
+    },
   }
 })
 

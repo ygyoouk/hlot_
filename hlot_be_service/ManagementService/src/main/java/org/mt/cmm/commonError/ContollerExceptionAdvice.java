@@ -1,4 +1,4 @@
-package org.mt.mms.commonError;
+package org.mt.cmm.commonError;
 
 import org.apache.coyote.BadRequestException;
 import org.apache.ibatis.javassist.NotFoundException;

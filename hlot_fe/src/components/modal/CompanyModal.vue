@@ -165,7 +165,7 @@ export default {
         compCeoNm: '',       // 업체대표명
         compTel: '',         // 업체번호
         compAddr: '',         // 업체주소
-        registUserName: '관리자',// 등록자
+        registUserName: store.getters.getUser.userNm, // 등록자
 
         companyManagers: [] // 업체담당자
       },
@@ -173,7 +173,7 @@ export default {
       companyManager: {   // 업체담당자
         compMngerName: '', // 업체담당자명
         compMngerTel: '',  // 업체담당자번호
-        registDate : ''         // 등록일자
+        registUserName: store.getters.getUser.userNm, // 등록자
       }
     }
   },
@@ -197,6 +197,7 @@ export default {
     /* company_manager 추가 */
     async addManager() {
       this.companyManager.compId = this.company.compId;
+      this.companyManager.registUserName = store.getters.getUser.userNm; // 등록자
 
       if(validUtil.isNull(this.key)){
         this.company.companyManagers.push(this.companyManager);

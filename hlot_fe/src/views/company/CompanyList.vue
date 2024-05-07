@@ -65,7 +65,6 @@ export default {
   methods: {
     /* company 목록 조회 */
     async getCompanys(){
-      console.log("!@#!@#!@#!@#");
       this.companys = await companyApi.companys();
     },
 

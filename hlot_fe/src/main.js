@@ -21,14 +21,18 @@ axios.interceptors.request.use(
   }
 )
 
-/* 요청후 response를 받아 작업을 수행한다.
-  TODO : 공통 예외처리 , 메세징 처리등 추가.
-* */
+/* 요청후 response를 받아 작업을 수행한다. */
 axios.interceptors.response.use(
   response => { /* 성공시 */
+    const data = response.data;
+    if(data.alert) alert(data.message);
+
     return response;
   },
   error => { /* 에러 발생시 */
+
+    console.log(error);
+    alert("처리에 실패하였습니다.")
     return Promise.reject(error);
   }
 )

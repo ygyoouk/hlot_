@@ -39,28 +39,28 @@ public class CompanyController {
     @PostMapping("/company")
     public ResponseEntity<Result> newCompany(@RequestBody CompanyVO companyVO) throws Exception {
         return ResponseEntity.ok()
-                .body(Result.resSuccess(companyService.newCompany(companyVO)));
+                .body(Result.resSuccess(companyService.newCompany(companyVO), true));
     }
 
     /* company 삭제 */
     @DeleteMapping("/company/{id}")
     public ResponseEntity<Result> deleteCompany(@PathVariable String id) throws Exception {
         return ResponseEntity.ok()
-                .body(Result.resSuccess(companyService.deleteCompany(id)));
+                .body(Result.resSuccess(companyService.deleteCompany(id), true));
     }
 
     /* company_manager 등록 */
     @PostMapping("/company/companyManager")
     public ResponseEntity<Result> newCompanyManager(@RequestBody CompanyManagerVO companyManagerVO) throws Exception {
         return ResponseEntity.ok()
-                .body(Result.resSuccess(companyService.newCompanyManager(companyManagerVO)));
+                .body(Result.resSuccess(companyService.newCompanyManager(companyManagerVO), true));
     }
 
     /* company_manager 삭제 */
     @DeleteMapping("/company/companyManager/{id}")
     public ResponseEntity<Result> deleteCompanyManager(@PathVariable String id) throws Exception {
         return ResponseEntity.ok()
-                .body(Result.resSuccess(companyService.deleteCompanyManager(id)));
+                .body(Result.resSuccess(companyService.deleteCompanyManager(id), true));
     }
 
 }

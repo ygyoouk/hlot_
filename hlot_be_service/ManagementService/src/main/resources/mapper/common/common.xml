@@ -27,4 +27,17 @@
             )
     </insert>
 
+    <select id="selectAttachmentInfo" resultType="org.mt.mms.cmm.vo.AttachmentVO" parameterType="string">
+        SELECT
+            FILE_ID,
+            FILE_PATH,
+            ORIGN_FILE_NAME,
+            CHANGE_FILE_NAME,
+            FILE_SIZE
+        FROM
+            ATTACHMENT
+        WHERE
+            FILE_ID = #{fileId}
+    </select>
+
 </mapper>

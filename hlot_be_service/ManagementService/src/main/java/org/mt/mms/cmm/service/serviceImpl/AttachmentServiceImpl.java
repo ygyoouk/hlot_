@@ -1,52 +1,40 @@
-package org.mt.mms.topContr.service.serviceImpl;
+package org.mt.mms.cmm.service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mt.mms.cmm.mapper.CommonMapper;
-import org.mt.mms.topContr.mapper.TopContrMapper;
-import org.mt.mms.topContr.service.TopContrService;
-import org.mt.mms.topContr.vo.TopContrVO;
+import org.mt.mms.cmm.service.AttachmentService;
+import org.mt.mms.cmm.vo.AttachmentVO;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.UriUtils;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
+
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class TopContrServiceImpl implements TopContrService {
+public class AttachmentServiceImpl implements AttachmentService{
 
-    private final TopContrMapper topContrMapper;
     private final CommonMapper commonMapper;
-
     @Value("${hlot.file.upload.path}")
     private String filePath;
-
     @Override
-    public List<TopContrVO> all() throws Exception{
+    public AttachmentVO selectAttachmentInfo(String fileId) throws Exception {
 
-        List<TopContrVO> result = null;
-
-        try{
-            result = topContrMapper.getTopContrs();
-            log.info(result.toString());
-        }catch(Exception e){
-            log.info(e.getMessage());
-        }
-        return result;
+        return commonMapper.selectAttachmentInfo(fileId);
     }
 
+
     @Override
-    public int newTopContr(TopContrVO data, MultipartFile file) throws Exception{
-        String topContrFileId = null;
+    public AttachmentVO upload(MultipartFile file) throws Exception {
+        String fileId = null;
 
         if(file != null){
             log.info("file : {}", file.getOriginalFilename());
@@ -80,47 +68,14 @@ public class TopContrServiceImpl implements TopContrService {
                 paramMap.put("fileSize", String.valueOf(file.getSize()));
                 paramMap.put("registUserName","tester");
 
-                topContrFileId = uploadFileName;
-                log.info("paramMap : {}", paramMap);
 
+                log.info("paramMap : {}", paramMap);
+                fileId = uploadFileName;
                 commonMapper.insertFile(paramMap);
             }
         }
-
-        // 프로젝트ID가 없는 경우(신규)
-        data.setTopContrFileId(topContrFileId);
-
-        log.info("data : {}", data);
-
-        return topContrMapper.newTopContr(data);
+        return selectAttachmentInfo(fileId);
     }
 
-    @Override
-    public TopContrVO one(String topContrId) throws Exception{
-        log.info("serviceImpl one");
-        TopContrVO result = null;
 
-        try{
-            result = topContrMapper.one(topContrId);
-
-            log.info("info : {}",result);
-        }catch (Exception e){
-            log.info(e.getMessage());
-        }
-
-        return result;
-    }
-
-    @Override
-    public int updateTopContr(TopContrVO data, MultipartFile file) throws Exception{
-
-        return topContrMapper.updateTopContr(data);
-    }
-
-    @Override
-    public int deleteTopContr(ArrayList<String> deldata) throws Exception{
-
-       return  topContrMapper.deleteTopContr(deldata);
-
-    }
 }

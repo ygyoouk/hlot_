@@ -76,13 +76,15 @@
             CONTR_AMOUNT,
             DELIVERY_DEADLINE,
             DEMAND_INST_NM,
-            REGIST_USER_NAME,
-            REGIST_DATE,
-            DEL_YN,
-            TOP_CONTR_FILE_ID
+            TOP_CONTR_FILE_ID,
+            FILE_ID,
+            FILE_PATH,
+            ORIGN_FILE_NAME,
+            CHANGE_FILE_NAME
         FROM
-            TOP_CONTR
-        WHERE TOP_CONTR_ID  = #{projectId}
+            TOP_CONTR TC LEFT OUTER JOIN ATTACHMENT A
+            ON TC.TOP_CONTR_FILE_ID  = A.FILE_ID
+        WHERE TOP_CONTR_ID  = #{topContrId}
     </select>
 
     <update id="updateTopContr" parameterType="org.mt.mms.topContr.vo.TopContrVO">

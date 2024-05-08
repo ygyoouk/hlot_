@@ -7,13 +7,26 @@ import org.mt.mms.cmm.dto.Result;
 import org.mt.mms.topContr.service.TopContrService;
 
 import org.mt.mms.topContr.vo.TopContrVO;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
+import java.io.File;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @RestController
 @Slf4j // log용도
@@ -81,6 +94,38 @@ public class TopContrController {
 
 
         topContrService.deleteTopContr(deldata);
+    }
+
+    @GetMapping("/download/{topContrId}")
+    public ResponseEntity<Resource> download(@PathVariable String topContrId ) throws  Exception{
+        log.info("======download========");
+
+        TopContrVO result = topContrService.one(topContrId);
+
+        String filePath = result.getFilePath();
+        String uploadFileName = result.getOrignFileName();
+
+//        UrlResource urlResource = new UrlResource("file:" + filePath);
+//        UrlResource urlResource = new UrlResource("file:" + filePath + File.separator + result.getChangeFileName());
+
+        Path p = Paths.get(filePath + File.separator + result.getChangeFileName());
+
+        byte[] data = Files.readAllBytes(p);
+
+        ByteArrayResource resource = new ByteArrayResource(data);
+
+        log.info("urlResourse : {}", resource);
+
+        String encodeUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
+
+        log.info("encodeUploadFileName : {}", encodeUploadFileName);
+
+        String contentDisposition = "attachment; filename=\"" + encodeUploadFileName + "\"";
+
+        return ResponseEntity.ok()
+                .header("Content-type", "application/octet-stream")
+                .header("Content-disposition", "attachment; filename=\"" + URLEncoder.encode(uploadFileName, "utf-8") + "\"")
+                .body(resource);
     }
 
 }

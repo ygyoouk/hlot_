@@ -6,9 +6,9 @@
     </div>
 
     <div class="modal-content">
-    
+
       <v-container>
-        
+
           <v-row>
             <v-col>
               <v-text-field
@@ -20,7 +20,7 @@
             <v-col>
               <label> 원계약 기간</label><br>
               <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.contrStDate"/>  ~
-              <input type="date" id="endDate" :readonly="mode === 'D'" v-model="topContr.contrEndDate"/>  
+              <input type="date" id="endDate" :readonly="mode === 'D'" v-model="topContr.contrEndDate"/>
             </v-col>
           </v-row>
           <v-row>
@@ -44,7 +44,7 @@
           <v-row >
             <v-col>
               <label> 원계약일자</label><br>
-              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.topContrDate"/> 
+              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.topContrDate"/>
             </v-col>
              <v-col>
               <v-text-field
@@ -64,7 +64,7 @@
             </v-col>
             <v-col>
               <label>납품기한</label><br>
-              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.deliveryDeadline"/> 
+              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.deliveryDeadline"/>
             </v-col>
           </v-row>
           <v-row>
@@ -75,15 +75,18 @@
               v-model="topContr.demandInstNm">
               </v-text-field>
             </v-col>
-            <v-col>
-              <v-file-input label="원계약파일" @change="selectFile"></v-file-input>
+            <v-col v-if="this.topContr.fileId == null">
+              <v-file-input label="원계약파일" @change="selectFile" ></v-file-input>
+            </v-col>
+            <v-col v-if="this.topContr.fileId != null">
+              <a :href="'http://localhost:8081/common/download/' + this.topContr.fileId">다운로드</a>
             </v-col>
           </v-row>
           <v-row>
             <!-- <v-btn id="regist" v-if="mode == 'R'" @click="registProject">등록</v-btn>
             <v-btn id="update" v-if="mode == 'D' || mode == 'M'" @click="updateProject">수정</v-btn>
             <v-btn @click="close()">취소</v-btn> -->
-            
+            <!--
              <div class="modal-btn-list">
                 <v-btn
                   color="blue"
@@ -100,9 +103,10 @@
                   color="red"
                 >삭제</v-btn>
             </div>
+            -->
           </v-row>
       </v-container>
-      
+
     </div>
   </ModalLayout>
 </template>
@@ -135,15 +139,15 @@ export default {
   },
 
   mounted(){
-    
+
     if(this.mode == 'D'){
-      
+
     }
-    
+
     if(this.topContr.topContrNm !== ''){
       this.visible = true;
     }
-  },  
+  },
 
   data() {
     return {
@@ -163,11 +167,15 @@ export default {
         contrStDate : '', // 계약시작일자
         contrEndDate : '', // 계약종료일자
         prodNm : '', // 품명
-        contrAmount : '', // 계약금액 
+        contrAmount : '', // 계약금액
         deliveryDeadline : '', // 납품기한
         demandInstNm : '', // 수요기관명
+        topContrFileId : '',  // 첨부파일ID
+        fileId : '', // 파일ID
+        filePath : '', // 파일 경로
+        orignFileName : '', // 파일 원본명
       },
-      image : '', 
+      image : '',
     }
   },
 
@@ -180,13 +188,13 @@ export default {
       async newProject(){
         const formData = new FormData();
         formData.append('file' ,this.image);
-        
+
 
         this.topContr.contrStDate = utils.saveDate(this.topContr.contrStDate);
         this.topContr.contrEndDate = utils.saveDate(this.topContr.contrEndDate);
         this.topContr.topContrDate = utils.saveDate(this.topContr.topContrDate);
         this.topContr.deliveryDeadline = utils.saveDate(this.topContr.deliveryDeadline);
-        
+
         // formData.append('contrStDate' ,this.topContr.contrStDate);
         const blob = new Blob([JSON.stringify(this.topContr)],{type:'application/json'});
 
@@ -206,16 +214,17 @@ export default {
       },
 
       // 프로젝트 단건조회
-      async getProject(){ 
-        
+      async getProject(){
         this.topContr = await projectApi.project(this.key);
-         
+
+        console.log(JSON.stringify(this.topContr));
         this.topContr.contrStDate = utils.formatDate(this.topContr.contrStDate); // 원계약시작일자
         this.topContr.contrEndDate = utils.formatDate(this.topContr.contrEndDate); // 원계약종료일자
         this.topContr.topContrDate = utils.formatDate(this.topContr.topContrDate);  // 원계약일자
-        this.topContr.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한 
+        this.topContr.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한
 
       },
+
 
       // 모드 변경
       updateMode(){
@@ -226,7 +235,7 @@ export default {
         console.log(file.target.files[0]);
         this.image = file.target.files[0];
       }
-     
+
 
     }
 }

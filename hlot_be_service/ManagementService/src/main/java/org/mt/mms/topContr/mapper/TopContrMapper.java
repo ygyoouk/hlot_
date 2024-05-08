@@ -13,7 +13,7 @@ public interface TopContrMapper {
 
     int newTopContr(TopContrVO data) throws Exception;
 
-    TopContrVO one(String projectId) throws Exception;
+    TopContrVO one(String topContrId) throws Exception;
 
     int updateTopContr(TopContrVO data) throws Exception;
 

@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 public class TopContrVO {
 
-
     private String topContrId;
     private String topContrNm;
     private String topContrDiv;
@@ -24,5 +23,9 @@ public class TopContrVO {
     private String deliveryDeadline;
     private String demandInstNm;
     private String topContrFileId;
+    private String fileId;
+    private String filePath;
+    private String orignFileName;
+    private String changeFileName;
 
 }

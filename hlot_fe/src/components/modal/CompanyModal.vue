@@ -184,18 +184,24 @@ export default {
     },
     /* company 등록 */
     async newCompany() {
+      if(!confirm("등록 하시겠습니까?")) return false;
+
       await companyApi.newCompany(this.company);
       this.$emit('update');
       store.commit('toggleModal');
     },
     /* company 삭제 */
     async deleteCompany() {
+      if(!confirm("삭제 하시겠습니까?")) return false;
+
       await companyApi.deleteCompany(this.key);
       this.$emit('update');
       store.commit('toggleModal');
     },
     /* company_manager 추가 */
     async addManager() {
+      if(!confirm("등록 하시겠습니까?")) return false;
+
       this.companyManager.compId = this.company.compId;
       this.companyManager.registUserName = store.getters.getUser.userNm; // 등록자
 
@@ -209,6 +215,7 @@ export default {
     },
     /* company_manager 삭제 */
     async deleteManager() {
+      if(!confirm("삭제 하시겠습니까?")) return false;
 
       if(!this.companyManager.compMngerId) {
         this.company.companyManagers.forEach((v, i)=> {

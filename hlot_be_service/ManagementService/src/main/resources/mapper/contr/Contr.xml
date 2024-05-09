@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mt.mms.contr.mapper.ContrMapper">
+
+    <select id="all" resultType="org.mt.mms.contr.vo.ContrVO">
+        SELECT
+            TC.TOP_CONTR_ID ,
+            TC.TOP_CONTR_NM ,
+            C.CONTR_ID ,
+            C.CONTR_NM ,
+            CM.COMP_ID ,
+            CM.COMP_NAME ,
+            FORMAT(C.CONTR_AMOUNT,0) AS CONTR_AMOUNT ,
+            C.PAYMENT_TERM ,
+            C.CONTR_ST_DATE ,
+            C.CONTR_END_DATE
+        FROM
+            TOP_CONTR TC
+                INNER JOIN CONTR C ON TC.TOP_CONTR_ID  = C.TOP_CONTR_ID
+                INNER JOIN COMP CM ON CM.COMP_ID  = C.COMP_ID
+        WHERE C.DEL_YN = 'N'
+    </select>
+
+</mapper>

@@ -3,7 +3,7 @@
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
-      계약 관리ssssss
+      계약 관리
     </div>
 
     <v-card-title>
@@ -25,8 +25,8 @@
 
     <v-data-table
       :headers="headers"
-      :items="topContrs"
-      item-value="topContrId"
+      :items="contrs"
+      item-value="contrId"
       v-model="selected"
       :search="search"
       select-strategy="page"
@@ -51,16 +51,12 @@
   
 
   const headers = [
-    { title: '원계약명', key:'topContrNm' },
-    { title: '원계약구분', key:'topContrDiv'},
-    { title: '발주처', key:'clientComp'},
-    { title: '원계약일자', key:'topContrDate'},
-    { title: '계약시작일자',  key:'contrStDate'},
-    { title: '계약종료일자',  key:'contrEndDate'},
-    { title: '품명',  key:'prodNm'},
-    { title: '계약금액',  key:'contrAmount'},
-    { title: '납품기한',  key:'deliveryDeadline'},
-    { title: '수요기관명',  key:'demandInstNm'},
+    { title: '계약명', key:'contrNm' },
+    { title: '계약금액', key:'contrAmount'},
+    { title: '지불조건', key:'paymentTerm'},
+    { title: '특이사항', key:'specialNote'},
+    { title: '계약시작일자', key:'contrStDate'},
+    { title: '계약종료일자', key:'contrEndDate'},
   ];
 </script>
 
@@ -70,40 +66,46 @@
 import store from "@/store/store";
 import axios from "axios";
 import {MODAL_MODE} from "@/util/config";
-import projectApi from '@/api/project.js'
+import contrApi from '@/api/contr.js'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_PORT = import.meta.env.VITE_BE_PORT;
 
 export default {
   mounted() {
-    // this.projects = api.projectSampleData();
-
-    this.getTopContrs(); // 프로젝트리스트 조회
-
-
+    this.getContrs(); // 계약 리스트 조회
   },
+
   computed: {
       store() {
         return store
       }
     },
+
   data() {
     return {
       search: '',
-      topContrs: [],
+      contrs: [],
       selected : [],
       popUpValue : false,
     };
   },
+
   methods: {
     
+     async getContrs(){ // 계약 리스트 조회  
+     
+      this.contrs = await contrApi.contrs();
+
+      console.log(JSON.stringify(this.contrs));
+    },
+
     popUpOpen(event,{item}){
-      console.log(item.topContrId);
+      console.log(item.contrId);
 
-      this.topContrs.topContrId = item.topContrId;
+      this.contrs.contrId = item.contrId;
 
-      this.$store.commit("toggleModal", {key: this.topContrs.topContrId, mode: MODAL_MODE.DETAIL});
+      this.$store.commit("toggleModal", {key: this.contrs.contrId, mode: MODAL_MODE.DETAIL});
       
     },
 
@@ -111,11 +113,6 @@ export default {
       store.commit("toggleModal", {key: '', mode: MODAL_MODE.REG});
 
     },
-
-    async getTopContrs(){ // 원계약 리스트 조회  
-      this.topContrs = await projectApi.projects();
-    },
-
 
     async deleteProject(){ // 프로젝트 삭제
     console.log(this.selected);

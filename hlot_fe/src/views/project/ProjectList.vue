@@ -17,10 +17,10 @@
     <div class="table-btn-list">
       <v-btn color="#5865f2" @click="pushRegPop">등록</v-btn>
 
-       <v-btn
+       <!-- <v-btn
           color="red"
           @click="deleteProject"
-        >삭제</v-btn>
+        >삭제</v-btn> -->
     </div>
 
     <v-data-table

@@ -42,6 +42,7 @@ public class CommonController {
     public ResponseEntity<Resource> download(@PathVariable String fileId ) throws  Exception{
         log.info("======download========");
         log.info("fileId ==>" + fileId);
+
         AttachmentVO result = attachmentService.selectAttachmentInfo(fileId);
 
         log.info("result : {}", result);
@@ -49,12 +50,9 @@ public class CommonController {
         String filePath = result.getFilePath();
         String uploadFileName = result.getOrignFileName();
 
-//        UrlResource urlResource = new UrlResource("file:" + filePath);
-//        UrlResource urlResource = new UrlResource("file:" + filePath + File.separator + result.getChangeFileName());
+        Path p = Paths.get(filePath + File.separator + result.getChangeFileName()); // 경로 정의하기
 
-        Path p = Paths.get(filePath + File.separator + result.getChangeFileName());
-
-        byte[] data = Files.readAllBytes(p);
+        byte[] data = Files.readAllBytes(p); // Files.readAllBytes => 파일 내용을 한번에 바이트 배열로 읽는데 사용
 
         ByteArrayResource resource = new ByteArrayResource(data);
 
@@ -64,7 +62,6 @@ public class CommonController {
 
         log.info("encodeUploadFileName : {}", encodeUploadFileName);
 
-        String contentDisposition = "attachment; filename=\"" + encodeUploadFileName + "\"";
 
         return ResponseEntity.ok()
                 .header("Content-type", "application/octet-stream")

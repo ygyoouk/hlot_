@@ -75,35 +75,21 @@
               v-model="topContr.demandInstNm">
               </v-text-field>
             </v-col>
-            <v-col v-if="this.topContr.fileId == null">
+            <v-col v-if="this.topContr.fileId == '' ">
               <v-file-input label="원계약파일" @change="selectFile" ></v-file-input>
             </v-col>
-            <v-col v-if="this.topContr.fileId != null">
-              <a :href="'http://localhost:8081/common/download/' + this.topContr.fileId">다운로드</a>
+            <v-col v-if="this.topContr.fileId != '' && this.topContr.fileId !=null">
+              <a :href="'http://localhost:8081/common/download/' + this.topContr.fileId">{{this.topContr.orignFileName}}</a>
             </v-col>
           </v-row>
           <v-row>
-            <!-- <v-btn id="regist" v-if="mode == 'R'" @click="registProject">등록</v-btn>
-            <v-btn id="update" v-if="mode == 'D' || mode == 'M'" @click="updateProject">수정</v-btn>
-            <v-btn @click="close()">취소</v-btn> -->
-            <!--
              <div class="modal-btn-list">
                 <v-btn
-                  color="blue"
-                  @click="updateMode"
-                  v-if="mode === 'D'"
-                >수정</v-btn>
-                　
-                <v-btn
+                  v-if="this.mode == 'R'"
                   color="green"
                   @click="newProject"
                 >저장</v-btn>
-                　
-                <v-btn
-                  color="red"
-                >삭제</v-btn>
             </div>
-            -->
           </v-row>
       </v-container>
 
@@ -139,7 +125,7 @@ export default {
   },
 
   mounted(){
-
+    console.log(this.topContr.fileId);
     if(this.mode == 'D'){
 
     }
@@ -195,21 +181,12 @@ export default {
         this.topContr.topContrDate = utils.saveDate(this.topContr.topContrDate);
         this.topContr.deliveryDeadline = utils.saveDate(this.topContr.deliveryDeadline);
 
-        // formData.append('contrStDate' ,this.topContr.contrStDate);
         const blob = new Blob([JSON.stringify(this.topContr)],{type:'application/json'});
 
         formData.append('data' ,blob);
 
-        // for (let key of formData.keys()) {
-        //   console.log(key);
-        // }
-
-        // for (let value of formData.values()) {
-        //   console.log(JSON.stringify(value));
-        // }
-
-        // await projectApi.newProject(this.topContr);
         await projectApi.newProject(formData);
+        
         this.close();
       },
 

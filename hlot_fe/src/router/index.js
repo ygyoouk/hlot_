@@ -20,5 +20,9 @@ export default createRouter({
       path: '/project/projectList',
       component: () => import('@/views/project/ProjectList.vue')
     },
+    {
+      path: '/contr/contrList',
+      component: () => import('@/views/contr/ContrList.vue')
+    },
   ],
 })

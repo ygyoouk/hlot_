@@ -33,7 +33,8 @@ export default {
         { name: 'HOME',      path: '/' },
         { name: '업체관리',    path: '/company/companyList' },
         { name: '견적서관리',   path: '/estimate/estimateList' },
-        { name: '프로젝트관리',  path: '/project/projectList' },
+        { name: '원계약관리',  path: '/project/projectList' },
+        { name: '계약관리',    path: '/contr/contrList' },
       ]
 
     }

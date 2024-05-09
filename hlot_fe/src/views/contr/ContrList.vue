@@ -1,5 +1,5 @@
 <template>
-  <ProjectModal v-if="store.getters.isOpenModal"/>
+  <ContrModal v-if="store.getters.isOpenModal"/>
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
@@ -45,7 +45,7 @@
 
 <script setup>
   
-  import ProjectModal from "@/components/modal/ProjectModal.vue";
+  import ContrModal from "@/components/modal/ContrtModal.vue";
   import {ITEMS_PER_PAGE_OPTIONS} from "@/util/config";
 
   
@@ -114,16 +114,16 @@ export default {
 
     },
 
-    async deleteProject(){ // 프로젝트 삭제
-    console.log(this.selected);
-      if(this.selected.length <= 0){
-        alert("삭제할 행을 선택하세요");
-      }else{
-       confirm("삭제하시겠습니까?");
-       const res =  await projectApi.deleteProject(this.selected);
+    // async deleteProject(){ // 프로젝트 삭제
+    // console.log(this.selected);
+    //   if(this.selected.length <= 0){
+    //     alert("삭제할 행을 선택하세요");
+    //   }else{
+    //    confirm("삭제하시겠습니까?");
+    //    const res =  await projectApi.deleteProject(this.selected);
         
-      }
-    }
+    //   }
+    // }
   }
 };
 </script>

@@ -11,6 +11,7 @@
             CM.COMP_ID ,
             CM.COMP_NAME ,
             FORMAT(C.CONTR_AMOUNT,0) AS CONTR_AMOUNT ,
+
             C.PAYMENT_TERM ,
             C.CONTR_ST_DATE ,
             C.CONTR_END_DATE

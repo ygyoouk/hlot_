@@ -30,6 +30,15 @@ public class Result<T> {
                 .build();
     }
 
+    public static <T> Result resSuccess(T data, String message) {
+        return Result.builder()
+                .isSuccess(true)
+                .message(message)
+                .isAlert(true)
+                .data(data)
+                .build();
+    }
+
     public static <T> Result resSuccess(T data, boolean isAlert){
         return Result.builder()
                 .isSuccess(true)

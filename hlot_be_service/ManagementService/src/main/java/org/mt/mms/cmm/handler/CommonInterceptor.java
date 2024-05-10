@@ -15,12 +15,9 @@ public class CommonInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.info("preHandle...");
         if(isPreflightRequest(request)) return true; // pre flight 요청 걸러냄
         log.info("############## 요청 URI < " + request.getHeader("host") + request.getRequestURI() + " >");
-
-        /* TODO: Token 받아서 걸러주는작업 추가필요 */
-        String accessToken = request.getHeader("authorization");
-        log.info(accessToken);
 
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }

@@ -18,9 +18,6 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
-    @Value("${hlot.file.upload.path}")
-    String uploadPath;
-
     /* company 상세 조회 */
     @GetMapping("/company/{id}")
     public ResponseEntity<Result> one(@PathVariable String id) throws Exception {

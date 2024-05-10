@@ -4,19 +4,32 @@ import vuetify from "@/plugins/vuetify.js";
 import store from "@/store/store.js"
 import axios from "axios";
 import {createApp} from 'vue'
+import validUtil from "@/util/validUtil";
+import user from "@/api/user";
 
 /* 요청하기전에 수행할 일을 정의한다.
- TODO: 공통헤더 추가하기 (jwt토큰 추가)
 */
 axios.interceptors.request.use(
   request => {
-    request.headers["Authorization"] = "Bearer " + store.getters.getUser.token;
+    const t = user.getUserStorage('token');
+    const url = request.url;
+
+    if(url.substring(url.lastIndexOf('/')) !== '/login'){
+      if(!validUtil.isNull(t)){
+        request.headers.Authorization = "Bearer " + t;
+        // axios.defaults.headers.common['Authorization'] =  "Bearer " + t;
+      }
+      else {
+        alert("다시 로그인 해주세요.");
+        user.logout();
+      }
+    }
+
 
     let data = request.data??{};
-    data.registUserName = store.getters.getUser.userNm;
+    data.registUserName = user.getUserStorage('userNm');
 
     request.data = data;
-
     return request;
   }
 )
@@ -30,7 +43,6 @@ axios.interceptors.response.use(
     return response;
   },
   error => { /* 에러 발생시 */
-
     console.log(error);
     alert("처리에 실패하였습니다.")
     return Promise.reject(error);

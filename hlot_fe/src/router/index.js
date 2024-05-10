@@ -9,6 +9,10 @@ export default createRouter({
       component: Home,
     },
     {
+      path: '/login',
+      component: () => import('@/views/login/Login.vue')
+    },
+    {
       path: '/company/companyList',
       component: () => import('@/views/company/CompanyList.vue')
     },

@@ -184,6 +184,11 @@ export default {
     },
     /* company 등록 */
     async newCompany() {
+      if(validUtil.isNull(this.company.compName)) {
+        alert('업체명을 입력해주세요.');
+        return false;
+      }
+
       if(!confirm("등록 하시겠습니까?")) return false;
 
       await companyApi.newCompany(this.company);
@@ -200,6 +205,11 @@ export default {
     },
     /* company_manager 추가 */
     async addManager() {
+      if(validUtil.isNull(this.companyManager.compMngerName)) {
+        alert('담당자 명을 입력해주세요.');
+        return false;
+      }
+
       if(!confirm("등록 하시겠습니까?")) return false;
 
       this.companyManager.compId = this.company.compId;
@@ -239,7 +249,7 @@ export default {
     closeManagerModal() {
       this.companyManager = {};
       this.managerModal = false;
-    }
+    },
   }
 }
 </script>

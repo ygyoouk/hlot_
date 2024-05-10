@@ -7,12 +7,6 @@ const store = createStore({
       key : '',
       mode : '',
     },
-    user: {
-      isLogin: false,
-      userId: '',
-      userNm: '관리자',
-      token: 'abcd'
-    }
   },
 
   getters: {
@@ -24,9 +18,6 @@ const store = createStore({
       return state.params;
     },
 
-    getUser(state){
-      return state.user;
-    }
   },
 
   mutations: {
@@ -36,9 +27,6 @@ const store = createStore({
       state.isOpenModal = !state.isOpenModal;
     },
 
-    setUser(state, params = {}) {
-      state.user = params;
-    },
   }
 })
 

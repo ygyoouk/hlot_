@@ -16,8 +16,18 @@
         <v-btn class="header-btn_mt"
           variant="outlined"
           color="white"
-          @click="search"
+          v-if="isLogin"
+          @click="this.$router.push('/login')"
         >로그인</v-btn>
+      </v-responsive>
+
+      <v-responsive max-width="130">
+        <v-btn class="header-btn_mt"
+               variant="outlined"
+               color="white"
+               v-if="!isLogin"
+               @click="user.logout()"
+        >로그아웃</v-btn>
       </v-responsive>
 
     </v-container>
@@ -25,10 +35,23 @@
 </template>
 
 <script>
+import store from "@/store/store";
+import user from "@/api/user";
+import validUtil from "@/util/validUtil";
+
 export default {
   name: 'Header',
+  computed: {
+    user() {
+      return user
+    },
+    store() {
+      return store
+    }
+  },
   data(){
     return{
+      isLogin: validUtil.isNull(user.getUserStorage("isLogin")),
       links: [
         { name: 'HOME',      path: '/' },
         { name: '업체관리',    path: '/company/companyList' },
@@ -39,5 +62,8 @@ export default {
 
     }
   },
+  methods: {
+
+  }
 }
 </script>

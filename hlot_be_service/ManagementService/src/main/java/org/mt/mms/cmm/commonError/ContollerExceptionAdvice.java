@@ -1,10 +1,14 @@
 package org.mt.mms.cmm.commonError;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
+import org.apache.coyote.Response;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.mt.mms.cmm.dto.Result;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -20,5 +24,11 @@ public class ContollerExceptionAdvice {
                 .body(Result.resError("처리에 실패하였습니다."));
     }
 
+    @ExceptionHandler
+    public ResponseEntity<Result> handleException(BadCredentialsException e) {
+        log.info("BadCredentialsException");
 
+        return ResponseEntity.ok()
+                .body(Result.resError("아이디 혹은 패스워드를 확인해주세요."));
+    }
 }

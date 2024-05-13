@@ -165,7 +165,6 @@ export default {
         compCeoNm: '',       // 업체대표명
         compTel: '',         // 업체번호
         compAddr: '',         // 업체주소
-        registUserName: store.getters.getUser.userNm, // 등록자
 
         companyManagers: [] // 업체담당자
       },
@@ -173,7 +172,6 @@ export default {
       companyManager: {   // 업체담당자
         compMngerName: '', // 업체담당자명
         compMngerTel: '',  // 업체담당자번호
-        registUserName: store.getters.getUser.userNm, // 등록자
       }
     }
   },

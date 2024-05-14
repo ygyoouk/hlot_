@@ -2,15 +2,21 @@ package org.mt.mms.cmm.service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.mt.mms.cmm.mapper.CommonMapper;
 import org.mt.mms.cmm.service.AttachmentService;
 import org.mt.mms.cmm.vo.AttachmentVO;
+import org.mt.mms.contr.vo.ContrVO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -75,6 +81,50 @@ public class AttachmentServiceImpl implements AttachmentService{
             }
         }
         return selectAttachmentInfo(fileId);
+    }
+
+    @Override
+    public ContrVO pdfUpload(MultipartFile file) {
+
+        if(file != null){
+            log.info("PDFFILE : {}", file.getOriginalFilename());
+
+
+           try {
+               // PDF 파일을 로드합니다.
+               PDDocument document = Loader.loadPDF(file.getBytes());
+
+               log.info("document : {}", document);
+
+               // PDFTextStripper 클래스를 사용하여 텍스트를 추출합니다.
+               PDFTextStripper pdfStripper = new PDFTextStripper();
+
+               // UTF-8로 인코딩하여 텍스트를 추출합니다.
+               pdfStripper.setAddMoreFormatting(true);
+               pdfStripper.setStartPage(1); // 시작 페이지 설정
+               pdfStripper.setEndPage(1); // 끝 페이지 설정
+               String text = pdfStripper.getText(document);
+
+               System.out.print(text);
+
+               // 추출된 텍스트를 출력합니다.
+               System.out.println("Extracted text:");
+               byte[] tArr = text.getBytes(StandardCharsets.UTF_8);
+               String pdfText = new String(tArr, StandardCharsets.UTF_8);
+
+
+//               System.out.print(new String(tArr, StandardCharsets.UTF_8));
+
+
+               // PDF 문서를 닫습니다.
+               document.close();
+           }catch (IOException e){
+               e.printStackTrace();
+           }
+        }
+
+
+        return null;
     }
 
 

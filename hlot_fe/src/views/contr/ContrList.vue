@@ -96,8 +96,7 @@ export default {
      async getContrs(){ // 계약 리스트 조회  
      
       this.contrs = await contrApi.contrs();
-
-      console.log(JSON.stringify(this.contrs));
+      
     },
 
     popUpOpen(event,{item}){

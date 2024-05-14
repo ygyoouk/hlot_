@@ -143,7 +143,6 @@ export default {
 
       key:store.getters.getParams.key,
 
-
       topContr : {
         topContrId : '',
         topContrNm : '',  // 원계약명
@@ -175,7 +174,6 @@ export default {
         const formData = new FormData();
         formData.append('file' ,this.image);
 
-
         this.topContr.contrStDate = utils.saveDate(this.topContr.contrStDate);
         this.topContr.contrEndDate = utils.saveDate(this.topContr.contrEndDate);
         this.topContr.topContrDate = utils.saveDate(this.topContr.topContrDate);
@@ -186,7 +184,7 @@ export default {
         formData.append('data' ,blob);
 
         await projectApi.newProject(formData);
-        
+
         this.close();
       },
 
@@ -194,12 +192,10 @@ export default {
       async getProject(){
         this.topContr = await projectApi.project(this.key);
 
-        console.log(JSON.stringify(this.topContr));
         this.topContr.contrStDate = utils.formatDate(this.topContr.contrStDate); // 원계약시작일자
         this.topContr.contrEndDate = utils.formatDate(this.topContr.contrEndDate); // 원계약종료일자
         this.topContr.topContrDate = utils.formatDate(this.topContr.topContrDate);  // 원계약일자
         this.topContr.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한
-
       },
 
 
@@ -209,7 +205,6 @@ export default {
       },
 
       selectFile(file){
-        console.log(file.target.files[0]);
         this.image = file.target.files[0];
       }
 

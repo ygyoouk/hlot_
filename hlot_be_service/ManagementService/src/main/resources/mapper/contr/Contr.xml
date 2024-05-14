@@ -4,22 +4,22 @@
 
     <select id="all" resultType="org.mt.mms.contr.vo.ContrVO">
         SELECT
-            TC.TOP_CONTR_ID ,
-            TC.TOP_CONTR_NM ,
-            C.CONTR_ID ,
-            C.CONTR_NM ,
-            CM.COMP_ID ,
-            CM.COMP_NAME ,
-            FORMAT(C.CONTR_AMOUNT,0) AS CONTR_AMOUNT ,
-
-            C.PAYMENT_TERM ,
-            C.CONTR_ST_DATE ,
-            C.CONTR_END_DATE
+            CONTR_ID,
+            CONTR_NM,
+            CONTR_AMOUNT,
+            PAYMENT_TERM,
+            CONCAT(SUBSTRING(SPECIAL_NOTE, 1, 50),'...') AS SPECIAL_NOTE,
+            CONTR_ST_DATE,
+            CONTR_END_DATE,
+            REGIST_USER_NAME,
+            REGIST_DATE,
+            DEL_YN,
+            CONTR_FILE_ID,
+            ESTIMATE_ID
         FROM
-            TOP_CONTR TC
-                INNER JOIN CONTR C ON TC.TOP_CONTR_ID  = C.TOP_CONTR_ID
-                INNER JOIN COMP CM ON CM.COMP_ID  = C.COMP_ID
-        WHERE C.DEL_YN = 'N'
+            CONTR
+        WHERE DEL_YN = 'N'
+        ORDER BY REGIST_DATE DESC
     </select>
 
 </mapper>

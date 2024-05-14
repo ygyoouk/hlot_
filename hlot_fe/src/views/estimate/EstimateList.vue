@@ -47,10 +47,11 @@
   ];
 
   const headers = [
-    { title: '견적 번호', key:'estimateNumber' },
-    { title: '고객명', key:'customerName'},
-    { title: '생성 날짜', key:'dateCreated'},
-    { title: '총액',  key:'totalAmount'},
+    { title: '원계약', key:'estimateNumber' },
+    { title: '업체', key:'customerName'},
+    { title: '견적구분', key:'dateCreated'},
+    { title: '확정여부',  key:'totalAmount'},
+    { title: '계약여부',  key:'totalAmount'},
   ];
 </script>
 

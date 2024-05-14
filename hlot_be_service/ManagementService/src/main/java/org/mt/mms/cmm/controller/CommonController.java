@@ -32,6 +32,8 @@ public class CommonController {
     @PostMapping(value = "/upload" ,consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Result> upload(@RequestPart(value = "file", required = false) MultipartFile file) throws Exception{
 
+        log.info("file-info : {}", file.getOriginalFilename());
+
         return ResponseEntity.ok()
                 .body(Result.resSuccess(attachmentService.upload(file)));
     }
@@ -67,6 +69,18 @@ public class CommonController {
                 .header("Content-type", "application/octet-stream")
                 .header("Content-disposition", "attachment; filename=\"" + URLEncoder.encode(uploadFileName, "utf-8") + "\"")
                 .body(resource);
+    }
+
+
+    @PostMapping(value = "/pdfUpload" ,consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Result> pdfUpload(@RequestPart(value = "file", required = false) MultipartFile file) throws Exception{
+
+        log.info("PDF-FILE-INF : {}", file.getOriginalFilename());
+
+
+
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(attachmentService.pdfUpload(file)));
     }
 
 }

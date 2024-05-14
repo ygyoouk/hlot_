@@ -15,6 +15,7 @@ public class CompanyVO {
 
     private String compId;          // 업체ID
     private String compName;        // 업체명
+    private String compDiv;         // 업체구분
     private String compTel;         // 업체번호
     private String compCeoNm;       // 업체대표명
     private String compAddr;        // 업체주소

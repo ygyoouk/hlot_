@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mt.mms.estimate.mapper.EstimateMapper">
+
+    <select id="selectEstimates" resultType="org.mt.mms.estimate.vo.EstimateExVO">
+        SELECT /* org.mt.mms.estimate.mapper.EstimateMapper.selectEstimates : ESTIMATE 목록조회 */
+            E.ESTIMATE_ID
+             , E.TOP_CONTR_ID
+             , E.COMP_ID
+             , E.ORDER_NO
+             , E.CONFIRM_YN
+             , E.CONTR_YN
+             , E.REGIST_DATE
+             , E.REGIST_USER_NAME
+
+             , TC.TOP_CONTR_NM
+             , C.COMP_NM
+        FROM ESTIMATE E
+            INNER JOIN TOP_CONTR TC ON TC.TOP_CONTR_ID = E.TOP_CONTR_ID
+            INNER JOIN COMP C ON C.COMP_ID = E.COMP_ID
+        WHERE E.DEL_YN = 'N'
+        ORDER BY E.REGIST_DATE DESC
+    </select>
+
+
+</mapper>

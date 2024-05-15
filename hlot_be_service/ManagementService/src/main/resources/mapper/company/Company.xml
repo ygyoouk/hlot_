@@ -19,7 +19,7 @@
     <select id="selectCompanys" resultType="org.mt.mms.company.vo.CompanyVO">
         SELECT /* org.mt.mms.company.mapper.CompanyMapper.selectCompanys : COMP 목록조회 */
             COMP_ID
-            , COMP_NM
+            , COMP_NAME
             , COMP_DIV
             , COMP_CEO_NM
             , COMP_TEL

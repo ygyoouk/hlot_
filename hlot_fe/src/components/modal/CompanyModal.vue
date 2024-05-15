@@ -10,10 +10,18 @@
         <v-row>
           <v-col>
             <v-text-field
-              v-model="company.compName"
+              v-model="company.compNm"
               label="업체명"
               :readonly="mode === MODAL_MODE.DETAIL"
             />
+          </v-col>
+          <v-col>
+            <v-select
+              label="업체구분"
+              :items="['업체', '수요기관', '발주처']"
+              v-model="company.compDiv"
+              :readonly="mode === MODAL_MODE.DETAIL"
+            ></v-select>
           </v-col>
         </v-row>
         <v-row>
@@ -52,7 +60,7 @@
           </v-col>
           <v-col style="text-align: right">
             <v-btn
-              v-if="mode !== MODAL_MODE.DETAIL"
+              v-if="mode !== MODAL_MODE.DETAIL && !validUtil.isNull(this.key)"
               @click="openManagerModal()"
               color="green">담당자 추가</v-btn>
           </v-col>
@@ -69,7 +77,7 @@
               </thead>
               <tbody>
                   <tr v-for="manager in company.companyManagers" @click="openManagerModal(manager)">
-                    <td>{{ manager.compMngerName }}</td>
+                    <td>{{ manager.compMngerNm }}</td>
                     <td>{{ manager.compMngerTel }}</td>
                     <td>{{ manager.registDate }}</td>
                   </tr>
@@ -112,7 +120,7 @@
       <v-row>
         <v-col>
           <v-text-field
-            v-model="companyManager.compMngerName"
+            v-model="companyManager.compMngerNm"
             label="업체담당자"
           />
         </v-col>
@@ -141,6 +149,7 @@
 <script setup>
 import ModalLayout from "@/layouts/ModalLayout.vue";
 import {MODAL_MODE} from "@/util/config";
+import validUtil from "@/util/validUtil";
 </script>
 
 <script>
@@ -157,21 +166,24 @@ export default {
       managerModal: false,
 
       mode: store.getters.getParams.mode,
-      key:store.getters.getParams.key,
+      key: store.getters.getParams.key,
 
       company: {  // 업체
         compId: '',          // 업체ID
-        compName: '',        // 업체명
+        compNm: '',        // 업체명
         compCeoNm: '',       // 업체대표명
         compTel: '',         // 업체번호
         compAddr: '',         // 업체주소
+        compDiv: '',         // 업체구분
 
         companyManagers: [] // 업체담당자
       },
 
       companyManager: {   // 업체담당자
-        compMngerName: '', // 업체담당자명
+        compMngerNm: '', // 업체담당자명
         compMngerTel: '',  // 업체담당자번호
+        compMngerDiv: '', // 업체담당자구분
+        registUserName: '',
       }
     }
   },
@@ -182,7 +194,7 @@ export default {
     },
     /* company 등록 */
     async newCompany() {
-      if(validUtil.isNull(this.company.compName)) {
+      if(validUtil.isNull(this.company.compNm)) {
         alert('업체명을 입력해주세요.');
         return false;
       }
@@ -203,7 +215,7 @@ export default {
     },
     /* company_manager 추가 */
     async addManager() {
-      if(validUtil.isNull(this.companyManager.compMngerName)) {
+      if(validUtil.isNull(this.companyManager.compMngerNm)) {
         alert('담당자 명을 입력해주세요.');
         return false;
       }
@@ -211,7 +223,6 @@ export default {
       if(!confirm("등록 하시겠습니까?")) return false;
 
       this.companyManager.compId = this.company.compId;
-      this.companyManager.registUserName = store.getters.getUser.userNm; // 등록자
 
       if(validUtil.isNull(this.key)){
         this.company.companyManagers.push(this.companyManager);
@@ -227,7 +238,7 @@ export default {
 
       if(!this.companyManager.compMngerId) {
         this.company.companyManagers.forEach((v, i)=> {
-          if(v.compMngerName === this.companyManager.compMngerName
+          if(v.compMngerNm === this.companyManager.compMngerNm
             && v.compMngerTel === this.companyManager.compMngerTel) {
             this.company.companyManagers.splice(i, 1);
           }

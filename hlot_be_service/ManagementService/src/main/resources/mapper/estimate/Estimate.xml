@@ -22,5 +22,23 @@
         ORDER BY E.REGIST_DATE DESC
     </select>
 
+    <select id="selectEstimate" resultType="org.mt.mms.estimate.vo.EstimateExVO" parameterType="string">
+        SELECT /* org.mt.mms.estimate.mapper.EstimateMapper.selectEstimate : ESTIMATE 상세조회 */
+            ESTIMATE_ID
+             , TOP_CONTR_ID
+             , COMP_ID
+             , ORDER_NO
+             , ESTIMATE_DIV
+             , CONFIRM_YN
+             , CONTR_YN
+             , ESTIMATE_FILE_ID
+             , REGIST_DATE
+             , DEL_YN
+             , REGIST_USER_NAME
+        FROM ESTIMATE
+        WHERE ESTIMATE_ID = #{id}
+            AND DEL_YN = 'N'
+    </select>
+
 
 </mapper>

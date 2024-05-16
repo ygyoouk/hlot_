@@ -18,4 +18,9 @@ public class EstimateServiceImpl implements EstimateService {
     public List<EstimateExVO> all() throws Exception {
         return estimateMapper.selectEstimates();
     }
+
+    @Override
+    public EstimateExVO one(String id) throws Exception {
+        return estimateMapper.selectEstimate(id);
+    }
 }

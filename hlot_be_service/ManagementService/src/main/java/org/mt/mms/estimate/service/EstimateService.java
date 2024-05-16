@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 public interface EstimateService {
 
-
     List<EstimateExVO> all() throws Exception;
+
+    EstimateExVO one(String id) throws Exception;
 }

@@ -9,4 +9,7 @@ import java.util.List;
 public interface EstimateMapper {
 
     List<EstimateExVO> selectEstimates() throws Exception;
+
+    EstimateExVO selectEstimate(String id) throws Exception;
+
 }

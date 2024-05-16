@@ -7,6 +7,7 @@ import org.mt.mms.estimate.service.EstimateService;
 import org.mt.mms.estimate.vo.EstimateExVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +26,11 @@ public class EstimateController {
     public ResponseEntity<Result> all() throws Exception{
         return ResponseEntity.ok()
                 .body(Result.resSuccess(estimateService.all()));
+    }
+
+    @GetMapping("/estimate/{id}")
+    public ResponseEntity<Result> one(@PathVariable String id) throws Exception {
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(estimateService.one(id)));
     }
 }

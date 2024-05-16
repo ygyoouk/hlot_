@@ -9,7 +9,6 @@ export default {
   /* TOP_CONTR ID, 명 조회 */
   topContrNms(){
     return axios.get(REQUEST_URL + '/common/topContrNms').then(res => {
-      console.log(res);
       return res.data.data;
     });
   },
@@ -17,7 +16,6 @@ export default {
   /* COMP ID, 명 조회 */
   compNms(){
     return axios.get(REQUEST_URL + '/common/compNms').then(res => {
-      console.log(res);
       return res.data.data;
     });
   },

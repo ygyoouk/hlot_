@@ -80,7 +80,7 @@ export default {
     },
 
     openDetail: (item, row) => {
-      store.commit("toggleModal");
+      store.commit("toggleModal", {key: row.item.estimateId , mode:MODAL_MODE.DETAIL});
     },
 
     close() {

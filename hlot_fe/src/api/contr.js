@@ -23,7 +23,7 @@ export default {
   saveContrFile(formData){
     
     return axios.post(REQUEST_URL + '/common/pdfUpload',formData,{header:{'Content-Type' : 'multipart/form-data'}}).then(res=>{
-      return res;
+      return res.data.data;
     });
   }
 

@@ -46,7 +46,7 @@
               <v-text-field
               label="계약명"
               :readonly="mode === 'D'"
-              v-model="contr.topCOntrId">
+              v-model="contr.contrNm">
               </v-text-field>
             </v-col>
              <v-col>
@@ -66,13 +66,7 @@
               </v-text-field>
             </v-col>
              
-            <v-col>
-              <v-text-field
-              label="계약금액"
-              :readonly="mode === 'D'"
-              v-model="contr.paymentTerm">
-              </v-text-field>
-            </v-col>
+            
           </v-row>
 
           <v-row>
@@ -206,9 +200,9 @@ export default {
       },
 
       // 계약 단건조회
-      async contr(){
-        this.topContr = await projectApi.project(this.key);
-      },
+      // async contr(){
+      //   this.topContr = await projectApi.project(this.key);
+      // },
 
       
       /**
@@ -243,9 +237,18 @@ export default {
         const formData = new FormData();
         formData.append('file' ,this.file);
 
-        const res= await contrApi.saveContrFile(formData);
+        const data = await contrApi.saveContrFile(formData);
+        
+        console.log(data);
 
-        console.log(res);
+        this.contr.contrNm     = data.contrNm;
+        this.contr.contrAmount = data.contrAmount;
+        this.contr.paymentTerm = data.paymentTerm;
+        this.contr.specialNote = data.specialNote;
+        this.contr.contrStDate = data.contrStDate;
+        this.contr.contrEndDate = data.contrEndDate;
+        
+        
       }
 
 

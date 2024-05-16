@@ -48,6 +48,8 @@ const headers = [
   {title: '견적 순번', key: 'orderNo'},
   {title: '확정 여부', key: 'confirmYn'},
   {title: '계약 여부', key: 'contrYn'},
+  {title: '등록자', key: 'registUserName'},
+  {title: '등록일자', key: 'registDate'},
 ];
 </script>
 

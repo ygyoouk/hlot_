@@ -1,5 +1,8 @@
 <template>
-  <EstimateModal v-if="store.getters.isOpenModal" />
+  <EstimateModal
+    v-if="store.getters.isOpenModal"
+    @update="getEstimates"
+  />
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
@@ -15,20 +18,16 @@
     </v-card-title>
 
     <div class="table-btn-list">
-      <v-btn color="#5865f2" @click="pushRegPop">등록</v-btn>
+      <v-btn color="#5865f2" @click="openReg">등록</v-btn>
     </div>
 
     <v-data-table
+      @click:row="openDetail"
       :headers="headers"
       :items="estimates"
-      item-value="estimateNumber"
-      v-model="selected"
       :search="search"
-      select-strategy="page"
-      :items-per-page-options="itemsPerPageOptions"
+      :items-per-page-options="ITEMS_PER_PAGE_OPTIONS"
       class="elevation-1 table-list_mt"
-      show-select
-      @click:row="popUpOpen"
     >
 
 
@@ -39,60 +38,50 @@
 </template>
 
 <script setup>
-  const itemsPerPageOptions = [
-    {value: 10, title: '10'},
-    {value: 25, title: '25'},
-    {value: 50, title: '50'},
-    {value: 100, title: '100'},
-  ];
+import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
+import EstimateModal from "@/components/modal/EstimateModal.vue";
 
-  const headers = [
-    { title: '견적 번호', key:'estimateNumber' },
-    { title: '고객명', key:'customerName'},
-    { title: '생성 날짜', key:'dateCreated'},
-    { title: '총액',  key:'totalAmount'},
-  ];
+const headers = [
+  {title: '원계약 명', key: 'topContrNm'},
+  {title: '업체 명', key: 'compNm'},
+  {title: '견적 구분', key: 'estimateDiv'},
+  {title: '견적 순번', key: 'orderNo'},
+  {title: '확정 여부', key: 'confirmYn'},
+  {title: '계약 여부', key: 'contrYn'},
+];
 </script>
 
 <script>
-
-import EstimateModal from "@/components/modal/EstimateModal.vue";
 import store from "@/store/store";
+import estimateApi from '@/api/estimate.js'
+import {MODAL_MODE} from "@/util/config";
 
 export default {
-  mounted() {
+  beforeMount() {
+    this.getEstimates();
   },
-  computed: {
-      store() {
-        return store
-      }
-    },
   data() {
     return {
       search: '',
-      estimates: [
-        // 샘플 데이터
-        { estimateNumber: '001', customerName: '홍길동', dateCreated: '2024-04-01', totalAmount: '₩1,000,000' },
-        { estimateNumber: '002', customerName: '김철수', dateCreated: '2024-04-02', totalAmount: '₩1,500,000' },
-      ],
-      selected : [],
-      popUpValue : false,
+      estimates: [],
     };
   },
   methods: {
-    saveItem() {
-      // 등록 로직
-    },
-    popUpOpen(event,{item}){
-      this.$store.commit("toggleModal");
-
+    /* ESTIMATE 목록 조회 */
+    async getEstimates() {
+      this.estimates = await estimateApi.estimates();
     },
 
-    pushRegPop: () => {
+    /* 등록화면 */
+    openReg() {
+      store.commit('toggleModal', {key: '', mode: MODAL_MODE.REG});
+    },
+
+    openDetail: (item, row) => {
       store.commit("toggleModal");
     },
 
-    close(){
+    close() {
       this.popUpValue = false;
     }
   }

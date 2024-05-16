@@ -5,7 +5,7 @@
     <select id="selectCompany" resultType="org.mt.mms.company.vo.CompanyVO" parameterType="string">
         SELECT /* org.mt.mms.company.mapper.CompanyMapper.getCompany : COMP 상세조회 */
             COMP_ID
-             , COMP_NAME
+             , COMP_NM
              , COMP_DIV
              , COMP_CEO_NM
              , COMP_TEL
@@ -19,13 +19,13 @@
     <select id="selectCompanys" resultType="org.mt.mms.company.vo.CompanyVO">
         SELECT /* org.mt.mms.company.mapper.CompanyMapper.selectCompanys : COMP 목록조회 */
             COMP_ID
-            , COMP_NM
-            , COMP_DIV
-            , COMP_CEO_NM
-            , COMP_TEL
-            , COMP_ADDR
-            , REGIST_USER_NAME
-            , REGIST_DATE
+             , COMP_NM
+             , COMP_DIV
+             , COMP_CEO_NM
+             , COMP_TEL
+             , COMP_ADDR
+             , REGIST_USER_NAME
+             , REGIST_DATE
         FROM COMP
         WHERE DEL_YN = 'N'
         ORDER BY REGIST_DATE DESC
@@ -35,33 +35,33 @@
     <insert id="insertCompany" parameterType="org.mt.mms.company.vo.CompanyVO">
         INSERT INTO COMP /* org.mt.mms.company.mapper.CompanyMapper.insertCompany : COMP 저장 */
         (
-             COMP_ID
-            , COMP_NAME
-            , COMP_DIV
-            , COMP_TEL
-            , COMP_CEO_NM
-            , COMP_ADDR
-            , REGIST_USER_NAME
+          COMP_ID
+        , COMP_NM
+        , COMP_DIV
+        , COMP_TEL
+        , COMP_CEO_NM
+        , COMP_ADDR
+        , REGIST_USER_NAME
         )
         VALUES(
-            CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CMP', NEXTVAL(HLOT_SEQ)),
-            #{compName},
-            #{compDiv},
-            #{compTel},
-            #{compCeoNm},
-            #{compAddr},
-            #{registUserName}
-        )
+                  CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CMP', NEXTVAL(HLOT_SEQ)),
+                  #{compNm},
+                  #{compDiv},
+                  #{compTel},
+                  #{compCeoNm},
+                  #{compAddr},
+                  #{registUserName}
+              )
     </insert>
 
     <update id="updateCompany" parameterType="org.mt.mms.company.vo.CompanyVO">
         UPDATE COMP /* org.mt.mms.company.mapper.CompanyMapper.updateCompany : COMP 수정 */
         SET
-            COMP_NAME = #{compName}
-            , COMP_DIV = #{compDiv}
-            , COMP_TEL = #{compTel}
-            , COMP_CEO_NM = #{compCeoNm}
-            , COMP_ADDR = #{compAddr}
+            COMP_NM = #{compNm}
+          , COMP_DIV = #{compDiv}
+          , COMP_TEL = #{compTel}
+          , COMP_CEO_NM = #{compCeoNm}
+          , COMP_ADDR = #{compAddr}
         WHERE COMP_ID = #{compId}
     </update>
 
@@ -76,42 +76,42 @@
         SELECT /* org.mt.mms.company.mapper.CompanyMapper.selectCompanyManagers : COMP_MNGER 목록조회 */
             COMP_MNGER_ID
              , COMP_ID
-             , COMP_MNGER_NAME
+             , COMP_MNGER_NM
              , COMP_MNGER_TEL
              , REGIST_USER_NAME
              , REGIST_DATE
              , DEL_YN
         FROM COMP_MNGER
         WHERE COMP_ID = #{compId}
-            AND DEL_YN = 'N'
+          AND DEL_YN = 'N'
         ORDER BY REGIST_DATE DESC
     </select>
 
     <insert id="insertCompanyManager" parameterType="org.mt.mms.company.vo.CompanyManagerVO">
         INSERT INTO COMP_MNGER /* org.mt.mms.company.mapper.CompanyMapper.insertCompanyManager : COMP_MNGER 저장 */
         (
-        COMP_MNGER_ID
+          COMP_MNGER_ID
         , COMP_ID
-        , COMP_MNGER_NAME
+        , COMP_MNGER_NM
         , COMP_MNGER_TEL
         , REGIST_USER_NAME
         )
         VALUES(
-            CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CPM', NEXTVAL(HLOT_SEQ))
-            , #{compId}
-            , #{compMngerName}
-            , #{compMngerTel}
-            , #{registUserName}
-        )
+                CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CPM', NEXTVAL(HLOT_SEQ))
+              , #{compId}
+              , #{compMngerNm}
+              , #{compMngerTel}
+              , #{registUserName}
+              )
     </insert>
 
     <update id="updateCompanyManager" parameterType="org.mt.mms.company.vo.CompanyManagerVO">
         UPDATE COMP_MNGER /* org.mt.mms.company.mapper.CompanyMapper.updateCompanyManager : COMP_MNGER 수정 */
         SET
-            COMP_MNGER_NAME = #{compMngerName}
-            , COMP_MNGER_TEL = #{compMngerTel}
+            COMP_MNGER_NM = #{compMngerNm}
+          , COMP_MNGER_TEL = #{compMngerTel}
         WHERE COMP_ID = #{compId}
-            AND COMP_MNGER_ID = #{compMngerId}
+          AND COMP_MNGER_ID = #{compMngerId}
     </update>
 
     <update id="deleteCompanyManager" parameterType="string">

@@ -49,6 +49,7 @@ public class CompanyController {
     /* company_manager 등록 */
     @PostMapping("/company/companyManager")
     public ResponseEntity<Result> newCompanyManager(@RequestBody CompanyManagerVO companyManagerVO) throws Exception {
+        log.info(companyManagerVO.toString());
         return ResponseEntity.ok()
                 .body(Result.resSuccess(companyService.newCompanyManager(companyManagerVO), true));
     }

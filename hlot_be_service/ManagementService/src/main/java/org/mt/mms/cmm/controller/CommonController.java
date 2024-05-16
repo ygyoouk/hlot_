@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mt.mms.cmm.dto.Result;
 import org.mt.mms.cmm.service.AttachmentService;
+import org.mt.mms.cmm.service.CommonService;
 import org.mt.mms.cmm.vo.AttachmentVO;
 import org.mt.mms.topContr.vo.TopContrVO;
 import org.springframework.core.io.ByteArrayResource;
@@ -28,6 +29,9 @@ import java.nio.file.Paths;
 public class CommonController {
 
     private final AttachmentService attachmentService;
+
+    private final CommonService commonService;
+
 
     @PostMapping(value = "/upload" ,consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Result> upload(@RequestPart(value = "file", required = false) MultipartFile file) throws Exception{
@@ -83,4 +87,17 @@ public class CommonController {
                 .body(Result.resSuccess(attachmentService.pdfUpload(file)));
     }
 
+    /* 원계약 ID,명 전체조회 */
+    @GetMapping(value="/topContrNms")
+    public ResponseEntity<Result> topContrNms() throws Exception {
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(commonService.topContrNms()));
+    }
+
+    /* 업체 ID,명 전체조회*/
+    @GetMapping(value="/compNms")
+    public ResponseEntity<Result> compNms() throws Exception {
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(commonService.compNms()));
+    }
 }

@@ -40,4 +40,21 @@
             FILE_ID = #{fileId}
     </select>
 
+
+    <select id="selectTopContrNms" resultType="org.mt.mms.topContr.vo.TopContrVO">
+        SELECT /* org.mt.mms.cmm.mapper.CommonMapper.selectTopContrNms : 원계약ID, 명 조회 */
+            TOP_CONTR_ID, TOP_CONTR_NM
+        FROM TOP_CONTR
+        WHERE DEL_YN = 'N'
+        ORDER BY REGIST_DATE DESC
+    </select>
+
+    <select id="selectCompNms" resultType="org.mt.mms.company.vo.CompanyVO">
+        SELECT /* org.mt.mms.cmm.mapper.CommonMapper.selectCompNms : 업체ID, 명 조회 */
+            COMP_ID, COMP_NM
+        FROM COMP
+        WHERE DEL_YN = 'N'
+        ORDER BY REGIST_DATE DESC
+    </select>
+
 </mapper>

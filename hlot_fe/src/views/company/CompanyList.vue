@@ -41,7 +41,7 @@ import store from "@/store/store";
 import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
 
 const headers = [
-  { title: '업체 명', key:'compName' },
+  { title: '업체 명', key:'compNm' },
   { title: '업체 구분', key:'compDiv'},
   { title: '업체 대표', key:'compCeoNm'},
   { title: '업체 전화번호', key:'compTel'},

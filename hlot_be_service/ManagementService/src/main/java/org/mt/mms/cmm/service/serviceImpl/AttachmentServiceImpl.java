@@ -143,9 +143,13 @@ public class AttachmentServiceImpl implements AttachmentService{
                     System.out.println(found);
                 }
 
-               String contrDatePattern = "계약기간([^\n]*)";
+               String contrDatePattern = "계약기간([^(\n]*)";
                p = Pattern.compile(contrDatePattern);
                m = p.matcher(pdfText);
+
+
+               SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMd");
+               SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyyMMdd");
 
                String contrDate;
                String contrStDate = null;
@@ -162,10 +166,18 @@ public class AttachmentServiceImpl implements AttachmentService{
                    contrStDate = date[0].replaceAll("[^0-9]", "");
                    contrEndDate = date[1].replaceAll("[^0-9]", "");
 
-                   String month = contrStDate.substring(4);
-                   if(month.length() <4){
-                        System.out.println(String.format("%04d",month));
+                   // 날짜 형식이  yyyymd일 경우 yyyymmdd 형식으로 변환
+                   if(contrStDate.length()<8 || contrEndDate.length()<8){
+                       try{
+                           Date date1 = dateFormat.parse(contrStDate);
+                           Date date2 = dateFormat.parse(contrEndDate);
 
+                           contrStDate = dateFormat2.format(date1);
+                           contrEndDate = dateFormat2.format(date2);
+
+                       }catch(Exception e){
+                           e.printStackTrace();
+                       }
                    }
 
                }

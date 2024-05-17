@@ -25,7 +25,7 @@
               :items="topContr"
               item-title="topContrNm"
               item-value="topContrId"
-              :readonly="mode === 'D'"
+              :readonly="mode === 'R'"
               >
               </v-select>
             </v-col>
@@ -35,7 +35,7 @@
               :items="company"
               item-title="compName"
               item-value="compId"
-              :readonly="mode === 'D'"
+              :readonly="mode === 'R'"
               >
               </v-select>
             </v-col>
@@ -45,14 +45,14 @@
            <v-col>
               <v-text-field
               label="계약명"
-              :readonly="mode === 'D'"
+              :readonly="mode === 'R'"
               v-model="contr.contrNm">
               </v-text-field>
             </v-col>
              <v-col>
               <v-text-field
               label="계약금액"
-              :readonly="mode === 'D'"
+              :readonly="mode === 'R'"
               v-model="contr.contrAmount">
               </v-text-field>
             </v-col>
@@ -61,7 +61,7 @@
             <v-col>
               <v-text-field
               label="지불조건"
-              :readonly="mode === 'D'"
+              :readonly="mode === 'R'"
               v-model="contr.paymentTerm">
               </v-text-field>
             </v-col>
@@ -73,25 +73,28 @@
             <v-col>
               <label>계약일자</label> 
               <br/>
-              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="contr.contrStDate"/> ~  
-              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="contr.contrEndDate"/>
+              <input type="date" id="strDate" :readonly="mode === 'R'" v-model="contr.contrStDate"/> ~  
+              <input type="date" id="strDate" :readonly="mode === 'R'" v-model="contr.contrEndDate"/>
                
-              <v-textarea label="특이사항" variant="outlined" rows="10" v-model="contr.specialNote"></v-textarea>
+              <v-textarea label="특이사항" variant="outlined" rows="5" :readonly="mode === 'R'" v-model="contr.specialNote"></v-textarea>
             </v-col>
            
           </v-row>
           <v-row>
              <div class="modal-btn-list">
                 <v-btn
-                  v-if="this.mode == 'R'"
                   color="blue"
                   @click="saveContrFile"
-                >파일 저장</v-btn>
+                >자동입력</v-btn>
 
                 <v-btn
-                  v-if="this.mode == 'R'"
                   color="green"
-                  @click="newProject"
+                  @click="updateMode"
+                >수정</v-btn>
+
+                <v-btn
+                  color="green"
+                  @click="newContr"
                 >확정</v-btn>
             </div>
           </v-row>
@@ -116,7 +119,6 @@ import utils from "@/util/validUtil";
 import contrApi from '@/api/contr';
 import companyApi from '@/api/company';
 import topContrApi from '@/api/project';
-
 
 export default {
   name: "ProjectModal",
@@ -178,25 +180,28 @@ export default {
         store.commit("toggleModal");
       },
 
-      // 프로젝트 정보 등록
-      async newProject(){
+      /**
+       * 계약 정보 및 계약서 파일 저장
+      */
+      async newContr(){
 
         const formData = new FormData();
-        formData.append('file' ,this.image);
+        formData.append('file' ,this.file);
+
+        const amount = this.contr.contrAmount;
+
+        this.contr.contrAmount = amount.replace(",", "");
+        
+        console.log("this.contr.contrAmount ======>" + this.contr.contrAmount);
 
 
-        this.topContr.contrStDate = utils.saveDate(this.topContr.contrStDate);
-        this.topContr.contrEndDate = utils.saveDate(this.topContr.contrEndDate);
-        this.topContr.topContrDate = utils.saveDate(this.topContr.topContrDate);
-        this.topContr.deliveryDeadline = utils.saveDate(this.topContr.deliveryDeadline);
-
-        const blob = new Blob([JSON.stringify(this.topContr)],{type:'application/json'});
+        const blob = new Blob([JSON.stringify(this.contr)],{type:'application/json'});
 
         formData.append('data' ,blob);
 
-        await projectApi.newProject(formData);
+        //await projectApi.newProject(formData);
         
-        this.close();
+        //this.close();
       },
 
       // 계약 단건조회
@@ -239,19 +244,20 @@ export default {
 
         const data = await contrApi.saveContrFile(formData);
         
-        console.log(data);
-
-        this.contr.contrNm     = data.contrNm;
-        this.contr.contrAmount = data.contrAmount;
-        this.contr.paymentTerm = data.paymentTerm;
-        this.contr.specialNote = data.specialNote;
-        this.contr.contrStDate = data.contrStDate;
-        this.contr.contrEndDate = data.contrEndDate;
         
-        
+        if(data.contrNm == null){
+          alert("자동등록에 실패하였습니다.");
+          return false;
+        }else{
+          this.contr.contrNm     = data.contrNm;
+          this.contr.contrAmount = data.contrAmount;
+          this.contr.paymentTerm = data.paymentTerm;
+          this.contr.specialNote = data.specialNote;
+          this.contr.contrStDate = utils.formatDate(data.contrStDate);
+          this.contr.contrEndDate = utils.formatDate(data.contrEndDate);
+        }
+                
       }
-
-
     }
 }
 </script>

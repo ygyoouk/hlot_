@@ -23,4 +23,6 @@ public class ProdController {
         return ResponseEntity.ok()
                 .body(Result.resSuccess(prodService.all(id)));
     }
+
+
 }

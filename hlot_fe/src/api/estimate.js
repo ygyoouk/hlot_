@@ -21,11 +21,14 @@ export default {
     });
   },
 
-  /* PROD 목록조회 */
-  prods(id) {
-    return axios.get(REQUEST_URL + `/api/prods/${id}`).then(res => {
+  /* ESTIMATE 등록 */
+  newEstimate(data) {
+    const config = {
+      header: {'Content-Type': 'multipart/form-data'}
+    };
+    return axios.post(REQUEST_URL + `/api/estimate`, data, config).then(res => {
       return res.data.data;
-    });
-  },
+    })
+  }
 
 }

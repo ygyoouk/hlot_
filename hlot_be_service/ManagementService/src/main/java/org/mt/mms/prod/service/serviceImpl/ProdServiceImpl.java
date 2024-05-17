@@ -18,4 +18,9 @@ public class ProdServiceImpl implements ProdService {
     public List<ProdVO> all(String id) throws Exception {
         return prodMapper.selectProds(id);
     }
+
+    @Override
+    public int newProd(ProdVO prodVO) throws Exception {
+        return prodMapper.insertProd(prodVO);
+    }
 }

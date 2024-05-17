@@ -18,4 +18,6 @@ public interface CommonMapper {
     List<TopContrVO> selectTopContrNms() throws Exception;
 
     List<CompanyVO> selectCompNms() throws Exception;
+
+    String selectHlotSeq(HashMap<String, String> param) throws Exception;
 }

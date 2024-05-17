@@ -12,4 +12,6 @@ public interface CommonService {
     List<TopContrVO> topContrNms() throws Exception;
 
     List<CompanyVO> compNms() throws Exception;
+
+    String selectHlotSeq(String a, String b, String table) throws Exception;
 }

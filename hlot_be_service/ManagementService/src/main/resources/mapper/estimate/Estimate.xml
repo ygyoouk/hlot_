@@ -40,5 +40,35 @@
             AND DEL_YN = 'N'
     </select>
 
+    <insert id="insertEstimate" parameterType="org.mt.mms.estimate.vo.EstimateVO">
+        INSERT INTO ESTIMATE /* org.mt.mms.estimate.mapper.EstimateMapper.insertEstimate : ESTIMATE 등록 */
+        (
+         ESTIMATE_ID
+        , TOP_CONTR_ID
+        , COMP_ID
+        , ORDER_NO
+        , ESTIMATE_DIV
+        , CONFIRM_YN
+        , CONTR_YN
+        , ESTIMATE_FILE_ID
+        , REGIST_USER_NAME
+        )
+        VALUES
+        (
+          #{estimateId}
+        , #{topContrId}
+        , #{compId}
+        , (SELECT IFNULL(MAX(ORDER_NO), 0)+1
+           FROM ESTIMATE ALIAS_FOR_SUBQUERY
+           WHERE TOP_CONTR_ID=#{topContrId} AND COMP_ID=#{compId} AND ESTIMATE_DIV = #{estimateDiv}
+        )
+        , #{estimateDiv}
+        , 'N'
+        , 'N'
+        , #{estimateFileId}
+        , #{registUserName}
+        )
+    </insert>
+
 
 </mapper>

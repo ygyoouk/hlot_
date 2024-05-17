@@ -9,4 +9,7 @@ import java.util.List;
 public interface ProdService {
 
     List<ProdVO> all(String id) throws Exception;
+
+    int newProd(ProdVO prodVO) throws Exception;
+
 }

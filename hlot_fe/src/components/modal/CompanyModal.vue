@@ -251,7 +251,7 @@ export default {
     },
     /* company_manager modal 열기 */
     openManagerModal(manager = {}) {
-      this.companyManager = manager;
+      this.companyManager = {...manager};
       this.managerModal = true;
     },
     /* company_manager modal 닫기 */

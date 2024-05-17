@@ -43,6 +43,11 @@ public class CustomUserDetails extends UserVO implements UserDetails {
     }
 
     @Override
+    public String getUserName() {
+        return userName;
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
         return true;
     }

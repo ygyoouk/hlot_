@@ -3,6 +3,10 @@ package org.mt.mms.estimate.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.mt.mms.cmm.vo.AttachmentVO;
+import org.mt.mms.prod.vo.ProdVO;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,5 +25,7 @@ public class EstimateVO {
     private String delYn;               // 삭제여부
     private String registUserName;      // 등록자명
 
+    private List<ProdVO> prods; // 품목목록
+    private AttachmentVO attachmentVO; //첨부파일관련
 
 }

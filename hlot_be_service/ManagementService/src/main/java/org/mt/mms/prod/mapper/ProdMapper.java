@@ -9,4 +9,6 @@ import java.util.List;
 public interface ProdMapper {
 
     List<ProdVO> selectProds(String id) throws Exception;
+
+    int insertProd(ProdVO prodVO) throws Exception;
 }

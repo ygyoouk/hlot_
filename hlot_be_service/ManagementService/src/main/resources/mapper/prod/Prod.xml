@@ -18,4 +18,34 @@
         FROM PROD
         WHERE ESTIMATE_ID = #{id}
     </select>
+
+    <insert id="insertProd" parameterType="org.mt.mms.prod.vo.ProdVO">
+        INSERT INTO PROD /* org.mt.mms.prod.mapper.ProdMapper.insertProd : PROD 등록 */
+        (
+         ESTIMATE_ID
+        , ORDER_NO
+        , PROD_NM
+        , DETAIL_PROD_NM
+        , CLIENT_UNIT_PRICE
+        , PROV_PROD_PRICE
+        , DC_PER
+        , QUANTITY
+        , REGIST_USER_NAME
+        )
+        VALUES
+        (
+          #{estimateId}
+        , (SELECT IFNULL(MAX(ORDER_NO),0) +1
+           FROM PROD ALIAS_FOR_SUBQUERY
+           WHERE ESTIMATE_ID=#{estimateId}
+        )
+        , #{prodNm}
+        , #{detailProdNm}
+        , #{clientUnitPrice}
+        , #{provProdPrice}
+        , #{dcPer}
+        , #{quantity}
+        , #{registUserName}
+        )
+    </insert>
 </mapper>

@@ -32,14 +32,27 @@
               label="견적구분"
               :items="['A', 'B', 'C']"
               v-model="estimate.estimateDiv"
+              :readonly="mode === MODAL_MODE.DETAIL"
               ></v-select>
           </v-col>
         </v-row>
         <v-row>
-          <v-file-input label="견적서" @change="selectFile" ></v-file-input>
+          <v-col>
+            <br>
+          </v-col>
         </v-row>
         <v-row>
-          <v-col><hr><br></v-col>
+          <v-col v-if="mode === MODAL_MODE.REG">
+            <v-file-input label="견적서" @change="selectFile" :readonly="mode === MODAL_MODE.DETAIL"></v-file-input>
+          </v-col>
+          <v-col v-else>
+            <a :href="`${REQUEST_URL}/common/download/${this.estimate.attachmentVO.fileId}`">
+              {{ this.estimate.attachmentVO.orignFileName }}
+            </a>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col><br><hr><br></v-col>
         </v-row>
         <v-row>
           <v-col style="font-size: 20px">품목</v-col>
@@ -66,7 +79,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="prod in prods" @click="openProdModal(prod)">
+              <tr v-for="(prod, index) in prods" @click="openProdModal(prod, index)">
                 <td>{{ prod.orderNo }}</td>
                 <td>{{ prod.prodNm }}</td>
                 <td>{{ prod.detailProdNm }}</td>
@@ -78,6 +91,21 @@
               </tbody>
             </table>
           </v-col>
+        </v-row>
+        <v-row>
+          <div class="modal-btn-list">
+            <v-btn
+              v-if="mode !== MODAL_MODE.DETAIL"
+              color="green"
+              @click="newEstimate"
+            >저장</v-btn>
+            　
+            <v-btn
+              v-if="mode !== MODAL_MODE.DETAIL"
+              color="red"
+              @click="deleteEstimate"
+            >삭제</v-btn>
+          </div>
         </v-row>
       </v-container>
     </div>
@@ -138,11 +166,13 @@
         <v-btn
           color="green"
           @click="addProd"
+          v-if="mode !== MODAL_MODE.DETAIL"
         >저장</v-btn>
         　
         <v-btn
           color="red"
           @click="deleteProd"
+          v-if="mode !== MODAL_MODE.DETAIL"
         >삭제</v-btn>
       </div>
     </div>
@@ -153,6 +183,10 @@
 import ModalLayout from "@/layouts/ModalLayout.vue";
 import {MODAL_MODE} from "@/util/config";
 import validUtil from "@/util/validUtil";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
+const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
 </script>
 
 <script>
@@ -181,68 +215,107 @@ export default {
       mode: store.getters.getParams.mode,
       key: store.getters.getParams.key,
 
+      file: '',
       estimate: {
         topContrId: '',
         compId: '',
-        estimateDiv: ''
+        estimateDiv: '',
+
+        attachmentVO:{
+
+        }
       },
       prod: {},
       prods: [],
       prodModal: false,
+      prodIndex: 0,
 
       topContrNms: [],
       compNms: [],
 
-      file: '',
     }
   },
   methods : {
+    /* 원계약명 조회 */
     async getTopContrNms() {
       this.topContrNms = await commonApi.topContrNms();
     },
 
+    /* 업체명 조회 */
     async getCompNms() {
       this.compNms = await commonApi.compNms();
     },
 
+    /* 파일 선택 */
     selectFile(file) {
       this.file = file.target.files[0];
     },
 
-
+    /* ESTIMATE 상세조회 */
     async getEstimate() {
       this.estimate = await estimateApi.estimate(this.key);
     },
 
+    /* PROD 목록조회 */
     async getProds() {
       this.prods = await prodApi.prods(this.key);
     },
 
-    openProdModal(prod = {}) {
-      this.prod = prod;
+    /* PROD 등록 모달 열기 */
+    openProdModal(prod = {}, index = -1) {
+      this.prodIndex = index;
+
+      this.prod = {...prod};
       this.prodModal = true;
     },
+    /* PROD 등록 모달 닫기 */
     closeProdModal() {
+      this.prod = {};
       this.prodModal = false;
     },
 
+    /* PROD 추가 */
     addProd() {
       if(!confirm("등록 하시겠습니까?")) return false;
 
-      this.prods.push(this.prod);
+      if(this.prodIndex > -1){ // 수정상태
+        this.prods.splice(this.prodIndex, 1, this.prod);
+      } else {
+        this.prods.push(this.prod);
+      }
+
       this.prod = {};
 
       this.closeProdModal();
     },
+    /* PROD 삭제 */
     deleteProd() {
       if(!confirm("삭제 하시겠습니까?")) return false;
 
-      let index = this.prods.findIndex(p => {
-        return p.prodNm === this.prod.prodNm && p.detailProdNm === this.prod.detailProdNm;
-      });
-
-      this.prods.splice(index, 1);
+      this.prods.splice(this.prodIndex, 1);
       this.closeProdModal();
+    },
+
+    /* ESTIMATE 등록 */
+    async newEstimate(){
+      if(!confirm("등록 하시겠습니까?")) return false;
+      this.estimate.prods = this.prods;
+
+      const blob = new Blob([JSON.stringify(this.estimate)], {type:'application/json'});
+
+      const formData = new FormData();
+      formData.append('file', this.file);
+      formData.append('data', blob);
+
+      await estimateApi.newEstimate(formData);
+
+      this.$emit('update');
+      store.commit('toggleModal');
+
+    },
+    /* ESTIMATE 삭제 */
+    async deleteEstimate(){
+
     }
 
   }

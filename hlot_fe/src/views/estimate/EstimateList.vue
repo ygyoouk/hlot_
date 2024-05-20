@@ -30,11 +30,20 @@
       class="elevation-1 table-list_mt"
     >
 
+      <template v-slot:item.actions="{ item }">
+        <v-btn
+          v-if="item.contrYn === 'Y' && item.confirmYn === 'Y'"
+          color="primary"
+          @click="openContr(item)"
+        >
+          계약 등록
+        </v-btn>
+      </template>
+
 
     </v-data-table>
   </v-card>
 
-  <popUp v-if="store.getters.isOpenModal" @click="close()"></popUp>
 </template>
 
 <script setup>
@@ -48,8 +57,10 @@ const headers = [
   {title: '견적 순번', key: 'orderNo'},
   {title: '확정 여부', key: 'confirmYn'},
   {title: '계약 여부', key: 'contrYn'},
+  {title: '', key: 'actions'},
   {title: '등록자', key: 'registUserName'},
   {title: '등록일자', key: 'registDate'},
+
 ];
 </script>
 
@@ -57,6 +68,7 @@ const headers = [
 import store from "@/store/store";
 import estimateApi from '@/api/estimate.js'
 import {MODAL_MODE} from "@/util/config";
+import validUtil from "@/util/validUtil";
 
 export default {
   beforeMount() {
@@ -78,14 +90,17 @@ export default {
     openReg() {
       store.commit('toggleModal', {key: '', mode: MODAL_MODE.REG});
     },
-
+    /* 상세화면 */
     openDetail: (item, row) => {
-      store.commit("toggleModal", {key: row.item.estimateId , mode:MODAL_MODE.DETAIL});
+      if(!validUtil.isNull(item.target.cellIndex)){
+        store.commit("toggleModal", {key: row.item.estimateId , mode:MODAL_MODE.DETAIL});
+      }
+    },
+    /* 계약등록화면 */
+    openContr(item) {
+      console.log(item);
     },
 
-    close() {
-      this.popUpValue = false;
-    }
   }
 };
 </script>

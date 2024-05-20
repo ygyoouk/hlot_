@@ -70,5 +70,20 @@
         )
     </insert>
 
+    <select id="selectPossibleConfirm" parameterType="hashmap" resultType="int">
+        SELECT COUNT(*) /* org.mt.mms.estimate.mapper.EstimateMapper.selectPossibleConfirm : ESTIMATE 확정여부 조회 */
+        FROM ESTIMATE
+        WHERE DEL_YN = 'N'
+          AND TOP_CONTR_ID = #{topContrId}
+          AND COMP_ID = #{compId}
+          AND ESTIMATE_DIV = #{estimateDiv}
+          AND CONFIRM_YN = 'Y'
+    </select>
+
+    <update id="updateConfirmEstimate" parameterType="string">
+        UPDATE ESTIMATE SET /* org.mt.mms.estimate.mapper.EstimateMapper.updateConfirmEstimate : ESTIMATE 확정 */
+            CONFIRM_YN = 'Y'
+        WHERE ESTIMATE_ID = #{id}
+    </update>
 
 </mapper>

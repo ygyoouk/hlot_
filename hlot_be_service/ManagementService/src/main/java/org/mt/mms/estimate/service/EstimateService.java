@@ -15,4 +15,8 @@ public interface EstimateService {
     EstimateExVO one(String id) throws Exception;
 
     int newEstimate(EstimateVO estimateVO, MultipartFile file) throws Exception;
+
+    boolean possibleConfirm(String topContrId, String compId, String estimateDiv) throws Exception;
+
+    int confirmEstimate(String id) throws Exception;
 }

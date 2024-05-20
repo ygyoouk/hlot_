@@ -14,4 +14,8 @@ public class Util {
         return auth.getName();
     }
 
+    public String getLoginUserName(){
+        return "";
+    }
+
 }

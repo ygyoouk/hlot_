@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.mt.mms.estimate.vo.EstimateExVO;
 import org.mt.mms.estimate.vo.EstimateVO;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -17,5 +18,8 @@ public interface EstimateMapper {
 
     int insertEstimate(EstimateVO estimateVO) throws Exception;
 
+    int selectPossibleConfirm(HashMap<String, String> param) throws Exception;
+
+    int updateConfirmEstimate(String id) throws Exception;
 
 }

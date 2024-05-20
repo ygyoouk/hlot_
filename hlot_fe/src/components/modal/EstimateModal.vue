@@ -46,8 +46,8 @@
             <v-file-input label="견적서" @change="selectFile" :readonly="mode === MODAL_MODE.DETAIL"></v-file-input>
           </v-col>
           <v-col v-else>
-            <a :href="`${REQUEST_URL}/common/download/${this.estimate.attachmentVO.fileId}`">
-              {{ this.estimate.attachmentVO.orignFileName }}
+            <a :href="`${REQUEST_URL}/common/download/${estimate.attachmentVO.fileId}`">
+              {{ estimate.attachmentVO.orignFileName }}
             </a>
           </v-col>
         </v-row>
@@ -94,6 +94,13 @@
         </v-row>
         <v-row>
           <div class="modal-btn-list">
+            <v-btn
+              v-if="estimate.possibleConfirm"
+              color="primary"
+              @click="confirmEstimate"
+            >
+              확정
+            </v-btn>
             <v-btn
               v-if="mode !== MODAL_MODE.DETAIL"
               color="green"
@@ -195,6 +202,7 @@ import commonApi from "@/api/common.js"
 import estimateApi from "@/api/estimate.js";
 import prodApi from "@/api/prod.js"
 import {MODAL_MODE} from "@/util/config";
+import validUtil from "@/util/validUtil";
 
 
 
@@ -222,8 +230,10 @@ export default {
         estimateDiv: '',
 
         attachmentVO:{
-
-        }
+          fileId: '',
+          orignFileName: '',
+        },
+        possibleConfirm: false
       },
       prod: {},
       prods: [],
@@ -232,6 +242,7 @@ export default {
 
       topContrNms: [],
       compNms: [],
+
 
     }
   },
@@ -254,6 +265,7 @@ export default {
     /* ESTIMATE 상세조회 */
     async getEstimate() {
       this.estimate = await estimateApi.estimate(this.key);
+      this.estimate.attachmentVO = validUtil.isNull(this.estimate.attachmentVO)??{};
     },
 
     /* PROD 목록조회 */
@@ -316,6 +328,14 @@ export default {
     /* ESTIMATE 삭제 */
     async deleteEstimate(){
 
+    },
+    /* ESTIMATE 확정 */
+    async confirmEstimate(){
+      await estimateApi.confirmEstimate(this.key);
+      console.log('after confirm');
+      await this.getEstimate();
+      console.log('after get');
+      this.$emit('update');
     }
 
   }

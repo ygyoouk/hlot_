@@ -1,5 +1,7 @@
 <template>
-  <ModalLayout>
+  <ModalLayout
+    @close="modalClose"
+  >
     <div class="modal-title">
       견적서 등록
     </div>
@@ -58,7 +60,7 @@
           <v-col style="font-size: 20px">품목</v-col>
           <v-col style="text-align: right">
             <v-btn
-              v-if="mode === MODAL_MODE.REG && validUtil.isNull(this.key)"
+              v-if="mode === MODAL_MODE.REG && validUtil.isNull(key)"
               @click="openProdModal()"
               color="green">품목 추가</v-btn>
             <br><br>
@@ -321,16 +323,13 @@ export default {
 
       await estimateApi.newEstimate(formData);
 
-      this.$emit('update');
-      store.commit('toggleModal');
+      this.modalClose();
 
     },
     /* ESTIMATE 삭제 */
     async deleteEstimate(){
       await estimateApi.deleteEstimate(this.key);
-
-      this.$emit('update');
-      store.commit('toggleModal');
+      this.modalClose();
     },
     /* ESTIMATE 확정 */
     async confirmEstimate(){
@@ -338,9 +337,14 @@ export default {
 
       await estimateApi.confirmEstimate(this.key);
 
+      this.modalClose();
+    },
+
+    modalClose(){
+      store.commit("toggleModal");
       this.$emit('update');
-      store.commit('toggleModal');
-    }
+      this.$emit('close');
+    },
 
   }
 }

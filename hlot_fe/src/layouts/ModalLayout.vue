@@ -4,7 +4,7 @@
     <div class="modal">
 
       <div class="modal-header" style="text-align: right;">
-        <div class="close" @click="store.commit('toggleModal')"/>
+        <div class="close" @click="closeModal"/>
       </div>
 
       <slot />
@@ -24,6 +24,12 @@ export default {
       return store
     }
   },
+  methods: {
+    closeModal(){
+      this.$emit('close');
+      store.commit('toggleModal');
+    }
+  }
 }
 </script>
 

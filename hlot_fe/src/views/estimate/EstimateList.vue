@@ -1,13 +1,14 @@
 <template>
   <EstimateModal
-    v-if="store.getters.isOpenModal"
+    v-if="bEstimateModal"
     @update="getEstimates"
+    @close="bEstimateModal = false"
   />
 
   <ContrModal
     v-if="bContrModal"
     @update="getEstimates"
-    @close="bContrModal = !bContrModal"
+    @close="bContrModal = false"
   />
 
   <v-card class="table-container_mt">
@@ -87,6 +88,7 @@ export default {
       search: '',
       estimates: [],
 
+      bEstimateModal: false,
       bContrModal: false,
     };
   },
@@ -98,12 +100,14 @@ export default {
 
     /* 등록화면 */
     openReg() {
-      store.commit('toggleModal', {key: '', mode: MODAL_MODE.REG});
+      store.commit('setModalParams', {key: '', mode: MODAL_MODE.REG});
+      this.bEstimateModal = !this.bEstimateModal;
     },
     /* 상세화면 */
-    openDetail: (item, row) => {
+    openDetail(item, row) {
       if(!validUtil.isNull(item.target.cellIndex)){
-        store.commit("toggleModal", {key: row.item.estimateId , mode:MODAL_MODE.DETAIL});
+        store.commit("setModalParams", {key: row.item.estimateId , mode:MODAL_MODE.DETAIL});
+        this.bEstimateModal = !this.bEstimateModal;
       }
     },
     /* 계약등록화면 */

@@ -2,6 +2,7 @@ package org.mt.mms.contr.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mt.mms.cmm.Util;
 import org.mt.mms.cmm.dto.Result;
 import org.mt.mms.contr.service.ContrService;
 import org.mt.mms.contr.vo.ContrVO;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContrController {
 
     private final ContrService contrService;
+    private final Util util;
     /**
      * 계약 전체 조회
      * */

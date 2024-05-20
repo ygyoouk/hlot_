@@ -6,9 +6,7 @@
     </div>
 
     <div class="modal-content">
-
       <v-container>
-
           <v-row>
             <v-col>
               <v-file-input label="계약파일" @change="selectFile" ></v-file-input>
@@ -57,6 +55,7 @@
               </v-text-field>
             </v-col>
           </v-row>
+
           <v-row >
             <v-col>
               <v-text-field
@@ -65,8 +64,6 @@
               v-model="contr.paymentTerm">
               </v-text-field>
             </v-col>
-             
-            
           </v-row>
 
           <v-row>
@@ -75,7 +72,6 @@
               <br/>
               <input type="date" id="strDate" :readonly="mode === 'R'" v-model="contr.contrStDate"/> ~  
               <input type="date" id="strDate" :readonly="mode === 'R'" v-model="contr.contrEndDate"/>
-               
               <v-textarea label="특이사항" variant="outlined" rows="5" :readonly="mode === 'R'" v-model="contr.specialNote"></v-textarea>
             </v-col>
            
@@ -84,16 +80,6 @@
              <div class="modal-btn-list">
                 <v-btn
                   color="blue"
-                  @click="saveContrFile"
-                >자동입력</v-btn>
-
-                <v-btn
-                  color="green"
-                  @click="updateMode"
-                >수정</v-btn>
-
-                <v-btn
-                  color="green"
                   @click="newContr"
                 >확정</v-btn>
             </div>
@@ -129,16 +115,13 @@ export default {
         /** 계약 단건 조회*/
         this.contr();
     }else{
-      console.log("@@@@@@@@@@@");
       this.getSelectBox();
     }
 
   },
 
   mounted(){
-    console.log(this.topContr.fileId);
     if(this.mode == 'D'){
-
     }
 
     if(this.topContr.topContrNm !== ''){
@@ -228,9 +211,13 @@ export default {
           this.mode = 'M';
       },
 
+      /**
+       * 파일 선택
+      */
       selectFile(file){
-        console.log(file.target.files[0]);
         this.file = file.target.files[0];
+
+        this.saveContrFile();
       },
 
       /**
@@ -255,6 +242,9 @@ export default {
           this.contr.specialNote = data.specialNote;
           this.contr.contrStDate = utils.formatDate(data.contrStDate);
           this.contr.contrEndDate = utils.formatDate(data.contrEndDate);
+
+          // 파일 등록시 수정모드로 변경
+          this.updateMode();
         }
                 
       }

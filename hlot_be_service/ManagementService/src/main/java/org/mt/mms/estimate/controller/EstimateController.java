@@ -42,17 +42,25 @@ public class EstimateController {
     public ResponseEntity<Result> newEstimate(@RequestPart EstimateVO data
             , @RequestPart(value = "file", required = false) MultipartFile file) throws Exception {
 
-        String userId = util.getLoginUserId();
-        data.setRegistUserName(userId);
+        String userName = util.getLoginUserName();
+        data.setRegistUserName(userName);
 
         return ResponseEntity.ok()
                 .body(Result.resSuccess(estimateService.newEstimate(data, file), true));
     }
 
     /* estimate 확정 */
-     @GetMapping("/estimate/confirm/{id}")
+    @GetMapping("/estimate/confirm/{id}")
     public ResponseEntity<Result> confirm(@PathVariable String id) throws Exception {
          return ResponseEntity.ok()
                  .body(Result.resSuccess(estimateService.confirmEstimate(id), true));
-     }
+    }
+
+    /* estimate 삭제 */
+    @GetMapping("/estimate/delete/{id}")
+    public ResponseEntity<Result> delete(@PathVariable String id) throws Exception {
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(estimateService.deleteEstimate(id), true));
+    }
+
 }

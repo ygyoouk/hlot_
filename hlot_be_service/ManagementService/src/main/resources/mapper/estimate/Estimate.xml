@@ -8,6 +8,7 @@
              , E.TOP_CONTR_ID
              , E.COMP_ID
              , E.ORDER_NO
+             , E.ESTIMATE_DIV
              , E.CONFIRM_YN
              , E.CONTR_YN
              , E.REGIST_DATE
@@ -86,4 +87,9 @@
         WHERE ESTIMATE_ID = #{id}
     </update>
 
+    <update id="deleteEstimate" parameterType="string">
+        UPDATE ESTIMATE SET /* org.mt.mms.estimate.mapper.EstimateMapper.deleteEstimate : ESTIMATE 삭제 */
+            DEL_YN = 'Y'
+        WHERE ESTIMATE_ID = #{id}
+    </update>
 </mapper>

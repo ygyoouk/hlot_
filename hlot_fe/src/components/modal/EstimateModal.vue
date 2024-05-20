@@ -327,15 +327,19 @@ export default {
     },
     /* ESTIMATE 삭제 */
     async deleteEstimate(){
+      await estimateApi.deleteEstimate(this.key);
 
+      this.$emit('update');
+      store.commit('toggleModal');
     },
     /* ESTIMATE 확정 */
     async confirmEstimate(){
+      if(!confirm("확정 하시겠습니까?")) return false;
+
       await estimateApi.confirmEstimate(this.key);
-      console.log('after confirm');
-      await this.getEstimate();
-      console.log('after get');
+
       this.$emit('update');
+      store.commit('toggleModal');
     }
 
   }

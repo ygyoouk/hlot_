@@ -36,6 +36,13 @@ export default {
     return axios.get(REQUEST_URL + `/api/estimate/confirm/${id}`, id).then(res => {
       return res.data;
     });
+  },
+
+  /* ESTIMATE 삭제 */
+  deleteEstimate(id) {
+    return axios.get(REQUEST_URL + `/api/estimate/delete/${id}`, id).then(res => {
+      return res.data;
+    })
   }
 
 }

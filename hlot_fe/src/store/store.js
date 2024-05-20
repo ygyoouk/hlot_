@@ -27,6 +27,9 @@ const store = createStore({
       state.isOpenModal = !state.isOpenModal;
     },
 
+    setModalParams(state, params ={}) {
+      state.params = params;
+    }
   }
 })
 

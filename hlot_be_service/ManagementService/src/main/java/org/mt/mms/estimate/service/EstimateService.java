@@ -19,4 +19,6 @@ public interface EstimateService {
     boolean possibleConfirm(String topContrId, String compId, String estimateDiv) throws Exception;
 
     int confirmEstimate(String id) throws Exception;
+
+    int deleteEstimate(String id) throws Exception;
 }

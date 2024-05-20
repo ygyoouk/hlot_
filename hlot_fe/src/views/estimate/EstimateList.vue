@@ -4,6 +4,12 @@
     @update="getEstimates"
   />
 
+  <ContrModal
+    v-if="bContrModal"
+    @update="getEstimates"
+    @close="bContrModal = !bContrModal"
+  />
+
   <v-card class="table-container_mt">
     <div class="table-title_mt">
       견적서 관리
@@ -32,9 +38,10 @@
 
       <template v-slot:item.actions="{ item }">
         <v-btn
-          v-if="item.contrYn === 'Y' && item.confirmYn === 'Y'"
+          v-if="item.contrYn === 'N' && item.confirmYn === 'Y'"
           color="primary"
           @click="openContr(item)"
+          rounded="xl"
         >
           계약 등록
         </v-btn>
@@ -49,6 +56,7 @@
 <script setup>
 import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
 import EstimateModal from "@/components/modal/EstimateModal.vue";
+import ContrModal from "@/components/modal/ContrtModal.vue";
 
 const headers = [
   {title: '원계약 명', key: 'topContrNm'},
@@ -78,6 +86,8 @@ export default {
     return {
       search: '',
       estimates: [],
+
+      bContrModal: false,
     };
   },
   methods: {
@@ -98,7 +108,15 @@ export default {
     },
     /* 계약등록화면 */
     openContr(item) {
-      console.log(item);
+      const params = {
+        estimateId : item.estimateId,
+        compId: item.compId,
+        topContrId: item.topContrId,
+
+        mode: MODAL_MODE.REG
+      };
+      store.commit("setModalParams", params);
+      this.bContrModal = !this.bContrModal;
     },
 
   }

@@ -1,5 +1,6 @@
 package org.mt.mms.company.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mt.mms.cmm.Util;
@@ -7,9 +8,10 @@ import org.mt.mms.cmm.dto.Result;
 import org.mt.mms.company.service.CompanyService;
 import org.mt.mms.company.vo.CompanyManagerVO;
 import org.mt.mms.company.vo.CompanyVO;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api")
@@ -28,7 +30,9 @@ public class CompanyController {
 
     /* company 목록 조회 */
     @GetMapping("/companys")
-    public ResponseEntity<Result> all() throws Exception{
+    public ResponseEntity<Result> all(HttpServletRequest request) throws Exception{
+        HashMap<String, String> params = Util.requestToMap(request);
+
         return ResponseEntity.ok()
                 .body(Result.resSuccess(companyService.all()));
     }

@@ -14,8 +14,8 @@ export default {
   },
 
   /* COMPANY 목록조회 */
-  companys(){
-    return axios.get(REQUEST_URL + '/api/companys').then(res => {
+  companys(params){
+    return axios.get(REQUEST_URL + '/api/companys', {params}).then(res => {
       return res.data.data;
     });
   },

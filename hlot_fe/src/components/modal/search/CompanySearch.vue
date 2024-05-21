@@ -5,17 +5,25 @@
     </div>
 
     <div class="d-flex flex-wrap ga-3 mb-0">
-      <v-text-field
-        label="업체명"
-        density="compact"
-      />
       <v-select
         label="업체구분"
         density="compact"
+        :items="compDivs"
+        item-title="codeNm"
+        item-value="code"
+        v-model="searchCondition.compDiv"
       />
+
+      <v-text-field
+        label="업체명"
+        density="compact"
+        v-model="searchCondition.compNm"
+      />
+
       <v-text-field
         label="사업자 등록번호"
         density="compact"
+        v-model="searchCondition.compBussRegNum"
       />
       <v-btn
         color="primary"
@@ -35,7 +43,8 @@ import SubModalLayout from "@/layouts/SubModalLayout.vue";
 </script>
 
 <script>
-import commonApi from "@/api/common.js"
+import commonApi from "@/api/common.js";
+import companyApi from "@/api/company.js";
 
   export default {
     async beforeMount() {
@@ -45,12 +54,17 @@ import commonApi from "@/api/common.js"
     data() {
       return {
         compDivs:[],
+        searchCondition:{
+          compDiv: '',
+          compNm: '',
+          compBussRegNum: '',
+        }
       }
     },
 
     methods : {
-      search() {
-
+      async search() {
+        await companyApi.companys(this.searchCondition);
       }
     }
   }

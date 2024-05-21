@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.mt.mms.topContr.mapper.TopContrMapper">
-    <select id="getTopContrs" resultType="org.mt.mms.topContr.vo.TopContrVO">
+
+    <select id="getTopContrs" parameterType="org.mt.mms.topContr.vo.TopContrVO" resultType="org.mt.mms.topContr.vo.TopContrVO">
 
         SELECT
             TOP_CONTR_ID,
             TOP_CONTR_NM,
             TOP_CONTR_DIV,
             CLIENT_COMP,
-            TOP_CONTR_DATE,
-            CONTR_ST_DATE,
-            CONTR_END_DATE,
+            DATE_FORMAT(TOP_CONTR_DATE, '%Y-%m-%d') AS TOP_CONTR_DATE,
+            DATE_FORMAT(CONTR_ST_DATE, '%Y-%m-%d') AS CONTR_ST_DATE,
+            DATE_FORMAT(CONTR_END_DATE, '%Y-%m-%d') AS CONTR_END_DATE,
             PROD_NM,
-            CONTR_AMOUNT,
-            DELIVERY_DEADLINE,
+            FORMAT(CONTR_AMOUNT,',') AS CONTR_AMOUNT,
+            DATE_FORMAT(DELIVERY_DEADLINE, '%Y-%m-%d') AS DELIVERY_DEADLINE,
             DEMAND_INST_NM,
             REGIST_USER_NAME,
             REGIST_DATE,
@@ -22,6 +23,25 @@
         FROM
             TOP_CONTR
         WHERE DEL_YN = 'N'
+        <if test="topContrNm != null and topContrNm !=''">
+            AND TOP_CONTR_NM LIKE '%' #{topContrNm} '%'
+        </if>
+        <if test="topContrDiv != null and topContrDiv != ''">
+            AND TOP_CONTR_DIV = #{topContrDiv}
+        </if>
+        <if test="clientComp != null and clientComp != ''">
+            AND CLIENT_COMP = #{clientComp}
+        </if>
+        <if test="prodNm != null and prodNm != ''">
+            AND PROD_NM LIKE '%' #{prodNm} '%'
+        </if>
+        <if test="demandInstNm != null and demandInstNm != ''">
+            AND DEMAND_INST_NM = #{demandInstNm}
+        </if>
+        <if test="topContrStDate != '' and topContrEndDate != ''">
+            AND TOP_CONTR_DATE BETWEEN #{topContrStDate} AND #{topContrEndDate}
+        </if>
+        ORDER BY REGIST_DATE DESC
     </select>
 
     <insert id="newTopContr" parameterType="org.mt.mms.topContr.vo.TopContrVO">
@@ -73,7 +93,7 @@
             CONTR_ST_DATE,
             CONTR_END_DATE,
             PROD_NM,
-            CONTR_AMOUNT,
+            FORMAT(CONTR_AMOUNT, ',') AS CONTR_AMOUNT,
             DELIVERY_DEADLINE,
             DEMAND_INST_NM,
             TOP_CONTR_FILE_ID,

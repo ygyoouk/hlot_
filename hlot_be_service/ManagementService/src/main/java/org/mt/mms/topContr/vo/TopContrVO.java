@@ -16,6 +16,8 @@ public class TopContrVO {
     private String topContrDiv;
     private String clientComp;
     private String topContrDate;
+    private String topContrStDate;
+    private String topContrEndDate;
     private String contrStDate;
     private String contrEndDate;
     private String prodNm;

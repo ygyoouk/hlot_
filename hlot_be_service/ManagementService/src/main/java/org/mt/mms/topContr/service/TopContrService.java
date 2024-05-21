@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface TopContrService {
     // 프로젝트 조회
-    List<TopContrVO> all() throws Exception;
+    List<TopContrVO> all(TopContrVO searchParam) throws Exception;
     
     // 프로젝트 등록
     int newTopContr(TopContrVO data, MultipartFile file) throws Exception;

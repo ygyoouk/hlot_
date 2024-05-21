@@ -7,8 +7,8 @@ const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
 export default {
 
   // TOP_CONTR 조회
-  projects(){
-    return axios.get(REQUEST_URL + '/api/topContr').then(res => {
+  projects(searchParam){
+    return axios.post(REQUEST_URL + '/api/topContr',searchParam).then(res => {
       return res.data.data;
     });
   },

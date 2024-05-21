@@ -89,6 +89,7 @@ public class CommonController {
     /* 원계약 ID,명 전체조회 */
     @GetMapping(value="/topContrNms")
     public ResponseEntity<Result> topContrNms() throws Exception {
+
         return ResponseEntity.ok()
                 .body(Result.resSuccess(commonService.topContrNms()));
     }
@@ -96,6 +97,7 @@ public class CommonController {
     /* 업체 ID,명 전체조회*/
     @GetMapping(value="/compNms")
     public ResponseEntity<Result> compNms() throws Exception {
+
         return ResponseEntity.ok()
                 .body(Result.resSuccess(commonService.compNms()));
     }

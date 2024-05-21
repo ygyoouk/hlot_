@@ -11,77 +11,109 @@
 
           <v-row>
             <v-col>
+              <label for="strDate">원계약일자  : </label>
+              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.topContrDate"/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <br>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+              label="발주처"
+              density="comfortable"
+              :readonly="mode === 'D'"
+              v-model="topContr.clientComp">
+              </v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
               <v-text-field
                 v-model="topContr.topContrNm"
+                density="comfortable"
                 label="원계약명"
                 :readonly="mode === 'D'"
               ></v-text-field>
             </v-col>
+          </v-row>
+
+          <v-row>
+             <v-col>
+              <v-text-field
+              label="품명"
+              density="comfortable"
+              :readonly="mode === 'D'"
+              v-model="topContr.prodNm">
+              </v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
             <v-col>
-              <label> 원계약 기간</label><br>
+              <v-text-field
+              label="계약금액"
+              density="comfortable"
+              :readonly="mode === 'D'"
+              v-model="topContr.contrAmount">
+              </v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <label> 원계약 기간 : </label>
               <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.contrStDate"/>  ~
               <input type="date" id="endDate" :readonly="mode === 'D'" v-model="topContr.contrEndDate"/>
             </v-col>
           </v-row>
           <v-row>
+            <br>
+          </v-row>
+          <v-row>
+             <v-col>
+              <label>납품기한 : </label>
+              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.deliveryDeadline"/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <br>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+              label="수요기관명"
+              density="comfortable"
+              :readonly="mode === 'D'"
+              v-model="topContr.demandInstNm">
+              </v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
            <v-col>
              <v-select
             label="구분"
+            density="comfortable"
             :items="['유지관리', '구축', '개발']"
             v-model="topContr.topContrDiv"
             :readonly="mode === 'D'"
             >
             </v-select>
            </v-col>
-           <v-col>
-              <v-text-field
-              label="발주처"
-              :readonly="mode === 'D'"
-              v-model="topContr.clientComp">
-              </v-text-field>
-            </v-col>
           </v-row>
-          <v-row >
-            <v-col>
-              <label> 원계약일자</label><br>
-              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.topContrDate"/>
-            </v-col>
-             <v-col>
-              <v-text-field
-              label="품명"
-              :readonly="mode === 'D'"
-              v-model="topContr.prodNm">
-              </v-text-field>
-            </v-col>
-          </v-row>
+
           <v-row>
-            <v-col>
-              <v-text-field
-              label="계약금액"
-              :readonly="mode === 'D'"
-              v-model="topContr.contrAmount">
-              </v-text-field>
-            </v-col>
-            <v-col>
-              <label>납품기한</label><br>
-              <input type="date" id="strDate" :readonly="mode === 'D'" v-model="topContr.deliveryDeadline"/>
-            </v-col>
-          </v-row>
-          <v-row>
-          <v-col>
-              <v-text-field
-              label="수요기관명"
-              :readonly="mode === 'D'"
-              v-model="topContr.demandInstNm">
-              </v-text-field>
-            </v-col>
             <v-col v-if="this.topContr.fileId == '' ">
-              <v-file-input label="원계약파일" @change="selectFile" ></v-file-input>
+              <v-file-input density="comfortable" label="원계약파일" @change="selectFile" ></v-file-input>
             </v-col>
             <v-col v-if="this.topContr.fileId != '' && this.topContr.fileId !=null">
               <a :href="'http://localhost:8081/common/download/' + this.topContr.fileId">{{this.topContr.orignFileName}}</a>
             </v-col>
           </v-row>
+
           <v-row>
              <div class="modal-btn-list">
                 <v-btn
@@ -91,6 +123,7 @@
                 >저장</v-btn>
             </div>
           </v-row>
+
       </v-container>
 
     </div>
@@ -171,6 +204,7 @@ export default {
 
       // 프로젝트 정보 등록
       async newProject(){
+
         const formData = new FormData();
         formData.append('file' ,this.image);
 
@@ -183,8 +217,14 @@ export default {
 
         formData.append('data' ,blob);
 
-        await projectApi.newProject(formData);
+        if(utils.isNull(this.topContr.topContrNm)){
+          alert('원계약명을 입력해주세요');
+           return false;
+        }
 
+        if(!confirm("등록 하시겠습니까?")) return false;
+
+        await projectApi.newProject(formData);
         this.close();
       },
 

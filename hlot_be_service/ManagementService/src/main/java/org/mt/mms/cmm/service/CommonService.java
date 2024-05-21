@@ -1,5 +1,6 @@
 package org.mt.mms.cmm.service;
 
+import org.mt.mms.cmm.vo.CmmCodeVO;
 import org.mt.mms.company.vo.CompanyVO;
 import org.mt.mms.topContr.vo.TopContrVO;
 import org.springframework.stereotype.Service;
@@ -14,4 +15,6 @@ public interface CommonService {
     List<CompanyVO> compNms() throws Exception;
 
     String selectHlotSeq(String a, String b, String table) throws Exception;
+
+    List<CmmCodeVO> getCode(String codeNm) throws Exception;
 }

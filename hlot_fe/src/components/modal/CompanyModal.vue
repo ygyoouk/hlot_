@@ -1,5 +1,7 @@
 <template>
-  <ModalLayout>
+  <ModalLayout
+    @close="this.$emit('close')"
+  >
     <div class="modal-title">
       업체관리 {{ mode === MODAL_MODE.DETAIL ? '상세'
                 : mode === MODAL_MODE.REG ? '등록' : '수정' }}
@@ -203,7 +205,8 @@ export default {
 
       await companyApi.newCompany(this.company);
       this.$emit('update');
-      store.commit('toggleModal');
+      this.$emit('close');
+
     },
     /* company 삭제 */
     async deleteCompany() {
@@ -211,7 +214,7 @@ export default {
 
       await companyApi.deleteCompany(this.key);
       this.$emit('update');
-      store.commit('toggleModal');
+      this.$emit('close');
     },
     /* company_manager 추가 */
     async addManager() {

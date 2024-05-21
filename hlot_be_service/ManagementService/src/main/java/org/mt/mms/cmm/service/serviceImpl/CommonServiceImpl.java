@@ -3,6 +3,7 @@ package org.mt.mms.cmm.service.serviceImpl;
 import lombok.RequiredArgsConstructor;
 import org.mt.mms.cmm.mapper.CommonMapper;
 import org.mt.mms.cmm.service.CommonService;
+import org.mt.mms.cmm.vo.CmmCodeVO;
 import org.mt.mms.company.vo.CompanyVO;
 import org.mt.mms.topContr.vo.TopContrVO;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,10 @@ public class CommonServiceImpl implements CommonService {
         param.put("b", a);
         param.put("table", a);
         return commonMapper.selectHlotSeq(param);
+    }
+
+    @Override
+    public List<CmmCodeVO> getCode(String codeNm) throws Exception {
+        return commonMapper.selectCode(codeNm);
     }
 }

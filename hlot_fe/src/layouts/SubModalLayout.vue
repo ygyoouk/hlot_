@@ -1,8 +1,6 @@
 <template>
-  <div class="modal-overlay">
-
-    <div class="modal">
-
+  <div class="child-modal-overlay">
+    <div class="child-modal">
       <div class="modal-header" style="text-align: right;">
         <div class="close" @click="closeModal"/>
       </div>
@@ -10,13 +8,12 @@
       <slot />
 
     </div>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: "ModalLayout",
+  name: "SubModalLayout",
   methods: {
     closeModal(){
       this.$emit('close');
@@ -26,5 +23,11 @@ export default {
 </script>
 
 <style scoped>
-  @import "@/assets/styles/modal.css";
+@import "@/assets/styles/modal.css";
+@import "@/assets/styles/customTable.css";
+
+.child-modal{
+  width: 850px;
+  height: 700px;
+}
 </style>

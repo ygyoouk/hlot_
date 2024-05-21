@@ -2,6 +2,7 @@ package org.mt.mms.cmm.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.mt.mms.cmm.vo.AttachmentVO;
+import org.mt.mms.cmm.vo.CmmCodeVO;
 import org.mt.mms.company.vo.CompanyVO;
 import org.mt.mms.topContr.vo.TopContrVO;
 
@@ -20,4 +21,6 @@ public interface CommonMapper {
     List<CompanyVO> selectCompNms() throws Exception;
 
     String selectHlotSeq(HashMap<String, String> param) throws Exception;
+
+    List<CmmCodeVO> selectCode(String codeNm) throws Exception;
 }

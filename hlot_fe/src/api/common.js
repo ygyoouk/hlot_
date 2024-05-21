@@ -19,4 +19,12 @@ export default {
       return res.data.data;
     });
   },
+
+  /* 업체구분 조회 */
+  cmmCodeComp(codeNm) {
+    return axios.get(REQUEST_URL + `/common/code/${codeNm}`).then(res => {
+      console.log(res);
+      return res.data.data;
+    })
+  }
 }

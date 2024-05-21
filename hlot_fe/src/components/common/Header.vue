@@ -7,7 +7,7 @@
         :key="link.path"
         :text="link.name"
         variant="text"
-        @click="this.$router.push(link.path)"
+        @click="movePage(link.path)"
       ></v-btn>
 
       <v-spacer></v-spacer>
@@ -54,16 +54,22 @@ export default {
       isLogin: validUtil.isNull(user.getUserStorage("isLogin")),
       links: [
         { name: 'HOME',      path: '/' },
-        { name: '업체관리',    path: '/company/companyList' },
-        { name: '견적서관리',   path: '/estimate/estimateList' },
         { name: '원계약관리',  path: '/project/projectList' },
+        { name: '견적서관리',   path: '/estimate/estimateList' },
         { name: '계약관리',    path: '/contr/contrList' },
-      ]
 
+        { name: '업체관리',    path: '/company/companyList' },
+        { name: '공통코드관리', path: '/' }
+      ]
     }
   },
   methods: {
-
+    movePage(path){
+      this.$router.push(path);
+      if(store.getters.isOpenModal){
+        store.commit('toggleModal');
+      }
+    }
   }
 }
 </script>

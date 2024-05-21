@@ -1,7 +1,14 @@
 <template>
+  <TopContrSearch
+    v-if="bTopContrSearch"
+    @close="bTopContrSearch = !bTopContrSearch"
+    @select="selectTopContr"
+  />
+
   <ModalLayout
     @close="modalClose"
   >
+
     <div class="modal-title">
       견적서 등록
     </div>
@@ -10,14 +17,12 @@
       <v-container>
         <v-row>
           <v-col>
-            <v-autocomplete
-              label="원계약"
-              :items="topContrNms"
-              item-title="topContrNm"
-              item-value="topContrId"
-              v-model="estimate.topContrId"
-              :readonly="mode === MODAL_MODE.DETAIL"
-            ></v-autocomplete>
+            <v-text-field
+              label="원계약 명"
+              readonly="readonly"
+              append-inner-icon="mdi-magnify"
+              @click:append-inner="searchTopContr"
+            ></v-text-field>
           </v-col>
           <v-col>
             <v-autocomplete
@@ -192,6 +197,7 @@
 import ModalLayout from "@/layouts/ModalLayout.vue";
 import {MODAL_MODE} from "@/util/config";
 import validUtil from "@/util/validUtil";
+import TopContrSearch from "@/components/modal/search/TopContrSearch.vue";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
@@ -222,6 +228,9 @@ export default {
   },
   data() {
     return {
+      bTopContrSearch: false,
+      bCompanySearch: false,
+
       mode: store.getters.getParams.mode,
       key: store.getters.getParams.key,
 
@@ -250,6 +259,12 @@ export default {
   },
   methods : {
     /* 원계약명 조회 */
+    searchTopContr() {
+      this.bTopContrSearch = !this.bTopContrSearch;
+    },
+    selectTopContr() {
+
+    },
     async getTopContrNms() {
       this.topContrNms = await commonApi.topContrNms();
     },
@@ -341,7 +356,6 @@ export default {
     },
 
     modalClose(){
-      store.commit("toggleModal");
       this.$emit('update');
       this.$emit('close');
     },

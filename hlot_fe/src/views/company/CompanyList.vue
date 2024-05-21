@@ -1,6 +1,7 @@
 <template>
   <CompanyModal
-    v-if="store.getters.isOpenModal"
+    v-if="bCompanyModal"
+    @close="bCompanyModal = !bCompanyModal"
     @update="getCompanys"
   />
 
@@ -37,7 +38,6 @@
 
 <script setup>
 import CompanyModal from "@/components/modal/CompanyModal.vue";
-import store from "@/store/store";
 import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
 
 const headers = [
@@ -61,6 +61,7 @@ export default {
     return {
       search: '',     // 검색텍스트
       companys: [],   // 업체 Array
+      bCompanyModal: false,
     };
   },
   methods: {
@@ -71,12 +72,14 @@ export default {
 
     /* 등록화면 */
     openReg(){
-      store.commit('toggleModal', {key: '', mode: MODAL_MODE.REG});
+      store.commit('setModalParams', {key: '', mode: MODAL_MODE.REG});
+      this.bCompanyModal = !this.bCompanyModal;
     },
 
     /* 상세조회화면 */
     openDetail(item, row) {
-      store.commit('toggleModal', {key: row.item.compId, mode: MODAL_MODE.DETAIL});
+      store.commit('setModalParams', {key: row.item.compId, mode: MODAL_MODE.DETAIL});
+      this.bCompanyModal = !this.bCompanyModal;
     }
   }
 };

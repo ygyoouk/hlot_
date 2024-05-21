@@ -61,4 +61,11 @@
         SELECT CONCAT(date_format(NOW(), '%Y%m'), #{a}, #{b}, #{table}, NEXTVAL(HLOT_SEQ))
         FROM DUAL
     </select>
+
+    <select id="selectCode" resultType="org.mt.mms.cmm.vo.CmmCodeVO" parameterType="string">
+        SELECT /* org.mt.mms.cmm.mapper.CommonMapper.selectCode : 공통코드 조회 */
+            CODE_GROUP, CODE_NM, CODE
+        FROM CMM_CODE
+        WHERE CODE_GROUP = #{codeNm}
+    </select>
 </mapper>

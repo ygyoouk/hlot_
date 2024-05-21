@@ -6,7 +6,6 @@ import org.mt.mms.cmm.dto.Result;
 import org.mt.mms.cmm.service.AttachmentService;
 import org.mt.mms.cmm.service.CommonService;
 import org.mt.mms.cmm.vo.AttachmentVO;
-import org.mt.mms.topContr.vo.TopContrVO;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -100,4 +99,12 @@ public class CommonController {
         return ResponseEntity.ok()
                 .body(Result.resSuccess(commonService.compNms()));
     }
+
+    /* 공통코드 조회 */
+    @GetMapping(value="/code/{codeNm}")
+    public ResponseEntity<Result> code(@PathVariable String codeNm) throws Exception {
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(commonService.getCode(codeNm)));
+    }
+
 }

@@ -1,1 +1,0 @@
-import{_ as e,c as a,w as t,V as s,o,a as c,b as n,d as r}from"./index-D0SR6vLb.js";const i={name:"EstimateList"};function _(d,l,f,p,m,u){return o(),a(s,{class:"bg-grey-lighten-2"},{default:t(()=>[c(r,null,{default:t(()=>[n(" EstimateList!! ")]),_:1})]),_:1})}const V=e(i,[["render",_]]);export{V as default};

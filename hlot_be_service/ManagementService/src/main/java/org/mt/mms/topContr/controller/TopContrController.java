@@ -27,6 +27,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 @RestController
 @Slf4j // log용도
@@ -37,12 +38,12 @@ public class TopContrController {
 
     private final TopContrService topContrService;
 
-    @GetMapping("/topContr")
-    public ResponseEntity<Result> all() throws Exception{
-
+    @PostMapping("/topContr")
+    public ResponseEntity<Result> all(@RequestBody TopContrVO searchParam) throws Exception{
+    log.info("searchParam : {}",searchParam);
      /* 프로젝트 리스트 조회*/
      return ResponseEntity.ok()
-             .body(Result.resSuccess(topContrService.all()));
+             .body(Result.resSuccess(topContrService.all(searchParam)));
 
     }
 
@@ -50,7 +51,6 @@ public class TopContrController {
     @PostMapping(value = "/topContr" ,consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Result> newContr(@RequestPart TopContrVO data, @RequestPart(value = "file", required = false)MultipartFile file) throws Exception{
         log.info("data====>" +  data);
-        log.info("FILE OG NAME ====>" +  file.getOriginalFilename());
 
         // 프로젝트 Id
         String topContrId = data.getTopContrId();

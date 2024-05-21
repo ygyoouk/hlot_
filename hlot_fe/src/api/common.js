@@ -7,16 +7,19 @@ const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
 export default {
 
   /* TOP_CONTR ID, 명 조회 */
-  topContrNms(){
-    return axios.get(REQUEST_URL + '/common/topContrNms').then(res => {
+  topContrNms(topContrId){
+    return axios.get(REQUEST_URL + '/common/topContrNms/'+topContrId).then(res => {
+      console.log(res.data.data);
       return res.data.data;
     });
   },
 
   /* COMP ID, 명 조회 */
-  compNms(){
-    return axios.get(REQUEST_URL + '/common/compNms').then(res => {
+  compNms(compId){
+    return axios.get(REQUEST_URL + '/common/compNms/'+compId).then(res => {
+      console.log(res.data.data);
       return res.data.data;
+
     });
   },
 

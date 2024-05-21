@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface TopContrMapper {
 
-    List<TopContrVO> getTopContrs() throws Exception;
+    List<TopContrVO> getTopContrs(TopContrVO searchParam) throws Exception;
 
     int newTopContr(TopContrVO data) throws Exception;
 

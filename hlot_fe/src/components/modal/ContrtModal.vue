@@ -18,24 +18,25 @@
 
           <v-row>
             <v-col>
-              <v-select
+              <v-autocomplete
               label="원계약"
               :items="topContr"
               item-title="topContrNm"
               item-value="topContrId"
-              :readonly="mode === 'R'"
-              >
-              </v-select>
+              v-model="contr.topContrId"
+              :readonly="mode === MODAL_MODE.DETAIL"
+            ></v-autocomplete>
             </v-col>
+
              <v-col>
-              <v-select
+             <v-autocomplete
               label="업체"
               :items="company"
-              item-title="compName"
+              item-title="compNm "
               item-value="compId"
-              :readonly="mode === 'R'"
-              >
-              </v-select>
+              v-model="contr.compId"
+              :readonly="mode === MODAL_MODE.DETAIL"
+            ></v-autocomplete>
             </v-col>
           </v-row>
 
@@ -68,13 +69,13 @@
 
           <v-row>
             <v-col>
-              <label>계약일자</label> 
+              <label>계약일자</label>
               <br/>
-              <input type="date" id="strDate" :readonly="mode === 'R'" v-model="contr.contrStDate"/> ~  
+              <input type="date" id="strDate" :readonly="mode === 'R'" v-model="contr.contrStDate"/> ~
               <input type="date" id="strDate" :readonly="mode === 'R'" v-model="contr.contrEndDate"/>
               <v-textarea label="특이사항" variant="outlined" rows="5" :readonly="mode === 'R'" v-model="contr.specialNote"></v-textarea>
             </v-col>
-           
+
           </v-row>
           <v-row>
              <div class="modal-btn-list">
@@ -101,6 +102,7 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_PORT = import.meta.env.VITE_BE_PORT;
 import {MODAL_MODE} from "@/util/config";
+import commonApi from "@/api/common.js"
 import utils from "@/util/validUtil";
 import contrApi from '@/api/contr';
 import companyApi from '@/api/company';
@@ -115,7 +117,8 @@ export default {
         /** 계약 단건 조회*/
         this.contr();
     }else{
-      this.getSelectBox();
+      this.getTopContrNms();
+      this.getCompNms();
     }
 
   },
@@ -137,7 +140,7 @@ export default {
 
       key:store.getters.getParams.key,
 
-      topContr : [],  
+      topContr : [],
 
       company : [],
 
@@ -154,6 +157,8 @@ export default {
         contrEndDate : '',
       },
 
+      params : store.getters.getParams,
+
       file : '',
     }
   },
@@ -162,6 +167,23 @@ export default {
       close:()=>{
         store.commit("toggleModal");
       },
+
+      /* 원계약명 조회 */
+      async getTopContrNms() {
+        const topContrId = this.params.topContrId;
+
+        this.topContr = await commonApi.topContrNms(topContrId);
+      },
+
+      /* 업체명 조회 */
+      async getCompNms() {
+        const compId = this.params.compId;
+
+        this.company = await commonApi.compNms(compId);
+
+
+      },
+
 
       /**
        * 계약 정보 및 계약서 파일 저장
@@ -174,7 +196,7 @@ export default {
         const amount = this.contr.contrAmount;
 
         this.contr.contrAmount = amount.replace(",", "");
-        
+
         console.log("this.contr.contrAmount ======>" + this.contr.contrAmount);
 
 
@@ -183,7 +205,7 @@ export default {
         formData.append('data' ,blob);
 
         //await projectApi.newProject(formData);
-        
+
         //this.close();
       },
 
@@ -192,12 +214,12 @@ export default {
       //   this.topContr = await projectApi.project(this.key);
       // },
 
-      
+
       /**
        * select box (원계약,업체) 목록조회
       */
       async getSelectBox(){
-        
+
         // 원계약
         this.topContr = await topContrApi.projects();
         // 업체
@@ -222,7 +244,7 @@ export default {
 
       /**
        * 계약 파일 저장
-       * 
+       *
       */
       async saveContrFile(){
 
@@ -230,8 +252,8 @@ export default {
         formData.append('file' ,this.file);
 
         const data = await contrApi.saveContrFile(formData);
-        
-        
+
+
         if(data.contrNm == null){
           alert("자동등록에 실패하였습니다.");
           return false;
@@ -246,7 +268,7 @@ export default {
           // 파일 등록시 수정모드로 변경
           this.updateMode();
         }
-                
+
       }
     }
 }

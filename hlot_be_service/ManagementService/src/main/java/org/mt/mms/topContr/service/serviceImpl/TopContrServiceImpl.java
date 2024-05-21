@@ -7,15 +7,10 @@ import org.mt.mms.topContr.mapper.TopContrMapper;
 import org.mt.mms.topContr.service.TopContrService;
 import org.mt.mms.topContr.vo.TopContrVO;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.UriUtils;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -31,12 +26,12 @@ public class TopContrServiceImpl implements TopContrService {
     private String filePath;
 
     @Override
-    public List<TopContrVO> all() throws Exception{
+    public List<TopContrVO> all(TopContrVO searchParam) throws Exception{
 
         List<TopContrVO> result = null;
 
         try{
-            result = topContrMapper.getTopContrs();
+            result = topContrMapper.getTopContrs(searchParam);
             log.info(result.toString());
         }catch(Exception e){
             log.info(e.getMessage());

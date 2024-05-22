@@ -62,7 +62,7 @@ import ContrModal from "@/components/modal/ContrtModal.vue";
 const headers = [
   {title: '원계약 명', key: 'topContrNm'},
   {title: '업체 명', key: 'compNm'},
-  {title: '견적 구분', key: 'estimateDiv'},
+  {title: '견적 구분', key: 'estimateDivNm'},
   {title: '견적 순번', key: 'orderNo'},
   {title: '확정 여부', key: 'confirmYn'},
   {title: '계약 여부', key: 'contrYn'},

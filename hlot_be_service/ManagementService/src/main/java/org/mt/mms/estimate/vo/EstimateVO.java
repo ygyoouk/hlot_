@@ -18,6 +18,7 @@ public class EstimateVO {
     private String compId;              // 업체ID
     private int orderNo;                // 견적 순번
     private String estimateDiv;         // 견적구분
+    private String estimateDivNm;       // 견적구분명
     private String confirmYn;           // 확정여부
     private String contrYn;             // 계약여부
     private String estimateFileId;      // 견적서첨부파일ID

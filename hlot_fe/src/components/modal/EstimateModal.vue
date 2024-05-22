@@ -45,7 +45,9 @@
           <v-col>
             <v-select
               label="견적구분"
-              :items="['A', 'B', 'C']"
+              :items="estimateDivs"
+              item-title="codeNm"
+              item-value="code"
               v-model="estimate.estimateDiv"
               :readonly="mode === MODAL_MODE.DETAIL"
               ></v-select>
@@ -225,11 +227,12 @@ import validUtil from "@/util/validUtil";
 
 export default {
   name: "EstimateModal",
-  beforeMount() {
+  async beforeMount() {
 
+    this.estimateDivs = await commonApi.cmmCodeComp('ESTD');
     if(this.mode === MODAL_MODE.DETAIL){
-      this.getEstimate();
-      this.getProds();
+      await this.getEstimate();
+      await this.getProds();
     }
 
   },
@@ -243,6 +246,7 @@ export default {
       key: store.getters.getParams.key,
 
       file: '',
+      estimateDivs: [],
       estimate: {
         topContrId: '',
         topContrNm: '',
@@ -262,10 +266,6 @@ export default {
       prods: [],
       prodModal: false,
       prodIndex: 0,
-
-      topContrNms: [],
-      compNms: [],
-
 
     }
   },
@@ -288,15 +288,6 @@ export default {
       this.estimate.compId = obj.id;
     },
 
-    async getTopContrNms() {
-      this.topContrNms = await commonApi.topContrNms();
-    },
-
-    /* 업체명 조회 */
-    async getCompNms() {
-      this.compNms = await commonApi.compNms();
-    },
-
     /* 파일 선택 */
     selectFile(file) {
       this.file = file.target.files[0];
@@ -305,7 +296,7 @@ export default {
     /* ESTIMATE 상세조회 */
     async getEstimate() {
       this.estimate = await estimateApi.estimate(this.key);
-      this.estimate.attachmentVO = validUtil.isNull(this.estimate.attachmentVO)??{};
+      this.estimate.attachmentVO = validUtil.isNull(this.estimate.attachmentVO) ? {} : this.estimate.attachmentVO;
     },
 
     /* PROD 목록조회 */

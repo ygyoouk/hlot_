@@ -9,6 +9,7 @@
              , E.COMP_ID
              , E.ORDER_NO
              , E.ESTIMATE_DIV
+             , (SELECT CC.CODE_NM FROM CMM_CODE CC WHERE CC.CODE = E.ESTIMATE_DIV AND CC.CODE_GROUP = 'ESTD') AS ESTIMATE_DIV_NM
              , E.CONFIRM_YN
              , E.CONTR_YN
              , E.REGIST_DATE
@@ -25,20 +26,24 @@
 
     <select id="selectEstimate" resultType="org.mt.mms.estimate.vo.EstimateExVO" parameterType="string">
         SELECT /* org.mt.mms.estimate.mapper.EstimateMapper.selectEstimate : ESTIMATE 상세조회 */
-            ESTIMATE_ID
-             , TOP_CONTR_ID
-             , COMP_ID
-             , ORDER_NO
-             , ESTIMATE_DIV
-             , CONFIRM_YN
-             , CONTR_YN
-             , ESTIMATE_FILE_ID
-             , REGIST_DATE
-             , DEL_YN
-             , REGIST_USER_NAME
-        FROM ESTIMATE
+            E.ESTIMATE_ID
+             , E.TOP_CONTR_ID
+             , E.COMP_ID
+             , E.ORDER_NO
+             , E.ESTIMATE_DIV
+             , E.CONFIRM_YN
+             , E.CONTR_YN
+             , E.ESTIMATE_FILE_ID
+             , E.REGIST_DATE
+             , E.DEL_YN
+             , E.REGIST_USER_NAME
+
+             , TC.TOP_CONTR_NM
+             , C.COMP_NM
+        FROM ESTIMATE E
+                 INNER JOIN TOP_CONTR TC ON TC.TOP_CONTR_ID = E.TOP_CONTR_ID
+                 INNER JOIN COMP C ON C.COMP_ID = E.COMP_ID
         WHERE ESTIMATE_ID = #{id}
-            AND DEL_YN = 'N'
     </select>
 
     <insert id="insertEstimate" parameterType="org.mt.mms.estimate.vo.EstimateVO">

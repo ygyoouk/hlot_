@@ -10,13 +10,34 @@
       업체 관리
     </div>
 
-    <v-card-title>
+    <div class="d-flex flex-wrap ga-3 mb-0">
+      <v-select
+        label="업체구분"
+        density="compact"
+        :items="compDivs"
+        item-title="codeNm"
+        item-value="code"
+        v-model="searchCondition.compDiv"
+      />
+
       <v-text-field
-        v-model="search"
-        prepend-inner-icon="mdi-magnify"
-        label="검색"
-      ></v-text-field>
-    </v-card-title>
+        label="업체명"
+        density="compact"
+        v-model="searchCondition.compNm"
+      />
+
+      <v-text-field
+        label="사업자 등록번호"
+        density="compact"
+        v-model="searchCondition.compBussRegnum"
+      />
+      <v-btn
+        color="primary"
+        @click="getCompanys"
+      >
+        조회
+      </v-btn>
+    </div>
 
     <div class="table-btn-list">
       <v-btn color="#5865f2" @click="openReg">등록</v-btn>
@@ -26,7 +47,6 @@
       @click:row="openDetail"
       :headers="headers"
       :items="companys"
-      :search="search"
       :items-per-page-options="ITEMS_PER_PAGE_OPTIONS"
       class="elevation-1 table-list_mt"
     >
@@ -41,12 +61,14 @@ import CompanyModal from "@/components/modal/CompanyModal.vue";
 import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
 
 const headers = [
+  { title: '업체 구분', key:'compDivNm'},
   { title: '업체 명', key:'compNm' },
   { title: '사업자등록번호', key:'compBussRegnum' },
-  { title: '업체 구분', key:'compDivNm'},
   { title: '업체 대표', key:'compCeoNm'},
   { title: '업체 전화번호', key:'compTel'},
-  { title: '업체 주소',  key:'compAddr'}
+  { title: '업체 주소',  key:'compAddr'},
+  { title: '등록자',  key:'registUserName'},
+  { title: '등록일자',  key:'registDate'}
 ];
 </script>
 
@@ -54,13 +76,24 @@ const headers = [
 import companyApi from '@/api/company.js'
 import store from "@/store/store";
 import {MODAL_MODE} from "@/util/config";
+import commonApi from "@/api/common.js";
+
 export default {
-  beforeMount() {
-    this.getCompanys();
+  async beforeMount() {
+    await this.getCompanys();
+
+    /* 업체구분 공통코드 조회 */
+    this.compDivs = await commonApi.cmmCodeComp("COMP");
   },
   data() {
     return {
-      search: '',     // 검색텍스트
+      searchCondition: {
+        compDiv: '',
+        compNm: '',
+        compBussRegnum: '',
+      },
+      compDivs: [],
+
       companys: [],   // 업체 Array
       bCompanyModal: false,
     };
@@ -68,7 +101,7 @@ export default {
   methods: {
     /* company 목록 조회 */
     async getCompanys(){
-      this.companys = await companyApi.companys();
+      this.companys = await companyApi.companys(this.searchCondition);
     },
 
     /* 등록화면 */

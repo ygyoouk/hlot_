@@ -6,13 +6,13 @@
         SELECT /* org.mt.mms.company.mapper.CompanyMapper.getCompany : COMP 상세조회 */
             COMP_ID
              , COMP_NM
-             , COMP_BUSS_REGNUM
+             , bussRegnum(COMP_BUSS_REGNUM) AS COMP_BUSS_REGNUM
              , COMP_DIV
              , COMP_CEO_NM
-             , COMP_TEL
+             , phoneNumber(COMP_TEL) AS COMP_TEL
              , COMP_ADDR
              , REGIST_USER_NAME
-             , REGIST_DATE
+             , DATE_FORMAT(REGIST_DATE, '%Y-%m-%d') AS REGIST_DATE
         FROM COMP
         WHERE COMP_ID = #{compId}
     </select>
@@ -20,15 +20,15 @@
     <select id="selectCompanys" resultType="org.mt.mms.company.vo.CompanyVO" parameterType="hashmap">
         SELECT /* org.mt.mms.company.mapper.CompanyMapper.selectCompanys : COMP 목록조회 */
             COMP_ID
-             , COMP_BUSS_REGNUM
+             , bussRegnum(COMP_BUSS_REGNUM) AS COMP_BUSS_REGNUM
              , COMP_NM
              , COMP_DIV
              , (SELECT CC.CODE_NM FROM CMM_CODE CC WHERE CC.CODE_GROUP = 'COMP' AND CC.CODE = A.COMP_DIV) AS COMP_DIV_NM
              , COMP_CEO_NM
-             , COMP_TEL
+             , phoneNumber(COMP_TEL) AS COMP_TEL
              , COMP_ADDR
              , REGIST_USER_NAME
-             , REGIST_DATE
+             , DATE_FORMAT(REGIST_DATE, '%Y-%m-%d') AS REGIST_DATE
         FROM COMP A
         WHERE DEL_YN = 'N'
         <if test='compDiv != null and !compDiv.equals("")'>
@@ -38,7 +38,7 @@
             AND COMP_NM LIKE CONCAT('%', #{compNm} ,'%')
         </if>
         <if test='compBussRegnum != null and !compBussRegnum.equals("")'>
-            AND COMP_BUSS_REGNUM = #{compBussRegnum}
+            AND COMP_BUSS_REGNUM = REPLACE(#{compBussRegnum}, '-', '')
         </if>
         ORDER BY REGIST_DATE DESC
     </select>
@@ -59,9 +59,9 @@
         VALUES(
             CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CMP', NEXTVAL(HLOT_SEQ)),
             #{compNm},
-            #{compBussRegnum},
+            REPLACE(#{compBussRegnum}, '-', ''),
             #{compDiv},
-            #{compTel},
+            REPLACE(#{compTel}, '-', ''),
             #{compCeoNm},
             #{compAddr},
             #{registUserName}
@@ -72,9 +72,9 @@
         UPDATE COMP /* org.mt.mms.company.mapper.CompanyMapper.updateCompany : COMP 수정 */
         SET
             COMP_NM = #{compNm}
-          , COMP_BUSS_REGNUM = #{compBussRegnum}
+          , COMP_BUSS_REGNUM = REPLACE(#{compBussRegnum}, '-', '')
           , COMP_DIV = #{compDiv}
-          , COMP_TEL = #{compTel}
+          , COMP_TEL = REPLACE(#{compTel}, '-', '')
           , COMP_CEO_NM = #{compCeoNm}
           , COMP_ADDR = #{compAddr}
         WHERE COMP_ID = #{compId}
@@ -92,9 +92,9 @@
             COMP_MNGER_ID
              , COMP_ID
              , COMP_MNGER_NM
-             , COMP_MNGER_TEL
+             , phoneNumber(COMP_MNGER_TEL) AS COMP_MNGER_TEL
              , REGIST_USER_NAME
-             , REGIST_DATE
+             , DATE_FORMAT(REGIST_DATE, '%Y-%m-%d') AS REGIST_DATE
              , DEL_YN
         FROM COMP_MNGER
         WHERE COMP_ID = #{compId}
@@ -115,7 +115,7 @@
                 CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CPM', NEXTVAL(HLOT_SEQ))
               , #{compId}
               , #{compMngerNm}
-              , #{compMngerTel}
+              , REPLACE(#{compMngerTel}, '-', '')
               , #{registUserName}
               )
     </insert>
@@ -124,7 +124,7 @@
         UPDATE COMP_MNGER /* org.mt.mms.company.mapper.CompanyMapper.updateCompanyManager : COMP_MNGER 수정 */
         SET
             COMP_MNGER_NM = #{compMngerNm}
-          , COMP_MNGER_TEL = #{compMngerTel}
+          , COMP_MNGER_TEL = REPLACE(#{compMngerTel}, '-', '')
         WHERE COMP_ID = #{compId}
           AND COMP_MNGER_ID = #{compMngerId}
     </update>

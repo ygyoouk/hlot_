@@ -12,7 +12,7 @@
              , (SELECT CC.CODE_NM FROM CMM_CODE CC WHERE CC.CODE = E.ESTIMATE_DIV AND CC.CODE_GROUP = 'ESTD') AS ESTIMATE_DIV_NM
              , E.CONFIRM_YN
              , E.CONTR_YN
-             , E.REGIST_DATE
+             , DATE_FORMAT(E.REGIST_DATE, '%Y-%m-%d') AS REGIST_DATE
              , E.REGIST_USER_NAME
 
              , TC.TOP_CONTR_NM

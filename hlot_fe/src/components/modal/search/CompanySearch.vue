@@ -23,7 +23,7 @@
       <v-text-field
         label="사업자 등록번호"
         density="compact"
-        v-model="searchCondition.compBussRegNum"
+        v-model="searchCondition.compBussRegnum"
       />
       <v-btn
         color="primary"
@@ -33,6 +33,28 @@
       </v-btn>
     </div>
 
+    <div>
+      <table class="custom-table_mt">
+        <thead>
+          <tr>
+            <th>업체명</th>
+            <th>업체구분</th>
+            <th>사업자등록번호</th>
+            <th>업체대표</th>
+            <th>업체전화번호</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="c in companys" @click="select(c.compId, c.compNm, c.compDiv)">
+            <td>{{ c.compNm }}</td>
+            <td>{{ c.compDivNm }}</td>
+            <td>{{ c.compBussRegnum }}</td>
+            <td>{{ c.compCeoNm }}</td>
+            <td>{{ c.compTel }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </SubModalLayout>
 
 </template>
@@ -48,27 +70,35 @@ import companyApi from "@/api/company.js";
 
   export default {
     async beforeMount() {
+      /* 업체구분 공통코드 조회 */
       this.compDivs = await commonApi.cmmCodeComp("COMP");
     },
 
     data() {
       return {
         compDivs:[],
+        companys:[],
+
         searchCondition:{
           compDiv: '',
           compNm: '',
-          compBussRegNum: '',
+          compBussRegnum: '',
         }
       }
     },
 
     methods : {
       async search() {
-        await companyApi.companys(this.searchCondition);
+        this.companys = await companyApi.companys(this.searchCondition);
+      },
+      select(id, nm, div){
+        this.$emit('select', {id, nm, div});
+        this.$emit('close');
       }
     }
   }
 
 </script>
 <style scoped>
+@import "@/assets/styles/customTable.css";
 </style>

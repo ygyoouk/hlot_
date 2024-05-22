@@ -8,6 +8,7 @@ import org.mt.mms.company.vo.CompanyManagerVO;
 import org.mt.mms.company.vo.CompanyVO;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -27,8 +28,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<CompanyVO> all() throws Exception {
-        return companyMapper.selectCompanys();
+    public List<CompanyVO> all(HashMap params) throws Exception {
+        return companyMapper.selectCompanys(params);
     }
 
     @Override

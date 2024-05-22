@@ -5,6 +5,13 @@
     @select="selectTopContr"
   />
 
+  <CompanySearch
+    v-if="bCompanySearch"
+    @close="bCompanySearch = !bCompanySearch"
+    @select="selectCompany"
+  />
+
+
   <ModalLayout
     @close="modalClose"
   >
@@ -21,18 +28,17 @@
               label="원계약 명"
               readonly="readonly"
               append-inner-icon="mdi-magnify"
-              @click:append-inner="searchTopContr"
+              @click:append-inner="openTopContrSearch"
             ></v-text-field>
           </v-col>
           <v-col>
-            <v-autocomplete
+            <v-text-field
               label="업체"
-              :items="compNms"
-              item-title="compNm"
-              item-value="compId"
-              v-model="estimate.compId"
-              :readonly="mode === MODAL_MODE.DETAIL"
-            ></v-autocomplete>
+              readonly="readonly"
+              append-inner-icon="mdi-magnify"
+              @click:append-inner="openCompanySeach"
+              v-model="estimate.compNm"
+            ></v-text-field>
           </v-col>
           <v-col>
             <v-select
@@ -198,6 +204,7 @@ import ModalLayout from "@/layouts/ModalLayout.vue";
 import {MODAL_MODE} from "@/util/config";
 import validUtil from "@/util/validUtil";
 import TopContrSearch from "@/components/modal/search/TopContrSearch.vue";
+import CompanySearch from "@/components/modal/search/CompanySearch.vue";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
@@ -217,8 +224,6 @@ import validUtil from "@/util/validUtil";
 export default {
   name: "EstimateModal",
   beforeMount() {
-    this.getTopContrNms();
-    this.getCompNms();
 
     if(this.mode === MODAL_MODE.DETAIL){
       this.getEstimate();
@@ -237,7 +242,11 @@ export default {
       file: '',
       estimate: {
         topContrId: '',
+        topContrNm: '',
+
         compId: '',
+        compNm: '',
+
         estimateDiv: '',
 
         attachmentVO:{
@@ -259,12 +268,21 @@ export default {
   },
   methods : {
     /* 원계약명 조회 */
-    searchTopContr() {
+    openTopContrSearch() {
       this.bTopContrSearch = !this.bTopContrSearch;
     },
     selectTopContr() {
 
     },
+    /* 업체 조회 */
+    openCompanySeach() {
+      this.bCompanySearch = !this.bCompanySearch;
+    },
+    selectCompany(obj) {
+      this.estimate.compNm = obj.nm;
+      this.estimate.compId = obj.id;
+    },
+
     async getTopContrNms() {
       this.topContrNms = await commonApi.topContrNms();
     },

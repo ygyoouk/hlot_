@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.mt.mms.company.vo.CompanyManagerVO;
 import org.mt.mms.company.vo.CompanyVO;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -11,7 +12,7 @@ public interface CompanyMapper {
 
     CompanyVO selectCompany(String companyId) throws Exception;
 
-    List<CompanyVO> selectCompanys() throws Exception;
+    List<CompanyVO> selectCompanys(HashMap params) throws Exception;
 
     int insertCompany(CompanyVO companyVO) throws Exception;
 

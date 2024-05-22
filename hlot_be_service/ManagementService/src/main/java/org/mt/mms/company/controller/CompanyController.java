@@ -34,7 +34,7 @@ public class CompanyController {
         HashMap<String, String> params = Util.requestToMap(request);
 
         return ResponseEntity.ok()
-                .body(Result.resSuccess(companyService.all()));
+                .body(Result.resSuccess(companyService.all(params)));
     }
 
     /* company 등록 */

@@ -42,7 +42,8 @@ import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
 
 const headers = [
   { title: '업체 명', key:'compNm' },
-  { title: '업체 구분', key:'compDiv'},
+  { title: '사업자등록번호', key:'compBussRegnum' },
+  { title: '업체 구분', key:'compDivNm'},
   { title: '업체 대표', key:'compCeoNm'},
   { title: '업체 전화번호', key:'compTel'},
   { title: '업체 주소',  key:'compAddr'}

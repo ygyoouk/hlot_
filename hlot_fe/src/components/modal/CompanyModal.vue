@@ -11,6 +11,17 @@
       <v-container>
         <v-row>
           <v-col>
+            <v-select
+              label="업체구분"
+              :items="compDivs"
+              item-title="codeNm"
+              item-value="code"
+              v-model="company.compDiv"
+              :readonly="mode === MODAL_MODE.DETAIL"
+            ></v-select>
+
+          </v-col>
+          <v-col>
             <v-text-field
               v-model="company.compNm"
               label="업체명"
@@ -18,12 +29,11 @@
             />
           </v-col>
           <v-col>
-            <v-select
-              label="업체구분"
-              :items="['업체', '수요기관', '발주처']"
-              v-model="company.compDiv"
+            <v-text-field
+              v-model="company.compBussRegnum"
+              label="사업자등록번호"
               :readonly="mode === MODAL_MODE.DETAIL"
-            ></v-select>
+            />
           </v-col>
         </v-row>
         <v-row>
@@ -41,8 +51,6 @@
               label="전화번호"
             />
           </v-col>
-        </v-row>
-        <v-row>
           <v-col>
             <v-text-field
               :readonly="mode === MODAL_MODE.DETAIL"
@@ -158,13 +166,17 @@ import validUtil from "@/util/validUtil";
 import companyApi from '@/api/company.js'
 import store from "@/store/store";
 import validUtil from "@/util/validUtil";
+import commonApi from "@/api/common";
+
 export default {
   name: "CompanyModal",
-  beforeMount() {
-    if(!validUtil.isNull(this.key)) this.getCompany();
+  async beforeMount() {
+    this.compDivs = await commonApi.cmmCodeComp('COMP');
+    if(!validUtil.isNull(this.key)) await this.getCompany();
   },
   data() {
     return {
+      compDivs: [],
       managerModal: false,
 
       mode: store.getters.getParams.mode,
@@ -173,6 +185,7 @@ export default {
       company: {  // 업체
         compId: '',          // 업체ID
         compNm: '',        // 업체명
+        compBussRegnum: '', // 사업자등록번호
         compCeoNm: '',       // 업체대표명
         compTel: '',         // 업체번호
         compAddr: '',         // 업체주소

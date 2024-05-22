@@ -49,6 +49,7 @@
         (
           COMP_ID
         , COMP_NM
+        , COMP_BUSS_REGNUM
         , COMP_DIV
         , COMP_TEL
         , COMP_CEO_NM
@@ -56,20 +57,22 @@
         , REGIST_USER_NAME
         )
         VALUES(
-                  CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CMP', NEXTVAL(HLOT_SEQ)),
-                  #{compNm},
-                  #{compDiv},
-                  #{compTel},
-                  #{compCeoNm},
-                  #{compAddr},
-                  #{registUserName}
-              )
+            CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CMP', NEXTVAL(HLOT_SEQ)),
+            #{compNm},
+            #{compBussRegnum},
+            #{compDiv},
+            #{compTel},
+            #{compCeoNm},
+            #{compAddr},
+            #{registUserName}
+        )
     </insert>
 
     <update id="updateCompany" parameterType="org.mt.mms.company.vo.CompanyVO">
         UPDATE COMP /* org.mt.mms.company.mapper.CompanyMapper.updateCompany : COMP 수정 */
         SET
             COMP_NM = #{compNm}
+          , COMP_BUSS_REGNUM = #{compBussRegnum}
           , COMP_DIV = #{compDiv}
           , COMP_TEL = #{compTel}
           , COMP_CEO_NM = #{compCeoNm}

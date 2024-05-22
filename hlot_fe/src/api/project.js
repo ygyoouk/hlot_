@@ -16,7 +16,6 @@ export default {
   // TOP_CONTR 상세조회
   project(topContrId){
     return axios.get(REQUEST_URL + '/api/topContr/'+topContrId).then(res => {
-      console.log(res.data.data);
       return res.data.data;
     });
   },

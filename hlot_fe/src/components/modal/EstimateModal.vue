@@ -9,6 +9,7 @@
     v-if="bCompanySearch"
     @close="bCompanySearch = !bCompanySearch"
     @select="selectCompany"
+    :compDiv="compDiv"
   />
 
 
@@ -29,6 +30,7 @@
               readonly="readonly"
               append-inner-icon="mdi-magnify"
               @click:append-inner="openTopContrSearch"
+              v-model="estimate.topContrNm"
             ></v-text-field>
           </v-col>
           <v-col>
@@ -36,7 +38,7 @@
               label="업체"
               readonly="readonly"
               append-inner-icon="mdi-magnify"
-              @click:append-inner="openCompanySeach"
+              @click:append-inner="openCompanySeach('COMP01')"
               v-model="estimate.compNm"
             ></v-text-field>
           </v-col>
@@ -233,6 +235,7 @@ export default {
   },
   data() {
     return {
+      compDiv: '',
       bTopContrSearch: false,
       bCompanySearch: false,
 
@@ -271,11 +274,13 @@ export default {
     openTopContrSearch() {
       this.bTopContrSearch = !this.bTopContrSearch;
     },
-    selectTopContr() {
-
+    selectTopContr(obj) {
+      this.estimate.topContrId = obj.id;
+      this.estimate.topContrNm = obj.nm;
     },
     /* 업체 조회 */
-    openCompanySeach() {
+    openCompanySeach(compDiv) {
+      this.compDiv = compDiv;
       this.bCompanySearch = !this.bCompanySearch;
     },
     selectCompany(obj) {

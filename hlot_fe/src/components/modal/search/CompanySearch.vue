@@ -11,6 +11,7 @@
         :items="compDivs"
         item-title="codeNm"
         item-value="code"
+        readonly="readonly"
         v-model="searchCondition.compDiv"
       />
 
@@ -69,9 +70,12 @@ import commonApi from "@/api/common.js";
 import companyApi from "@/api/company.js";
 
   export default {
+    props: ['compDiv'],
+
     async beforeMount() {
       /* 업체구분 공통코드 조회 */
       this.compDivs = await commonApi.cmmCodeComp("COMP");
+      this.searchCondition.compDiv = this.compDiv;
     },
 
     data() {

@@ -6,6 +6,7 @@
         SELECT /* org.mt.mms.company.mapper.CompanyMapper.getCompany : COMP 상세조회 */
             COMP_ID
              , COMP_NM
+             , COMP_BUSS_REGNUM
              , COMP_DIV
              , COMP_CEO_NM
              , COMP_TEL
@@ -16,18 +17,29 @@
         WHERE COMP_ID = #{compId}
     </select>
 
-    <select id="selectCompanys" resultType="org.mt.mms.company.vo.CompanyVO">
+    <select id="selectCompanys" resultType="org.mt.mms.company.vo.CompanyVO" parameterType="hashmap">
         SELECT /* org.mt.mms.company.mapper.CompanyMapper.selectCompanys : COMP 목록조회 */
             COMP_ID
+             , COMP_BUSS_REGNUM
              , COMP_NM
              , COMP_DIV
+             , (SELECT CC.CODE_NM FROM CMM_CODE CC WHERE CC.CODE_GROUP = 'COMP' AND CC.CODE = A.COMP_DIV) AS COMP_DIV_NM
              , COMP_CEO_NM
              , COMP_TEL
              , COMP_ADDR
              , REGIST_USER_NAME
              , REGIST_DATE
-        FROM COMP
+        FROM COMP A
         WHERE DEL_YN = 'N'
+        <if test='compDiv != null and !compDiv.equals("")'>
+            AND COMP_DIV = #{compDiv}
+        </if>
+        <if test='compNm != null and !compNm.equals("")'>
+            AND COMP_NM LIKE CONCAT('%', #{compNm} ,'%')
+        </if>
+        <if test='compBussRegnum != null and !compBussRegnum.equals("")'>
+            AND COMP_BUSS_REGNUM = #{compBussRegnum}
+        </if>
         ORDER BY REGIST_DATE DESC
     </select>
 

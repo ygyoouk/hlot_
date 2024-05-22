@@ -3,6 +3,7 @@
   <CompanySearch
     v-if="bCompanySearch"
     @close="bCompanySearch = !bCompanySearch"
+    @select="selectCompany"
     style="z-index: 3"
   />
 
@@ -16,10 +17,12 @@
       <v-text-field
         label="원계약명"
         density="compact"
+        v-model="searchCondition.topContrNm"
       />
       <v-select
         label="계약구분(품명)"
         density="compact"
+        v-model="searchCondition.topContrDiv"
       />
       <v-text-field
         label="발주처"
@@ -27,6 +30,7 @@
         append-inner-icon="mdi-magnify"
         @click:append-inner="searchCompany"
         density="compact"
+        v-model="clientCompNm"
       ></v-text-field>
     </div>
     <div class="d-flex flex-wrap ga-3 mt-0">
@@ -40,6 +44,7 @@
         append-inner-icon="mdi-magnify"
         @click:append-inner="searchCompany"
         density="compact"
+        v-model="demandInstNm"
       ></v-text-field>
       <v-btn
         color="primary"
@@ -58,11 +63,26 @@ export default {
   data() {
     return {
       bCompanySearch: false,
+
+      clientCompNm : '',
+      demandInstNm : '',
+
+      searchCondition:{
+        topContrNm: '',
+        topContrDiv: '',
+        clientCompId: '',
+        demandInstId: '',
+        contrStDate: '',
+        contrEndDate: '',
+      }
     }
   },
   methods : {
     searchCompany() {
       this.bCompanySearch = !this.bCompanySearch;
+    },
+    selectCompany(obj){
+
     }
   }
 }

@@ -272,6 +272,7 @@ export default {
   methods : {
     /* 원계약명 조회 */
     openTopContrSearch() {
+      if(this.mode !== MODAL_MODE.REG) return false;
       this.bTopContrSearch = !this.bTopContrSearch;
     },
     selectTopContr(obj) {
@@ -280,6 +281,7 @@ export default {
     },
     /* 업체 조회 */
     openCompanySeach(compDiv) {
+      if(this.mode !== MODAL_MODE.REG) return false;
       this.compDiv = compDiv;
       this.bCompanySearch = !this.bCompanySearch;
     },

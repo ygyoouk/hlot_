@@ -23,4 +23,8 @@ public interface CommonMapper {
     String selectHlotSeq(HashMap<String, String> param) throws Exception;
 
     List<CmmCodeVO> selectCode(String codeNm) throws Exception;
+
+    TopContrVO topContrNm(String topContrId);
+
+    CompanyVO compNm(String compId);
 }

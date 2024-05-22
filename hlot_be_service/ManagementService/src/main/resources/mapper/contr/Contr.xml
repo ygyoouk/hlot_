@@ -2,15 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.mt.mms.contr.mapper.ContrMapper">
 
-    <select id="all" resultType="org.mt.mms.contr.vo.ContrVO">
+    <select id="all" parameterType="map" resultType="org.mt.mms.contr.vo.ContrVO">
+
+
         SELECT
             CONTR_ID,
             CONTR_NM,
-            CONTR_AMOUNT,
+            FORMAT(CONTR_AMOUNT,',') AS CONTR_AMOUNT,
             PAYMENT_TERM,
             CONCAT(SUBSTRING(SPECIAL_NOTE, 1, 50),'...') AS SPECIAL_NOTE,
-            CONTR_ST_DATE,
-            CONTR_END_DATE,
+            DATE_FORMAT(CONTR_ST_DATE, '%Y-%m-%d') As CONTR_ST_DATE,
+            DATE_FORMAT(CONTR_END_DATE, '%Y-%m-%d') As CONTR_END_DATE,
             REGIST_USER_NAME,
             REGIST_DATE,
             DEL_YN,
@@ -19,6 +21,15 @@
         FROM
             CONTR
         WHERE DEL_YN = 'N'
+        <if test="contrNm != null and contrNm !=''">
+            AND CONTR_NM LIKE '%' #{contrNm} '%'
+        </if>
+        <if test="contrStDate != '' and contrEndDate != ''">
+            <![CDATA[
+            AND CONTR_ST_DATE >= #{contrStDate}
+            AND CONTR_END_DATE <= #{contrEndDate}
+            ]]>
+        </if>
         ORDER BY REGIST_DATE DESC
     </select>
 

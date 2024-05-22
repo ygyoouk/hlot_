@@ -19,9 +19,11 @@
             REGIST_USER_NAME,
             REGIST_DATE,
             DEL_YN,
+            (SELECT COMP_NM FROM COMP WHERE COMP_ID = TC.CLIENT_COMP_ID) AS CLIENT_COMP,
+            (SELECT COMP_NM FROM COMP WHERE COMP_ID = TC.DEMAND_INST_ID) AS DEMAND_INST,
             TOP_CONTR_FILE_ID
         FROM
-            TOP_CONTR
+            TOP_CONTR TC
         WHERE DEL_YN = 'N'
         <if test="topContrNm != null and topContrNm !=''">
             AND TOP_CONTR_NM LIKE '%' #{topContrNm} '%'
@@ -29,14 +31,14 @@
         <if test="topContrDiv != null and topContrDiv != ''">
             AND TOP_CONTR_DIV = #{topContrDiv}
         </if>
-        <if test="clientComp != null and clientComp != ''">
-            AND CLIENT_COMP = #{clientComp}
+        <if test="clientCompId != null and clientCompId != ''">
+            AND CLIENT_COMP_ID = #{clientCompId}
         </if>
         <if test="prodNm != null and prodNm != ''">
             AND PROD_NM LIKE '%' #{prodNm} '%'
         </if>
-        <if test="demandInstNm != null and demandInstNm != ''">
-            AND DEMAND_INST_NM = #{demandInstNm}
+        <if test="demandInstId != null and demandInstId != ''">
+            AND DEMAND_INST_ID = #{demandInstId}
         </if>
         <if test="topContrStDate != '' and topContrEndDate != ''">
             AND TOP_CONTR_DATE BETWEEN #{topContrStDate} AND #{topContrEndDate}
@@ -68,14 +70,14 @@
             CONCAT('20240402BTCO',NEXTVAL(HLOT_SEQ)),
             #{topContrNm},
             #{topContrDiv},
-            #{clientComp},
+            #{clientCompId},
             #{topContrDate},
             #{contrStDate},
             #{contrEndDate},
             #{prodNm},
             #{contrAmount},
             #{deliveryDeadline},
-            #{demandInstNm},
+            #{demandInstId},
             '최성주',
             sysdate(),
             'N',
@@ -100,6 +102,8 @@
             FILE_ID,
             FILE_PATH,
             ORIGN_FILE_NAME,
+            (SELECT COMP_NM FROM COMP WHERE COMP_ID = TC.CLIENT_COMP_ID) AS CLIENT_COMP,
+            (SELECT COMP_NM FROM COMP WHERE COMP_ID = TC.DEMAND_INST_ID) AS DEMAND_INST,
             CHANGE_FILE_NAME
         FROM
             TOP_CONTR TC LEFT OUTER JOIN ATTACHMENT A

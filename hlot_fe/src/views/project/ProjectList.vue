@@ -1,5 +1,14 @@
 <template>
-  <ProjectModal v-if="store.getters.isOpenModal"/>
+  <ProjectModal
+  v-if="bProjectModal"
+   @close="bProjectModal = false"/>
+
+  <CompnaySearchModal
+  v-if="bCompanySearchModal"
+  :compDiv="compDiv"
+  @select="selectNm"
+  @close="bCompanySearchModal = !bCompanySearchModal"
+  />
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
@@ -30,15 +39,18 @@
           <v-text-field
             v-model="searchParam.clientComp"
             density="comfortable"
+            readonly="readonly"
             @keyup="enterKey()"
-            prepend-inner-icon="mdi-magnify"
             label="발주처"
+            append-inner-icon="mdi-magnify"
+            @click:append-inner="compSearchPopUp('COMP03')"
           ></v-text-field>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col>
-          <label> 원계약 기간 : </label>
+          <label> 계약기간 : </label>
           <input type="date" @keyup="enterKey()" id="strDate" v-model="searchParam.topContrStDate"/>  ~
           <input type="date" @keyup="enterKey()" id="endDate" v-model="searchParam.topContrEndDate"/>
         </v-col>
@@ -56,15 +68,21 @@
         <v-col>
           <v-text-field
             v-model="searchParam.demandInstNm"
-            prepend-inner-icon="mdi-magnify"
+            append-inner-icon="mdi-magnify"
             density="comfortable"
+            readonly="readonly"
             @keyup="enterKey()"
+            @click:append-inner="compSearchPopUp('COMP02')"
             label="수요기관명"
           ></v-text-field>
         </v-col>
 
         <v-col cols="auto">
           <v-btn color="green"  @keyup="enterKey()" @click="searchTopContr()">조회</v-btn>
+        </v-col>
+
+        <v-col cols="auto">
+          <v-btn color="red"  @keyup="enterKey()" @click="clearSearchParam()">초기화</v-btn>
         </v-col>
 
       </v-row>
@@ -100,6 +118,7 @@
 <script setup>
 
   import ProjectModal from "@/components/modal/ProjectModal.vue";
+  import CompnaySearchModal from "@/components/modal/search/CompanySearch.vue"
   import {ITEMS_PER_PAGE_OPTIONS} from "@/util/config";
 
 
@@ -114,7 +133,7 @@
     { title: '품명',  key:'prodNm'},
     { title: '계약금액',  key:'contrAmount'},
     { title: '납품기한',  key:'deliveryDeadline'},
-    { title: '수요기관명',  key:'demandInstNm'},
+    { title: '수요기관명',  key:'demandInst'},
   ];
 </script>
 
@@ -148,16 +167,22 @@ export default {
       search: '',
       topContrs: [],
       selected : [],
+      bProjectModal: false,
+      bCompanySearchModal : false,
+      compDiv : '',
       searchParam : {
+        
         topContrNm : '',
         topContrDiv : '',
         clientComp : '',
+        clientCompId : '',
         topContrStDate : '',
         topContrEndDate : '',
         prodNm : '',
         demandInstNm : '',
+        demandInstId : '',
       },
-      popUpValue : false,
+
     };
   },
   methods: {
@@ -188,20 +213,53 @@ export default {
 
       this.topContrs.topContrId = item.topContrId;
 
-      this.$store.commit("toggleModal", {key: this.topContrs.topContrId, mode: MODAL_MODE.DETAIL});
+      this.store.commit('setModalParams', {key: this.topContrs.topContrId, mode: MODAL_MODE.DETAIL});
+
+      this.bProjectModal = !this.bProjectModal;
+      // this.$store.commit("toggleModal", {key: this.topContrs.topContrId, mode: MODAL_MODE.DETAIL});
 
     },
 
-    pushRegPop: () => {
-      store.commit("toggleModal", {key: '', mode: MODAL_MODE.REG});
+    pushRegPop(){
+      store.commit('setModalParams', {key: '', mode: MODAL_MODE.REG});
 
+      this.bProjectModal = !this.bProjectModal;
+    },
+
+    compSearchPopUp(compDiv){
+      this.compDiv = compDiv; // 업체구분
+      this.bCompanySearchModal =!this.bCompanySearchModal;
     },
 
     async getTopContrs(searchParam){ // 원계약 리스트 조회
-
       this.topContrs = await projectApi.projects(searchParam);
+
+      // 조회조건 초기화
+      // this.searchParam = {};
     },
 
+    /**
+     * 검색조건 초기화
+    */
+    clearSearchParam(){
+      this.searchParam = {};
+    },
+
+    /**
+     *발주처,수요기관 검색한 내용 가져오기
+    */
+    selectNm(obj){
+      const compDiv = obj.div;
+
+      // 발주처 :  COMP03 / 수요기관 :  COMP02
+      if(compDiv === "COMP03"){
+        this.searchParam.clientComp   = obj.nm;
+        this.searchParam.clientCompId = obj.id;
+      }else{
+        this.searchParam.demandInstNm = obj.nm;
+        this.searchParam.demandInstId = obj.id;
+      }
+    },
 
     async deleteProject(){ // 프로젝트 삭제
     console.log(this.selected);

@@ -14,7 +14,7 @@ export default {
 
   /**
    * 날짜 포맷팅
-   * @param {*} date 
+   * @param {*} date
    * @returns {yyyy-MM-dd}
    */
    formatDate(date){
@@ -29,9 +29,9 @@ export default {
      * yyy-MM-dd => yyyymmdd
      */
     saveDate(date){
-
+      if(date === undefined || date === null || date === '') return '';
       return date.split("-").join("");
 
-    }    
+    }
 
 }

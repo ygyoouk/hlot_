@@ -9,8 +9,8 @@ const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
 export default {
 
   //CONTR 조회
-  contrs(){
-    return axios.get(REQUEST_URL + '/api/contrs').then(res => {
+  contrs(params){
+    return axios.get(REQUEST_URL + '/api/contrs',{params}).then(res => {
         console.log(res.data.data);
       return res.data.data;
     });
@@ -21,7 +21,7 @@ export default {
    * 계약 파일 저장
    */
   saveContrFile(formData){
-    
+
     return axios.post(REQUEST_URL + '/common/pdfUpload',formData,{header:{'Content-Type' : 'multipart/form-data'}}).then(res=>{
       return res.data.data;
     });

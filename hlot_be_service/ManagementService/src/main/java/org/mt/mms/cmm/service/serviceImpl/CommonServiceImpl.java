@@ -49,4 +49,14 @@ public class CommonServiceImpl implements CommonService {
     public List<CmmCodeVO> getCode(String codeNm) throws Exception {
         return commonMapper.selectCode(codeNm);
     }
+
+    @Override
+    public TopContrVO topContrNm(String topContrId) {
+        return commonMapper.topContrNm(topContrId);
+    }
+
+    @Override
+    public CompanyVO compNm(String compId) {
+        return commonMapper.compNm(compId);
+    }
 }

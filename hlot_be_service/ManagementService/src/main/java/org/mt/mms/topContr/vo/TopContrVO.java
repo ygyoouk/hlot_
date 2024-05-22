@@ -15,6 +15,7 @@ public class TopContrVO {
     private String topContrNm;
     private String topContrDiv;
     private String clientComp;
+    private String clientCompId;
     private String topContrDate;
     private String topContrStDate;
     private String topContrEndDate;
@@ -23,7 +24,8 @@ public class TopContrVO {
     private String prodNm;
     private String contrAmount;
     private String deliveryDeadline;
-    private String demandInstNm;
+    private String demandInst;
+    private String demandInstId;
     private String topContrFileId;
     private String fileId;
     private String filePath;

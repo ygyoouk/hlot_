@@ -1,6 +1,6 @@
 <template>
   <ModalLayout
-    @close="this.$emit('close')"
+    @close="$emit('close')"
   >
     <div class="modal-title">
       업체관리 {{ mode === MODAL_MODE.DETAIL ? '상세'

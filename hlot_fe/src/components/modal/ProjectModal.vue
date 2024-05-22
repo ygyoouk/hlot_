@@ -1,5 +1,13 @@
 <template>
-  <ModalLayout>
+<CompnaySearchModal
+  v-if="bCompanySearchModal"
+  :compDiv="compDiv"
+  @select="selectNm"
+  @close="bCompanySearchModal = !bCompanySearchModal"
+  />
+  <ModalLayout
+    @close="this.$emit('close')">
+
     <div class="modal-title">
       원계약 관리{{ mode === MODAL_MODE.DETAIL ? '상세'
                 : mode === MODAL_MODE.REG ? '등록' : '수정' }}
@@ -23,7 +31,9 @@
               <v-text-field
               label="발주처"
               density="comfortable"
-              :readonly="mode === 'D'"
+              append-inner-icon="mdi-magnify"
+              readonly="readonly"
+              @click:append-inner="compSearchPopUp('COMP03')"
               v-model="topContr.clientComp">
               </v-text-field>
             </v-col>
@@ -86,8 +96,10 @@
               <v-text-field
               label="수요기관명"
               density="comfortable"
+              append-inner-icon="mdi-magnify"
               :readonly="mode === 'D'"
-              v-model="topContr.demandInstNm">
+              @click:append-inner="compSearchPopUp('COMP02')"
+              v-model="topContr.demandInst">
               </v-text-field>
             </v-col>
           </v-row>
@@ -143,7 +155,7 @@ const BE_PORT = import.meta.env.VITE_BE_PORT;
 import {MODAL_MODE} from "@/util/config";
 import utils from "@/util/validUtil";
 import projectApi from '@/api/project.js'
-
+import CompnaySearchModal from "@/components/modal/search/CompanySearch.vue"
 
 export default {
   name: "ProjectModal",
@@ -151,7 +163,6 @@ export default {
   beforeMount(){
     //상세조회
     if(this.mode == 'D'){
-        /** 프로젝트 단건 조회*/
         this.getProject();
     }
 
@@ -176,18 +187,24 @@ export default {
 
       key:store.getters.getParams.key,
 
+      bCompanySearchModal : false,
+
+      compDiv : '',
+
       topContr : {
         topContrId : '',
         topContrNm : '',  // 원계약명
         topContrDiv : '', // 원계약구분
         clientComp : '', // 발주처
+        clientCompId : '', // 발주처ID
         topContrDate : '', // 원계약일자
         contrStDate : '', // 계약시작일자
         contrEndDate : '', // 계약종료일자
         prodNm : '', // 품명
         contrAmount : '', // 계약금액
         deliveryDeadline : '', // 납품기한
-        demandInstNm : '', // 수요기관명
+        demandInst : '', // 수요기관명
+        demandInstId : '', // 수요기관ID
         topContrFileId : '',  // 첨부파일ID
         fileId : '', // 파일ID
         filePath : '', // 파일 경로
@@ -198,9 +215,6 @@ export default {
   },
 
   methods: {
-      close:()=>{
-        store.commit("toggleModal");
-      },
 
       // 프로젝트 정보 등록
       async newProject(){
@@ -225,10 +239,12 @@ export default {
         if(!confirm("등록 하시겠습니까?")) return false;
 
         await projectApi.newProject(formData);
-        this.close();
+        this.$emit("close");
       },
 
-      // 프로젝트 단건조회
+      /**
+       * 프로젝트 단건조회
+       * */ 
       async getProject(){
         this.topContr = await projectApi.project(this.key);
 
@@ -238,6 +254,27 @@ export default {
         this.topContr.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한
       },
 
+      compSearchPopUp(compDiv){
+        if(this.mode !== MODAL_MODE.REG) return false;
+        this.compDiv = compDiv;
+        this.bCompanySearchModal =!this.bCompanySearchModal;
+      },
+
+    /**
+     *발주처,수요기관 검색한 내용 가져오기
+    */
+    selectNm(obj){
+      const compDiv = obj.div;
+
+        // 발주처 :  COMP03 / 수요기관 :  COMP02
+        if(compDiv === "COMP03"){
+          this.topContr.clientComp   = obj.nm;
+          this.topContr.clientCompId = obj.id;
+        }else{
+          this.topContr.demandInstNm = obj.nm;
+          this.topContr.demandInstId = obj.id;
+        }
+      },
 
       // 모드 변경
       updateMode(){

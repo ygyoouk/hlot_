@@ -68,4 +68,20 @@
         FROM CMM_CODE
         WHERE CODE_GROUP = #{codeNm}
     </select>
+
+    <select id="topContrNm" resultType="org.mt.mms.topContr.vo.TopContrVO" parameterType="string">
+        SELECT
+            TOP_CONTR_NM
+        FROM
+            TOP_CONTR
+        WHERE TOP_CONTR_ID = #{topContrId}
+    </select>
+
+    <select id="compNm" resultType="org.mt.mms.company.vo.CompanyVO" parameterType="string">
+        SELECT
+            COMP_NM
+        FROM COMP
+        WHERE COMP_ID = #{compId}
+    </select>
+
 </mapper>

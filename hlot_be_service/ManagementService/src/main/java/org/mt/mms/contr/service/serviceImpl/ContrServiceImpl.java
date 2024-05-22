@@ -7,6 +7,7 @@ import org.mt.mms.contr.service.ContrService;
 import org.mt.mms.contr.vo.ContrVO;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -20,7 +21,7 @@ public class ContrServiceImpl implements ContrService {
      * 계약 전체 조회
      * */
     @Override
-    public List<ContrVO> all() throws Exception {
-        return contrMapper.all();
+    public List<ContrVO> all(HashMap<String, String> params) throws Exception {
+        return contrMapper.all(params);
     }
 }

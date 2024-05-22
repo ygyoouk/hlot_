@@ -18,25 +18,19 @@
 
           <v-row>
             <v-col>
-              <v-autocomplete
-              label="원계약"
-              :items="topContr"
-              item-title="topContrNm"
-              item-value="topContrId"
-              v-model="contr.topContrId"
-              :readonly="mode === MODAL_MODE.DETAIL"
-            ></v-autocomplete>
+              <v-text-field
+                label="원계약"
+                :readonly="mode === 'R'"
+                >{{this.contr.topContrNm}}
+              </v-text-field>
             </v-col>
 
              <v-col>
-             <v-autocomplete
+              <v-text-field
               label="업체"
-              :items="company"
-              item-title="compNm "
-              item-value="compId"
-              v-model="contr.compId"
-              :readonly="mode === MODAL_MODE.DETAIL"
-            ></v-autocomplete>
+                :readonly="mode === 'R'"
+                >{{this.contr.compNm}}
+              </v-text-field>
             </v-col>
           </v-row>
 
@@ -117,18 +111,15 @@ export default {
         /** 계약 단건 조회*/
         this.contr();
     }else{
-      this.getTopContrNms();
-      this.getCompNms();
+
+      this.getTopContrNm();
+      this.getCompNm();
     }
 
   },
 
   mounted(){
     if(this.mode == 'D'){
-    }
-
-    if(this.topContr.topContrNm !== ''){
-      this.visible = true;
     }
   },
 
@@ -140,9 +131,7 @@ export default {
 
       key:store.getters.getParams.key,
 
-      topContr : [],
 
-      company : [],
 
       contr : {
         topContrNm : '',
@@ -168,20 +157,29 @@ export default {
         store.commit("toggleModal");
       },
 
-      /* 원계약명 조회 */
-      async getTopContrNms() {
+      /**
+       *  원계약명 조회
+       * @param {topContrId}
+       * */
+      async getTopContrNm() {
         const topContrId = this.params.topContrId;
 
-        this.topContr = await commonApi.topContrNms(topContrId);
+        const data = await commonApi.topContrNm(topContrId);
+
+        this.contr.topContrNm = data.topContrNm;
+
       },
 
-      /* 업체명 조회 */
-      async getCompNms() {
+      /**
+       *  업체명 조회
+       * @param {compId}
+       * */
+      async getCompNm() {
         const compId = this.params.compId;
 
-        this.company = await commonApi.compNms(compId);
+        const data = await commonApi.compNm(compId);
 
-
+        this.contr.compNm = data.compNm;
       },
 
 

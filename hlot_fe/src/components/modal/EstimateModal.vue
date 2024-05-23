@@ -23,36 +23,42 @@
 
     <div class="modal-content">
       <v-container>
-        <v-row>
-          <v-col>
-            <v-text-field
-              label="원계약 명"
-              readonly="readonly"
-              append-inner-icon="mdi-magnify"
-              @click:append-inner="openTopContrSearch"
-              v-model="estimate.topContrNm"
-            ></v-text-field>
-          </v-col>
-          <v-col>
-            <v-text-field
-              label="업체"
-              readonly="readonly"
-              append-inner-icon="mdi-magnify"
-              @click:append-inner="openCompanySeach('COMP01')"
-              v-model="estimate.compNm"
-            ></v-text-field>
-          </v-col>
-          <v-col>
-            <v-select
-              label="견적구분"
-              :items="estimateDivs"
-              item-title="codeNm"
-              item-value="code"
-              v-model="estimate.estimateDiv"
-              :readonly="mode === MODAL_MODE.DETAIL"
-              ></v-select>
-          </v-col>
-        </v-row>
+        <v-form ref="form">
+
+          <v-row>
+            <v-col>
+              <v-text-field
+                label="원계약 명"
+                readonly="readonly"
+                append-inner-icon="mdi-magnify"
+                @click:append-inner="openTopContrSearch"
+                v-model="estimate.topContrNm"
+                :rules="[validUtil.required]"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                label="업체"
+                readonly="readonly"
+                append-inner-icon="mdi-magnify"
+                @click:append-inner="openCompanySeach('COMP01')"
+                v-model="estimate.compNm"
+                :rules="[validUtil.required]"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-select
+                label="견적구분"
+                :items="estimateDivs"
+                item-title="codeNm"
+                item-value="code"
+                v-model="estimate.estimateDiv"
+                :readonly="mode === MODAL_MODE.DETAIL"
+                :rules="[validUtil.required]"
+                ></v-select>
+            </v-col>
+          </v-row>
+        </v-form>
         <v-row>
           <v-col>
             <br>
@@ -142,50 +148,58 @@
       <div style="text-align: right">
         <div @click="closeProdModal" class="close"></div>
       </div>
-      <v-row>
-        <v-col>
-          <v-text-field
-            v-model="prod.prodNm"
-            label="품명"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-text-field
-            v-model="prod.detailProdNm"
-            label="세부품명"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-text-field
-            v-model="prod.clientUnitPrice"
-            label="소비자 단가"
-          />
-        </v-col>
-        <v-col>
-          <v-text-field
-            v-model="prod.provProdPrice"
-            label="공급 단가"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-text-field
-            v-model="prod.dcPer"
-            label="할인율"
-          />
-        </v-col>
-        <v-col>
-          <v-text-field
-            v-model="prod.quantity"
-            label="수량"
-          />
-        </v-col>
-      </v-row>
+      <v-form ref="prodForm">
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="prod.prodNm"
+              label="품명"
+              :rules="[validUtil.required]"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="prod.detailProdNm"
+              label="세부품명"
+              :rules="[validUtil.required]"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="prod.clientUnitPrice"
+              label="소비자 단가"
+              :rules="[validUtil.required, validUtil.number]"
+            />
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model="prod.provProdPrice"
+              label="공급 단가"
+              :rules="[validUtil.required, validUtil.number]"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="prod.dcPer"
+              label="할인율"
+              :rules="[validUtil.required, validUtil.number]"
+            />
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model="prod.quantity"
+              label="수량"
+              :rules="[validUtil.required, validUtil.number]"
+            />
+          </v-col>
+        </v-row>
+      </v-form>
       <div class="modal-btn-list">
         <v-btn
           color="green"
@@ -320,7 +334,10 @@ export default {
     },
 
     /* PROD 추가 */
-    addProd() {
+    async addProd() {
+      const { valid } = await this.$refs.prodForm.validate();
+      if(!valid) return false;
+
       if(!confirm("등록 하시겠습니까?")) return false;
 
       if(this.prodIndex > -1){ // 수정상태
@@ -343,6 +360,9 @@ export default {
 
     /* ESTIMATE 등록 */
     async newEstimate(){
+      const { valid } = await this.$refs.managerForm.validate();
+      if(!valid) return false;
+
       if(!confirm("등록 하시겠습니까?")) return false;
       this.estimate.prods = this.prods;
 

@@ -21,6 +21,8 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
+    private final Util util;
+
     /* company 상세 조회 */
     @GetMapping("/company/{id}")
     public ResponseEntity<Result> one(@PathVariable String id) throws Exception {
@@ -31,6 +33,8 @@ public class CompanyController {
     /* company 목록 조회 */
     @GetMapping("/companys")
     public ResponseEntity<Result> all(HttpServletRequest request) throws Exception{
+        util.getLoginUserName();
+
         HashMap<String, String> params = Util.requestToMap(request);
 
         return ResponseEntity.ok()

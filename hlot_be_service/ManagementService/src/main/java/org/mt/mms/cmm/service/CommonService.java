@@ -14,7 +14,7 @@ public interface CommonService {
 
     List<CompanyVO> compNms() throws Exception;
 
-    String selectHlotSeq(String a, String b, String table) throws Exception;
+    String selectHlotSeq(String b, String table) throws Exception;
 
     List<CmmCodeVO> getCode(String codeNm) throws Exception;
 

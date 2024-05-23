@@ -1,5 +1,6 @@
 package org.mt.mms.security.user;
 
+import lombok.Getter;
 import org.mt.mms.security.user.vo.UserVO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +15,9 @@ public class CustomUserDetails extends UserVO implements UserDetails {
     private String userId;
     private String userPassword;
     private String userName;
+    @Getter
+    private String userAuth;
+
 
     Collection<? extends GrantedAuthority> authorities;
 
@@ -21,6 +25,7 @@ public class CustomUserDetails extends UserVO implements UserDetails {
         this.userId = userVO.getUserId();
         this.userPassword = userVO.getUserPassword();
         this.userName = userVO.getUserName();
+        this.userAuth = userVO.getUserAuth();
 
         List<GrantedAuthority> auths = new ArrayList<>();
         auths.add(new SimpleGrantedAuthority(userVO.getUserAuth().toUpperCase()));

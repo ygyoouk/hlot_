@@ -26,7 +26,7 @@
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
-      견적서 관리
+      견적서 등록
     </div>
 
     <div class="d-flex flex-wrap ga-3 mb-0">

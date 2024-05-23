@@ -22,12 +22,15 @@ public class Util {
     }
 
     public String getLoginUserName(){
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         UserVO user = (UserVO)auth.getPrincipal();
-
         return user.getUserName();
+    }
+
+    public String getUserAuth() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserVO user = (UserVO)auth.getPrincipal();
+        return user.getUserAuth();
     }
 
     public static HashMap<String, String> requestToMap(HttpServletRequest request) {

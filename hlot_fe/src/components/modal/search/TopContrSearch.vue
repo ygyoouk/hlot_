@@ -35,11 +35,18 @@
       ></v-text-field>
     </div>
     <div class="d-flex flex-wrap ga-3 mt-0">
-      <div>
-        <label> 원계약 기간 : </label>
-        <input type="date" id="strDate" v-model="searchCondition.topContrStDate"/>  ~
-        <input type="date" id="endDate" v-model="searchCondition.topContrEndDate"/>
-      </div>
+        <v-text-field
+          label="원계약 시작일"
+          type="date"
+          density="compact"
+          v-model="searchCondition.topContrStDate"
+        ></v-text-field>
+        <v-text-field
+          label="원계약 끝일"
+          type="date"
+          density="compact"
+          v-model="searchCondition.topContrEndDate"
+        ></v-text-field>
       <v-text-field
         label="수요기관"
         readonly="readonly"

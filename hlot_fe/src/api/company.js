@@ -16,7 +16,6 @@ export default {
   /* COMPANY 목록조회 */
   companys(params){
     return axios.get(REQUEST_URL + '/api/companys', {params}).then(res => {
-      console.log(res);
       return res.data.data;
     });
   },

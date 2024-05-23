@@ -1,6 +1,7 @@
 package org.mt.mms.cmm.service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
+import org.mt.mms.cmm.Util;
 import org.mt.mms.cmm.mapper.CommonMapper;
 import org.mt.mms.cmm.service.CommonService;
 import org.mt.mms.cmm.vo.CmmCodeVO;
@@ -17,6 +18,8 @@ public class CommonServiceImpl implements CommonService {
 
     private final CommonMapper commonMapper;
 
+    private final Util util;
+
 
     @Override
     public List<TopContrVO> topContrNms() throws Exception {
@@ -29,19 +32,17 @@ public class CommonServiceImpl implements CommonService {
     }
 
     /**
-     *
-     * @param a 내부조직구분 01|02|03
      * @param b 사업유형
      * @param table 테이블구분
      * @return seq ID
      * @throws Exception
      */
     @Override
-    public String selectHlotSeq(String a, String b, String table) throws Exception {
+    public String selectHlotSeq(String b, String table) throws Exception {
         HashMap<String, String> param = new HashMap<>();
-        param.put("a", a);
-        param.put("b", a);
-        param.put("table", a);
+        param.put("a", util.getUserAuth()); // 00: 관리자 | 01: 사업1 | 02: 사업2
+        param.put("b", b);
+        param.put("table", table);
         return commonMapper.selectHlotSeq(param);
     }
 

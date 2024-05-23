@@ -135,28 +135,33 @@
       <div style="text-align: right">
         <div @click="closeManagerModal" class="close"></div>
       </div>
-      <v-row>
-        <v-col>
-          <v-text-field
-            v-model="companyManager.compMngerNm"
-            label="업체담당자 명"
-          />
-        </v-col>
-        <v-col>
-          <v-text-field
-            v-model="companyManager.compMngerTel"
-            label="전화번호"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-text-field
-            v-model="companyManager.compMngerEmail"
-            label="이메일"
-          />
-        </v-col>
-      </v-row>
+      <v-form ref="managerForm">
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="companyManager.compMngerNm"
+              label="업체담당자 명"
+              :rules="[validUtil.required]"
+            />
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model="companyManager.compMngerTel"
+              label="전화번호"
+              :rules="[validUtil.required, validUtil.number]"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="companyManager.compMngerEmail"
+              label="이메일"
+              :rules="[validUtil.email]"
+            />
+          </v-col>
+        </v-row>
+      </v-form>
       <div class="modal-btn-list">
         <v-btn
           color="green"
@@ -247,6 +252,9 @@ export default {
     },
     /* company_manager 추가 */
     async addManager() {
+      const { valid } = await this.$refs.managerForm.validate();
+      if(!valid) return false;
+
       if(validUtil.isNull(this.companyManager.compMngerNm)) {
         alert('담당자 명을 입력해주세요.');
         return false;

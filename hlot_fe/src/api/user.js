@@ -13,7 +13,6 @@ export default {
     this.removeUserStorage();
 
     return axios.post(REQUEST_URL + `/api/login`, user).then(res => {
-
       const data = res.data.data;
       if(!validUtil.isNull(data)) {
         this.setUserStorage(data);
@@ -33,12 +32,14 @@ export default {
     window.localStorage.removeItem("userId");
     window.localStorage.removeItem("userName");
     window.localStorage.removeItem("token");
+    window.localStorage.removeItem("userAuth");
   },
 
   setUserStorage(data) {
     window.localStorage.setItem("isLogin", this.createItemWithExpireObj("0"));
     window.localStorage.setItem("userId", this.createItemWithExpireObj(data.userId));
     window.localStorage.setItem("userName", this.createItemWithExpireObj(data.userName));
+    window.localStorage.setItem("userAuth", this.createItemWithExpireObj(data.userAuth));
     window.localStorage.setItem("token", this.createItemWithExpireObj(data.accessToken));
   },
 

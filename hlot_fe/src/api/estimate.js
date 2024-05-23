@@ -8,8 +8,8 @@ const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
 export default {
 
   /* ESTIMATE 목록조회 */
-  estimates(){
-    return axios.get(REQUEST_URL + '/api/estimates').then(res => {
+  estimates(params){
+    return axios.get(REQUEST_URL + '/api/estimates', {params}).then(res => {
       return res.data.data;
     });
   },

@@ -32,10 +32,16 @@
         v-model="searchCondition.compBussRegnum"
       />
       <v-btn
-        color="primary"
+        color="green"
         @click="getCompanys"
       >
         조회
+      </v-btn>
+      <v-btn
+        color="green"
+        @click="searchCondition = {}"
+      >
+        초기화
       </v-btn>
     </div>
 

@@ -82,14 +82,14 @@
                 <tr>
                   <th>담당자명</th>
                   <th>전화번호</th>
-                  <th>등록일자</th>
+                  <th>이메일</th>
                 </tr>
               </thead>
               <tbody>
                   <tr v-for="manager in company.companyManagers" @click="openManagerModal(manager)">
                     <td>{{ manager.compMngerNm }}</td>
                     <td>{{ manager.compMngerTel }}</td>
-                    <td>{{ manager.registDate }}</td>
+                    <td>{{ manager.compMngerEmail }}</td>
                   </tr>
               </tbody>
             </table>
@@ -131,13 +131,21 @@
         <v-col>
           <v-text-field
             v-model="companyManager.compMngerNm"
-            label="업체담당자"
+            label="업체담당자 명"
           />
         </v-col>
         <v-col>
           <v-text-field
             v-model="companyManager.compMngerTel"
             label="전화번호"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-text-field
+            v-model="companyManager.compMngerEmail"
+            label="이메일"
           />
         </v-col>
       </v-row>
@@ -197,6 +205,7 @@ export default {
       companyManager: {   // 업체담당자
         compMngerNm: '', // 업체담당자명
         compMngerTel: '',  // 업체담당자번호
+        compMngerEmail: '', // 업체담당자이메일
         compMngerDiv: '', // 업체담당자구분
         registUserName: '',
       }
@@ -209,10 +218,7 @@ export default {
     },
     /* company 등록 */
     async newCompany() {
-      if(validUtil.isNull(this.company.compNm)) {
-        alert('업체명을 입력해주세요.');
-        return false;
-      }
+      if(!this.validation()) return false;
 
       if(!confirm("등록 하시겠습니까?")) return false;
 
@@ -255,7 +261,8 @@ export default {
       if(!this.companyManager.compMngerId) {
         this.company.companyManagers.forEach((v, i)=> {
           if(v.compMngerNm === this.companyManager.compMngerNm
-            && v.compMngerTel === this.companyManager.compMngerTel) {
+            && v.compMngerTel === this.companyManager.compMngerTel
+            && v.compMngerEmail === this.companyManager.compMngerEmail) {
             this.company.companyManagers.splice(i, 1);
           }
         });
@@ -275,6 +282,28 @@ export default {
       this.companyManager = {};
       this.managerModal = false;
     },
+
+    validation() {
+      /*
+      compId: '',          // 업체ID
+        compNm: '',        // 업체명
+        compBussRegnum: '', // 사업자등록번호
+        compCeoNm: '',       // 업체대표명
+        compTel: '',         // 업체번호
+        compAddr: '',         // 업체주소
+        compDiv: '',         // 업체구분
+       */
+
+      const v = this.company;
+
+      if(!validUtil.validationChk(v.compDiv, '업체구분')) return false;
+      if(!validUtil.validationChk(v.compNm, '업체명')) return false;
+
+
+      return true;
+    },
+
+
   }
 }
 </script>

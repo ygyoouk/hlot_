@@ -12,7 +12,7 @@ public interface EstimateMapper {
 
     String selectEstimateId() throws Exception;
 
-    List<EstimateExVO> selectEstimates() throws Exception;
+    List<EstimateExVO> selectEstimates(HashMap params) throws Exception;
 
     EstimateExVO selectEstimate(String id) throws Exception;
 

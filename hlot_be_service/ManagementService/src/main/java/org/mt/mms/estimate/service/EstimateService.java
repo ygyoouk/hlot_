@@ -5,12 +5,13 @@ import org.mt.mms.estimate.vo.EstimateVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public interface EstimateService {
 
-    List<EstimateExVO> all() throws Exception;
+    List<EstimateExVO> all(HashMap params) throws Exception;
 
     EstimateExVO one(String id) throws Exception;
 

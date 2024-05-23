@@ -35,7 +35,7 @@ export default {
     });
   },
 
-  /* 업체구분 조회 */
+  /* 공통코드 조회 조회 */
   cmmCodeComp(codeNm) {
     return axios.get(REQUEST_URL + `/common/code/${codeNm}`).then(res => {
       return res.data.data;

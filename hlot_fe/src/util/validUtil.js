@@ -32,6 +32,14 @@ export default {
       if(date === undefined || date === null || date === '') return '';
       return date.split("-").join("");
 
-    }
+    },
 
+
+  validationChk(col, nm){
+    if(this.isNull(col)){
+      alert(`${nm}을(를) 입력해주세요.`);
+      return false;
+    }
+    return true;
+  }
 }

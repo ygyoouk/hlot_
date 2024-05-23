@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.mt.mms.estimate.mapper.EstimateMapper">
 
-    <select id="selectEstimates" resultType="org.mt.mms.estimate.vo.EstimateExVO">
+    <select id="selectEstimates" resultType="org.mt.mms.estimate.vo.EstimateExVO" parameterType="hashmap">
         SELECT /* org.mt.mms.estimate.mapper.EstimateMapper.selectEstimates : ESTIMATE 목록조회 */
             E.ESTIMATE_ID
              , E.TOP_CONTR_ID
@@ -21,6 +21,15 @@
             INNER JOIN TOP_CONTR TC ON TC.TOP_CONTR_ID = E.TOP_CONTR_ID
             INNER JOIN COMP C ON C.COMP_ID = E.COMP_ID
         WHERE E.DEL_YN = 'N'
+        <if test='topContrId != null and !topContrId.equals("")'>
+            AND TC.TOP_CONTR_ID = #{topContrId}
+        </if>
+        <if test='compId != null and !compId.equals("")'>
+            AND C.COMP_ID = #{compId}
+        </if>
+        <if test='estimateDiv != null and !estimateDiv.equals("")'>
+            AND E.ESTIMATE_DIV = #{estimateDiv}
+        </if>
         ORDER BY E.REGIST_DATE DESC
     </select>
 

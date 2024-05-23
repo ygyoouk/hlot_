@@ -31,7 +31,7 @@
         append-inner-icon="mdi-magnify"
         @click:append-inner="openCompanySearch('COMP03')"
         density="compact"
-        v-model="clientCompNm"
+        v-model="searchCondition.clientCompNm"
       ></v-text-field>
     </div>
     <div class="d-flex flex-wrap ga-3 mt-0">
@@ -46,13 +46,19 @@
         append-inner-icon="mdi-magnify"
         @click:append-inner="openCompanySearch('COMP02')"
         density="compact"
-        v-model="demandInstNm"
+        v-model="searchCondition.demandInstNm"
       ></v-text-field>
       <v-btn
         color="primary"
         @click="search"
       >
         조회
+      </v-btn>
+      <v-btn
+        color="primary"
+        @click="searchCondition = {}"
+      >
+        초기화
       </v-btn>
     </div>
     <div>
@@ -93,8 +99,7 @@ export default {
       bCompanySearch: false,
 
       compDiv: '',
-      clientCompNm : '',
-      demandInstNm : '',
+
 
       topContrs: [],
 
@@ -103,6 +108,8 @@ export default {
         topContrDiv: '',
         clientCompId: '',
         demandInstId: '',
+        clientCompNm : '',
+        demandInstNm : '',
         topContrStDate: '',
         topContrEndDate: '',
       }
@@ -116,10 +123,10 @@ export default {
     selectCompany(obj){ // compDiv [ 업체:COMP01 | 수요기관:COMP02 | 발주처: COMP03 ]
       if(this.compDiv === 'COMP02') { // 수요기관
         this.searchCondition.demandInstId = obj.id;
-        this.demandInstNm = obj.nm;
+        this.searchCondition.demandInstNm = obj.nm;
       } else if(this.compDiv === 'COMP03') { // 발주처
         this.searchCondition.clientCompId = obj.id;
-        this.clientCompNm = obj.nm;
+        this.searchCondition.clientCompNm = obj.nm;
       }
     },
 

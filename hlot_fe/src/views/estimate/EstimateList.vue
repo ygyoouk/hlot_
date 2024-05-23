@@ -11,18 +11,66 @@
     @close="bContrModal = false"
   />
 
+  <TopContrSearch
+    v-if="bTopContrSearch"
+    @close="bTopContrSearch = !bTopContrSearch"
+    @select="selectTopContr"
+  />
+
+  <CompanySearch
+    v-if="bCompanySearch"
+    @close="bCompanySearch = !bCompanySearch"
+    @select="selectCompany"
+    :compDiv="compDiv"
+  />
+
   <v-card class="table-container_mt">
     <div class="table-title_mt">
       견적서 관리
     </div>
 
-    <v-card-title>
+    <div class="d-flex flex-wrap ga-3 mb-0">
       <v-text-field
-        v-model="search"
-        prepend-inner-icon="mdi-magnify"
-        label="검색"
+        label="원계약 명"
+        readonly="readonly"
+        append-inner-icon="mdi-magnify"
+        @click:append-inner="openTopContrSearch"
+        v-model="searchCondition.topContrNm"
+        density="compact"
       ></v-text-field>
-    </v-card-title>
+
+      <v-text-field
+        label="업체"
+        readonly="readonly"
+        append-inner-icon="mdi-magnify"
+        @click:append-inner="openCompanySeach('COMP01')"
+        v-model="searchCondition.compNm"
+        density="compact"
+      ></v-text-field>
+
+      <v-select
+        label="견적구분"
+        :items="estimateDivs"
+        item-title="codeNm"
+        item-value="code"
+        v-model="searchCondition.estimateDiv"
+        density="compact"
+      ></v-select>
+
+      <v-btn
+        color="green"
+        @click="getEstimates"
+      >
+        조회
+      </v-btn>
+      <v-btn
+        color="green"
+        @click="searchCondition = {}"
+      >
+        초기화
+      </v-btn>
+    </div>
+
 
     <div class="table-btn-list">
       <v-btn color="#5865f2" @click="openReg">등록</v-btn>
@@ -32,7 +80,6 @@
       @click:row="openDetail"
       :headers="headers"
       :items="estimates"
-      :search="search"
       :items-per-page-options="ITEMS_PER_PAGE_OPTIONS"
       class="elevation-1 table-list_mt"
     >
@@ -58,6 +105,8 @@
 import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
 import EstimateModal from "@/components/modal/EstimateModal.vue";
 import ContrModal from "@/components/modal/ContrtModal.vue";
+import TopContrSearch from "@/components/modal/search/TopContrSearch.vue";
+import CompanySearch from "@/components/modal/search/CompanySearch.vue";
 
 const headers = [
   {title: '원계약 명', key: 'topContrNm'},
@@ -78,24 +127,54 @@ import store from "@/store/store";
 import estimateApi from '@/api/estimate.js'
 import {MODAL_MODE} from "@/util/config";
 import validUtil from "@/util/validUtil";
+import commonApi from "@/api/common";
 
 export default {
-  beforeMount() {
-    this.getEstimates();
+  async beforeMount() {
+    this.estimateDivs = await commonApi.cmmCodeComp('ESTD');
+    await this.getEstimates();
   },
   data() {
     return {
-      search: '',
+      compDiv: '',
+      estimateDivs: [],
+      searchCondition: {
+        topContrId: '',
+        topContrNm: '',
+        compId: '',
+        compNm: '',
+        estimateDiv: '',
+      },
       estimates: [],
 
+      bTopContrSearch: false,
+      bCompanySearch: false,
       bEstimateModal: false,
       bContrModal: false,
     };
   },
   methods: {
+    /* 원계약명 조회 */
+    openTopContrSearch() {
+      this.bTopContrSearch = !this.bTopContrSearch;
+    },
+    selectTopContr(obj) {
+      this.searchCondition.topContrId = obj.id;
+      this.searchCondition.topContrNm = obj.nm;
+    },
+    /* 업체 조회 */
+    openCompanySeach(compDiv) {
+      this.compDiv = compDiv;
+      this.bCompanySearch = !this.bCompanySearch;
+    },
+    selectCompany(obj) {
+      this.searchCondition.compNm = obj.nm;
+      this.searchCondition.compId = obj.id;
+    },
+
     /* ESTIMATE 목록 조회 */
     async getEstimates() {
-      this.estimates = await estimateApi.estimates();
+      this.estimates = await estimateApi.estimates(this.searchCondition);
     },
 
     /* 등록화면 */

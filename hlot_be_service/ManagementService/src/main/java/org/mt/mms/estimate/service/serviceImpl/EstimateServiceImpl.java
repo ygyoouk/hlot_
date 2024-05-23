@@ -30,8 +30,8 @@ public class EstimateServiceImpl implements EstimateService {
 
 
     @Override
-    public List<EstimateExVO> all() throws Exception {
-        return estimateMapper.selectEstimates();
+    public List<EstimateExVO> all(HashMap params) throws Exception {
+        return estimateMapper.selectEstimates(params);
     }
 
     @Override

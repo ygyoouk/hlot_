@@ -32,6 +32,12 @@
       >
         조회
       </v-btn>
+      <v-btn
+        color="primary"
+        @click="searchCondition = {compDiv}"
+      >
+        초기화
+      </v-btn>
     </div>
 
     <div>

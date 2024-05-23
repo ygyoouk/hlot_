@@ -93,6 +93,7 @@
              , COMP_ID
              , COMP_MNGER_NM
              , phoneNumber(COMP_MNGER_TEL) AS COMP_MNGER_TEL
+             , COMP_MNGER_EMAIL
              , REGIST_USER_NAME
              , DATE_FORMAT(REGIST_DATE, '%Y-%m-%d') AS REGIST_DATE
              , DEL_YN
@@ -109,22 +110,25 @@
         , COMP_ID
         , COMP_MNGER_NM
         , COMP_MNGER_TEL
+        , COMP_MNGER_EMAIL
         , REGIST_USER_NAME
         )
         VALUES(
-                CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CPM', NEXTVAL(HLOT_SEQ))
-              , #{compId}
-              , #{compMngerNm}
-              , REPLACE(#{compMngerTel}, '-', '')
-              , #{registUserName}
-              )
+            CONCAT(date_format(NOW(), '%Y%m'), '02', 'A', 'CPM', NEXTVAL(HLOT_SEQ))
+            , #{compId}
+            , #{compMngerNm}
+            , REPLACE(#{compMngerTel}, '-', '')
+            , #{compMngerEmail}
+            , #{registUserName}
+        )
     </insert>
 
     <update id="updateCompanyManager" parameterType="org.mt.mms.company.vo.CompanyManagerVO">
         UPDATE COMP_MNGER /* org.mt.mms.company.mapper.CompanyMapper.updateCompanyManager : COMP_MNGER 수정 */
         SET
             COMP_MNGER_NM = #{compMngerNm}
-          , COMP_MNGER_TEL = REPLACE(#{compMngerTel}, '-', '')
+            , COMP_MNGER_TEL = REPLACE(#{compMngerTel}, '-', '')
+            , COMP_MNGER_EMAIL = #{compMngerEmail}
         WHERE COMP_ID = #{compId}
           AND COMP_MNGER_ID = #{compMngerId}
     </update>

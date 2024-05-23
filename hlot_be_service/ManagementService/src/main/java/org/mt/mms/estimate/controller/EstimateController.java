@@ -1,5 +1,6 @@
 package org.mt.mms.estimate.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+
 @RestController
 @Slf4j
 @RequestMapping("/api")
@@ -25,9 +28,10 @@ public class EstimateController {
 
     /* estimate 목록 조회 */
     @GetMapping("/estimates")
-    public ResponseEntity<Result> all() throws Exception{
+    public ResponseEntity<Result> all(HttpServletRequest request) throws Exception{
+        HashMap params = Util.requestToMap(request);
         return ResponseEntity.ok()
-                .body(Result.resSuccess(estimateService.all()));
+                .body(Result.resSuccess(estimateService.all(params)));
     }
 
     /* estimate 상세 조회 */

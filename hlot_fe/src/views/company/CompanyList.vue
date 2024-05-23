@@ -86,6 +86,7 @@ import commonApi from "@/api/common.js";
 
 export default {
   async beforeMount() {
+
     await this.getCompanys();
 
     /* 업체구분 공통코드 조회 */

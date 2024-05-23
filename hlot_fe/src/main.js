@@ -51,6 +51,17 @@ axios.interceptors.response.use(
 )
 
 
+router.beforeEach( (to, from, next) => {
+  const auth = user.getUserStorage('userAuth');
+
+  if(!auth && to.path !== '/login') {
+    alert('로그인 후 이용해주세요.');
+    next({path: '/login'});
+  } else {
+    next();
+  }
+} );
+
 createApp(App)
   .use(router)
   .use(vuetify)

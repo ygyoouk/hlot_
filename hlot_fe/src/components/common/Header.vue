@@ -49,7 +49,7 @@
         </v-btn>
 
         <v-menu>
-          <template v-slot:activator="{ props }">
+          <template v-if="user.getUserStorage('userAuth') === '00'" v-slot:activator="{ props }">
             <v-btn
               v-bind="props"
               class="header-btn_mt"

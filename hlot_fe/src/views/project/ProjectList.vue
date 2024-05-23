@@ -27,7 +27,7 @@
         </v-col>
         <v-col>
             <v-select
-            label="계약구분"
+            label="원계약구분"
             density="comfortable"
             @keyup="enterKey()"
             :items="['유지관리', '구축', '개발']"
@@ -50,9 +50,25 @@
 
       <v-row>
         <v-col>
-          <label> 계약기간 : </label>
-          <input type="date" @keyup="enterKey()" id="strDate" v-model="searchParam.topContrStDate"/>  ~
-          <input type="date" @keyup="enterKey()" id="endDate" v-model="searchParam.topContrEndDate"/>
+          <v-text-field 
+          label="계약시작일자"
+          type="date"
+          density="comfortable"
+          @keyup="enterKey()"
+          v-model="searchParam.topContrStDate"
+          >
+          </v-text-field>
+        </v-col>
+        
+        <v-col>
+          <v-text-field 
+          label="계약종료일자"
+          type="date"
+          density="comfortable"
+          @keyup="enterKey()"
+          v-model="searchParam.topContrEndDate"
+          >
+          </v-text-field>
         </v-col>
 
         <v-col>
@@ -171,7 +187,7 @@ export default {
       bCompanySearchModal : false,
       compDiv : '',
       searchParam : {
-        
+
         topContrNm : '',
         topContrDiv : '',
         clientComp : '',

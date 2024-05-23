@@ -1,5 +1,7 @@
 <template>
-  <ModalLayout>
+  <ModalLayout
+   @close="this.$emit('close')"
+  >
     <div class="modal-title">
       계약 관리{{ mode === MODAL_MODE.DETAIL ? '상세'
                 : mode === MODAL_MODE.REG ? '등록' : '수정' }}
@@ -20,16 +22,18 @@
             <v-col>
               <v-text-field
                 label="원계약"
-                :readonly="mode === 'R'"
-                >{{this.contr.topContrNm}}
+                :readonly="mode === 'R' || mode === 'D'"
+                v-model="contr.topContrNm"
+                >
               </v-text-field>
             </v-col>
 
              <v-col>
               <v-text-field
               label="업체"
-                :readonly="mode === 'R'"
-                >{{this.contr.compNm}}
+                :readonly="mode === 'R' || mode === 'D'"
+                v-model="contr.compNm"
+                >
               </v-text-field>
             </v-col>
           </v-row>
@@ -38,14 +42,14 @@
            <v-col>
               <v-text-field
               label="계약명"
-              :readonly="mode === 'R'"
+              :readonly="mode === 'R' || mode === 'D'"
               v-model="contr.contrNm">
               </v-text-field>
             </v-col>
              <v-col>
               <v-text-field
               label="계약금액"
-              :readonly="mode === 'R'"
+              :readonly="mode === 'R' || mode === 'D'"
               v-model="contr.contrAmount">
               </v-text-field>
             </v-col>
@@ -55,7 +59,7 @@
             <v-col>
               <v-text-field
               label="지불조건"
-              :readonly="mode === 'R'"
+              :readonly="mode === 'R' || mode === 'D'"
               v-model="contr.paymentTerm">
               </v-text-field>
             </v-col>
@@ -63,18 +67,44 @@
 
           <v-row>
             <v-col>
-              <label>계약일자</label>
-              <br/>
-              <input type="date" id="strDate" :readonly="mode === 'R'" v-model="contr.contrStDate"/> ~
-              <input type="date" id="strDate" :readonly="mode === 'R'" v-model="contr.contrEndDate"/>
-              <v-textarea label="특이사항" variant="outlined" rows="5" :readonly="mode === 'R'" v-model="contr.specialNote"></v-textarea>
+              <v-text-field
+                label="계약시작일자"
+                type="date"
+                :readonly="mode === 'R' || mode === 'D'" 
+                v-model="contr.contrStDate"
+              >
+              </v-text-field>
+              
             </v-col>
 
+            <v-col>
+              <v-text-field
+                label="계약종료일자"
+                type="date"
+                :readonly="mode === 'R' || mode === 'D'" 
+                v-model="contr.contrEndDate"
+              >
+              </v-text-field>
+            </v-col>
           </v-row>
+
+          <v-row>
+            <v-col>
+              <v-textarea 
+               label="특이사항" 
+               variant="outlined" 
+               rows="5" 
+               :readonly="mode === 'R' || mode === 'D'" 
+               v-model="contr.specialNote"
+               ></v-textarea>
+            </v-col>
+          </v-row>
+
           <v-row>
              <div class="modal-btn-list">
                 <v-btn
                   color="blue"
+                  v-if="mode === 'R'"
                   @click="newContr"
                 >확정</v-btn>
             </div>
@@ -91,7 +121,6 @@ import ModalLayout from "@/layouts/ModalLayout.vue";
 
 <script>
 import store from "@/store/store";
-import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_PORT = import.meta.env.VITE_BE_PORT;
@@ -109,7 +138,8 @@ export default {
     //상세조회
     if(this.mode == 'D'){
         /** 계약 단건 조회*/
-        this.contr();
+        console.log("sssss");
+        this.detailContr();
     }else{
 
       this.getTopContrNm();
@@ -208,9 +238,10 @@ export default {
       },
 
       // 계약 단건조회
-      // async contr(){
-      //   this.topContr = await projectApi.project(this.key);
-      // },
+      async detailContr(){
+        
+        this.contr = await contrApi.contr(this.key);
+      },
 
 
       /**

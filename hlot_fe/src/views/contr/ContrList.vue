@@ -1,5 +1,6 @@
 <template>
-  <ContrModal v-if="store.getters.isOpenModal"/>
+  <ContrModal v-if="bContrModal"
+   @close="bContrModal = false"/>
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
@@ -20,13 +21,33 @@
         </v-col>
 
         <v-col>
-          <label> 계약 기간 : </label>
-          <input type="date" @keyup="enterKey()" id="strDate" v-model="searchParam.contrStDate"/>  ~
-          <input type="date" @keyup="enterKey()" id="endDate" v-model="searchParam.contrEndDate"/>
+          <v-text-field
+            density="comfortable"
+            label="계약시작일자"
+            type="date"
+            @keyup="enterKey()"
+            v-model="searchParam.contrStDate"
+          >
+          </v-text-field>
+        </v-col>
+
+        <v-col>
+          <v-text-field
+            density="comfortable"
+            label="계약종료일자"
+            type="date"
+            @keyup="enterKey()"
+            v-model="searchParam.contrEndDate"
+          >
+          </v-text-field>
         </v-col>
 
         <v-col cols="auto">
           <v-btn color="green" @keyup="enterKey()" @click="getContrs(searchParam)">조회</v-btn>
+        </v-col>
+
+        <v-col cols="auto">
+          <v-btn color="red" @keyup="enterKey()" @click="clearSearchParam()">초기화</v-btn>
         </v-col>
 
       </v-row>
@@ -34,7 +55,7 @@
     </v-card-title>
 
     <div class="table-btn-list">
-      <v-btn color="#5865f2" @click="pushRegPop">등록</v-btn>
+      <v-btn color="#5865f2" v-if="false" @click="pushRegPop">등록</v-btn>
 
        <!-- <v-btn
           color="red"
@@ -105,7 +126,7 @@ export default {
       search: '',
       contrs: [],
       selected : [],
-      popUpValue : false,
+      bContrModal : false,
       searchParam: {
         contrNm : '',
         contrStDate : '',
@@ -126,17 +147,20 @@ export default {
     },
 
     popUpOpen(event,{item}){
-      console.log(item.contrId);
+      this.bContrModal = !this.bContrModal;
 
       this.contrs.contrId = item.contrId;
 
-      this.$store.commit("toggleModal", {key: this.contrs.contrId, mode: MODAL_MODE.DETAIL});
+      this.$store.commit('setModalParams', {key: this.contrs.contrId, mode: MODAL_MODE.DETAIL});
 
+      // this.$store.commit("toggleModal", {key: this.contrs.contrId, mode: MODAL_MODE.DETAIL});
     },
 
-    pushRegPop: () => {
-      store.commit("toggleModal", {key: '', mode: MODAL_MODE.REG});
-
+    pushRegPop(){
+      
+      store.commit('setModalParams', {key: '', mode: MODAL_MODE.REG});
+      
+      this.bContrModal = !this.bContrModal;
     },
 
     /**
@@ -146,6 +170,13 @@ export default {
       if(window.event.keyCode == 13){
         this.getContrs(this.searchParam);
       }
+    },
+
+    /**
+     * 검색조건 초기화
+    */
+    clearSearchParam(){
+      this.searchParam = {};
     },
 
     // async deleteProject(){ // 프로젝트 삭제

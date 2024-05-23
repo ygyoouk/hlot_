@@ -24,7 +24,7 @@ const ValidUtil = {
 
     return `${year}-${month}-${day}`;
   },
-
+  
   /**
    * yyy-MM-dd => yyyymmdd
    */
@@ -32,6 +32,18 @@ const ValidUtil = {
     if (date === undefined || date === null || date === '') return '';
     return date.split("-").join("");
   },
+
+  validDateChk(stDate,endDate){
+    const st = new Date(stDate);
+    const end = new Date(endDate);
+
+    if(st>end){
+      alert("시작일자가 종료일자보다 큽니다");
+      return false;
+    }
+    return true;
+  }
+  ,
 
   required(v) {
     if (ValidUtil.isNull(v))  // ValidUtil을 사용하여 isNull 참조

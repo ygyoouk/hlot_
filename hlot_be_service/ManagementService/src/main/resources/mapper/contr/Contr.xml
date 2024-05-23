@@ -33,4 +33,27 @@
         ORDER BY REGIST_DATE DESC
     </select>
 
+    <select id="one" resultType="org.mt.mms.contr.vo.ContrVO" parameterType="string">
+        SELECT
+            CONTR_ID,
+            E.TOP_CONTR_ID ,
+            (SELECT TOP_CONTR_NM FROM TOP_CONTR WHERE TOP_CONTR_ID = E.TOP_CONTR_ID) AS TOP_CONTR_NM,
+            (SELECT COMP_NM FROM COMP WHERE COMP_ID = E.COMP_ID) AS COMP_NM,
+            E.COMP_ID ,
+            C.ESTIMATE_ID,
+            CONTR_NM,
+            FORMAT(CONTR_AMOUNT, ',') AS CONTR_AMOUNT,
+            PAYMENT_TERM,
+            SPECIAL_NOTE,
+            CONTR_ST_DATE,
+            CONTR_END_DATE,
+            C.REGIST_USER_NAME,
+            C.REGIST_DATE,
+            C.DEL_YN,
+            CONTR_FILE_ID
+        FROM
+            CONTR C INNER JOIN ESTIMATE E ON C.ESTIMATE_ID = E.ESTIMATE_ID
+        WHERE
+            CONTR_ID = #{contrId}
+    </select>
 </mapper>

@@ -24,4 +24,12 @@ public class ContrServiceImpl implements ContrService {
     public List<ContrVO> all(HashMap<String, String> params) throws Exception {
         return contrMapper.all(params);
     }
+
+    /**
+     * 계약 단건 조회
+     * */
+    @Override
+    public ContrVO one(String contrId) {
+        return contrMapper.one(contrId);
+    }
 }

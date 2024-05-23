@@ -16,7 +16,13 @@ export default {
     });
   },
 
-
+  // 계약 단건 조회
+  contr(contrId){
+    return axios.get(REQUEST_URL + '/api/contr/' + contrId).then(res=>{
+      console.log(res.data.data);
+      return res.data.data;
+    });
+  },
   /**
    * 계약 파일 저장
    */

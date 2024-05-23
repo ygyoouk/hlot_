@@ -9,6 +9,7 @@ import org.mt.mms.contr.service.ContrService;
 import org.mt.mms.contr.vo.ContrVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +37,13 @@ public class ContrController {
                 .body(Result.resSuccess(contrService.all(params)));
     }
 
+    @GetMapping("/contr/{contrId}")
+    public ResponseEntity<Result> one(@PathVariable String contrId){
+        log.info("CONTR_ID : {}", contrId);
+
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(contrService.one(contrId)));
+    }
 
 
 }

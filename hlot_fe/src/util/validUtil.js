@@ -1,4 +1,4 @@
-export default {
+const ValidUtil = {
   name: "ValidUtil",
 
   /**
@@ -6,10 +6,10 @@ export default {
    * @param text
    * @returns {boolean|boolean}
    */
-  isNull(text){
+  isNull(text) {
     return text === '' ? true
-          : text === undefined ? true
-          : text === null;
+      : text === undefined ? true
+        : text === null;
   },
 
   /**
@@ -17,29 +17,37 @@ export default {
    * @param {*} date
    * @returns {yyyy-MM-dd}
    */
-   formatDate(date){
-    const year = date.slice(0,4);
-    const month = date.slice(4,6);
-    const day = date.slice(6,8);
+  formatDate(date) {
+    const year = date.slice(0, 4);
+    const month = date.slice(4, 6);
+    const day = date.slice(6, 8);
 
     return `${year}-${month}-${day}`;
-    },
+  },
 
-    /**
-     * yyy-MM-dd => yyyymmdd
-     */
-    saveDate(date){
-      if(date === undefined || date === null || date === '') return '';
-      return date.split("-").join("");
+  /**
+   * yyy-MM-dd => yyyymmdd
+   */
+  saveDate(date) {
+    if (date === undefined || date === null || date === '') return '';
+    return date.split("-").join("");
+  },
 
-    },
+  required(v) {
+    if (ValidUtil.isNull(v))  // ValidUtil을 사용하여 isNull 참조
+      return '필수항목 항목입니다.';
+  },
 
+  email(v) {
+    if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(v))
+      return '이메일 형식이 아닙니다.';
+  },
 
-  validationChk(col, nm){
-    if(this.isNull(col)){
-      alert(`${nm}을(를) 입력해주세요.`);
-      return false;
+  number(v) {
+    if (isNaN(v.replaceAll('-', ''))){
+      return '숫자만 입력 가능합니다.';
     }
-    return true;
   }
-}
+};
+
+export default ValidUtil;

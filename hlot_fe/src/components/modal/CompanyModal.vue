@@ -9,56 +9,64 @@
 
     <div class="modal-content">
       <v-container>
-        <v-row>
-          <v-col>
-            <v-select
-              label="업체구분"
-              :items="compDivs"
-              item-title="codeNm"
-              item-value="code"
-              v-model="company.compDiv"
-              :readonly="mode === MODAL_MODE.DETAIL"
-            ></v-select>
+        <v-form ref="form">
+          <v-row>
+              <v-col>
+                <v-select
+                  label="업체구분"
+                  :items="compDivs"
+                  item-title="codeNm"
+                  item-value="code"
+                  v-model="company.compDiv"
+                  :readonly="mode === MODAL_MODE.DETAIL"
+                  :rules="[validUtil.required]"
+                ></v-select>
 
-          </v-col>
-          <v-col>
-            <v-text-field
-              v-model="company.compNm"
-              label="업체명"
-              :readonly="mode === MODAL_MODE.DETAIL"
-            />
-          </v-col>
-          <v-col>
-            <v-text-field
-              v-model="company.compBussRegnum"
-              label="사업자등록번호"
-              :readonly="mode === MODAL_MODE.DETAIL"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-text-field
-              :readonly="mode === MODAL_MODE.DETAIL"
-              v-model="company.compCeoNm"
-              label="업체대표"
-            />
-          </v-col>
-          <v-col>
-            <v-text-field
-              :readonly="mode === MODAL_MODE.DETAIL"
-              v-model="company.compTel"
-              label="전화번호"
-            />
-          </v-col>
-          <v-col>
-            <v-text-field
-              :readonly="mode === MODAL_MODE.DETAIL"
-              v-model="company.compAddr"
-              label="업체주소"
-            />
-          </v-col>
-        </v-row>
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="company.compNm"
+                  label="업체명"
+                  :readonly="mode === MODAL_MODE.DETAIL"
+                  :rules="[validUtil.required]"
+                />
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="company.compBussRegnum"
+                  label="사업자등록번호"
+                  :readonly="mode === MODAL_MODE.DETAIL"
+                  :rules="[validUtil.required, validUtil.number]"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  :readonly="mode === MODAL_MODE.DETAIL"
+                  v-model="company.compCeoNm"
+                  label="업체대표"
+                  :rules="[validUtil.required]"
+                />
+              </v-col>
+              <v-col>
+                <v-text-field
+                  :readonly="mode === MODAL_MODE.DETAIL"
+                  v-model="company.compTel"
+                  :rules="[validUtil.required, validUtil.number]"
+                  label="전화번호"
+                />
+              </v-col>
+              <v-col>
+                <v-text-field
+                  :readonly="mode === MODAL_MODE.DETAIL"
+                  v-model="company.compAddr"
+                  label="업체주소"
+                  :rules="[validUtil.required]"
+                />
+              </v-col>
+          </v-row>
+        </v-form>
         <v-row>
           <v-col>
             <hr><br>
@@ -184,6 +192,7 @@ export default {
   },
   data() {
     return {
+
       compDivs: [],
       managerModal: false,
 
@@ -218,7 +227,8 @@ export default {
     },
     /* company 등록 */
     async newCompany() {
-      if(!this.validation()) return false;
+      const { valid } = await this.$refs.form.validate();
+      if(!valid) return false;
 
       if(!confirm("등록 하시겠습니까?")) return false;
 
@@ -283,25 +293,6 @@ export default {
       this.managerModal = false;
     },
 
-    validation() {
-      /*
-      compId: '',          // 업체ID
-        compNm: '',        // 업체명
-        compBussRegnum: '', // 사업자등록번호
-        compCeoNm: '',       // 업체대표명
-        compTel: '',         // 업체번호
-        compAddr: '',         // 업체주소
-        compDiv: '',         // 업체구분
-       */
-
-      const v = this.company;
-
-      if(!validUtil.validationChk(v.compDiv, '업체구분')) return false;
-      if(!validUtil.validationChk(v.compNm, '업체명')) return false;
-
-
-      return true;
-    },
 
 
   }

@@ -52,7 +52,7 @@ public class EstimateServiceImpl implements EstimateService {
         if(file!=null)
             estimateVO.setEstimateFileId(attachmentService.upload(file).getFileId());
 
-        String estimateId = commonService.selectHlotSeq("02", "A", "EST");
+        String estimateId = commonService.selectHlotSeq("A", "EST");
         estimateVO.setEstimateId(estimateId);
 
         int result = estimateMapper.insertEstimate(estimateVO);

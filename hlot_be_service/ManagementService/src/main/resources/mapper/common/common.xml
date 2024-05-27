@@ -64,9 +64,11 @@
 
     <select id="selectCode" resultType="org.mt.mms.cmm.vo.CmmCodeVO" parameterType="string">
         SELECT /* org.mt.mms.cmm.mapper.CommonMapper.selectCode : 공통코드 조회 */
-            CODE_GROUP, CODE_NM, CODE
+            CODE_GROUP, CODE_NM, CODE, CODE_GROUP_NM
         FROM CMM_CODE
+        <if test=" codeNm !=null and codeNm !='' ">
         WHERE CODE_GROUP = #{codeNm}
+        </if>
     </select>
 
     <select id="topContrNm" resultType="org.mt.mms.topContr.vo.TopContrVO" parameterType="string">

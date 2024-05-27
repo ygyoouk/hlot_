@@ -28,13 +28,5 @@ export default createRouter({
       path: '/contr/contrList',
       component: () => import('@/views/contr/ContrList.vue')
     },
-    {
-      path: '/cmmCode/cmmCodeList',
-      component: () => import('@/views/cmmCode/CmmCodeList.vue')
-    },
-    {
-      path: '/estimate/estimateCompare',
-      component: () => import('@/views/estimate/EstimateCompare.vue')
-    }
   ],
 })

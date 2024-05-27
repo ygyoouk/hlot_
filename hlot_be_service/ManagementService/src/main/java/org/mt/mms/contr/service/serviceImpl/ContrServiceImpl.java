@@ -32,4 +32,9 @@ public class ContrServiceImpl implements ContrService {
     public ContrVO one(String contrId) {
         return contrMapper.one(contrId);
     }
+
+    @Override
+    public int newContr(ContrVO data) {
+        return contrMapper.newContr(data);
+    }
 }

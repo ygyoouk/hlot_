@@ -13,6 +13,7 @@ public class ContrVO {
     private String topContrId; // 원계약 ID
     private String topContrNm; // 원계약명
     private String contrId; // 계약 ID
+    private String estimateId; //견적서ID
     private String contrNm; // 계약명
     private String compId; // 업체ID
     private String compName; // 업체명
@@ -21,4 +22,5 @@ public class ContrVO {
     private String specialNote; // 특이사항
     private String contrStDate; // 계약시작일자
     private String contrEndDate; // 계약종료일자
+    private String contrFileId; // 계약첨부파일ID
 }

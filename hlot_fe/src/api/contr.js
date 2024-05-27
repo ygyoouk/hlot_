@@ -23,14 +23,23 @@ export default {
       return res.data.data;
     });
   },
+
   /**
    * 계약 파일 저장
    */
   saveContrFile(formData){
-
     return axios.post(REQUEST_URL + '/common/pdfUpload',formData,{header:{'Content-Type' : 'multipart/form-data'}}).then(res=>{
       return res.data.data;
     });
-  }
+  },
+
+  /**
+   * 계약 등록
+  */
+  newContr(formData){
+    return axios.post(REQUEST_URL + '/api/newContr',formData,{header:{'Content-Type' :'multipart/form-data'}}).then(res=>{
+      return res.data.data;
+    })
+  },
 
 }

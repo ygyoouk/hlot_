@@ -43,13 +43,16 @@
               <v-text-field
               label="계약명"
               :readonly="mode === 'R' || mode === 'D'"
-              v-model="contr.contrNm">
+              v-model="contr.contrNm"
+              :rules="[utils.required]"
+              >
               </v-text-field>
             </v-col>
              <v-col>
               <v-text-field
               label="계약금액"
               :readonly="mode === 'R' || mode === 'D'"
+              :rules="[utils.required]"
               v-model="contr.contrAmount">
               </v-text-field>
             </v-col>
@@ -60,6 +63,7 @@
               <v-text-field
               label="지불조건"
               :readonly="mode === 'R' || mode === 'D'"
+              :rules="[utils.required]"
               v-model="contr.paymentTerm">
               </v-text-field>
             </v-col>
@@ -70,19 +74,21 @@
               <v-text-field
                 label="계약시작일자"
                 type="date"
-                :readonly="mode === 'R' || mode === 'D'" 
-                v-model="contr.contrStDate"
+                :readonly="mode === 'R' || mode === 'D'"
+                :rules="[utils.required]"
+                v-model="contrStDate"
               >
               </v-text-field>
-              
+
             </v-col>
 
             <v-col>
               <v-text-field
                 label="계약종료일자"
                 type="date"
-                :readonly="mode === 'R' || mode === 'D'" 
-                v-model="contr.contrEndDate"
+                :readonly="mode === 'R' || mode === 'D'"
+                :rules="[utils.required]"
+                v-model="contrEndDate"
               >
               </v-text-field>
             </v-col>
@@ -90,11 +96,11 @@
 
           <v-row>
             <v-col>
-              <v-textarea 
-               label="특이사항" 
-               variant="outlined" 
-               rows="5" 
-               :readonly="mode === 'R' || mode === 'D'" 
+              <v-textarea
+               label="특이사항"
+               variant="outlined"
+               rows="5"
+               :readonly="mode === 'R' || mode === 'D'"
                v-model="contr.specialNote"
                ></v-textarea>
             </v-col>
@@ -104,7 +110,7 @@
              <div class="modal-btn-list">
                 <v-btn
                   color="blue"
-                  v-if="mode === 'R'"
+                  v-if="mode !== 'D'"
                   @click="newContr"
                 >확정</v-btn>
             </div>
@@ -161,11 +167,14 @@ export default {
 
       key:store.getters.getParams.key,
 
+      contrStDate : '',
 
+      contrEndDate : '',
 
       contr : {
         topContrNm : '',
         topContrId : '',
+        estimateId : '',
         compId : '',
         companyNm : '',
         contrNm : '',
@@ -217,6 +226,11 @@ export default {
        * 계약 정보 및 계약서 파일 저장
       */
       async newContr(){
+        console.log(this.file)
+        if(utils.isNull(this.file)){
+          alert("파일을 선택해주세요.");
+          return false;
+        }
 
         const formData = new FormData();
         formData.append('file' ,this.file);
@@ -225,22 +239,29 @@ export default {
 
         this.contr.contrAmount = amount.replace(",", "");
 
+        this.contr.contrStDate = utils.saveDate(this.contrStDate);
+        this.contr.contrEndDate = utils.saveDate(this.contrEndDate);
+
         console.log("this.contr.contrAmount ======>" + this.contr.contrAmount);
 
+        this.contr.estimateId = this.params.estimateId;
 
         const blob = new Blob([JSON.stringify(this.contr)],{type:'application/json'});
 
         formData.append('data' ,blob);
 
-        //await projectApi.newProject(formData);
+        await contrApi.newContr(formData);
 
-        //this.close();
+        this.close();
       },
 
       // 계약 단건조회
       async detailContr(){
-        
+
         this.contr = await contrApi.contr(this.key);
+
+        this.contr.contrStDate = utils.formatDate(this.contr.contrStDate); // 계약시작일자
+        this.contr.contrEndDate = utils.formatDate(this.contr.contrEndDate); // 계약종료일자
       },
 
 
@@ -291,8 +312,8 @@ export default {
           this.contr.contrAmount = data.contrAmount;
           this.contr.paymentTerm = data.paymentTerm;
           this.contr.specialNote = data.specialNote;
-          this.contr.contrStDate = utils.formatDate(data.contrStDate);
-          this.contr.contrEndDate = utils.formatDate(data.contrEndDate);
+          this.contrStDate = utils.formatDate(data.contrStDate);
+          this.contrEndDate = utils.formatDate(data.contrEndDate);
 
           // 파일 등록시 수정모드로 변경
           this.updateMode();

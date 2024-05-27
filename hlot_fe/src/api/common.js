@@ -37,7 +37,17 @@ export default {
 
   /* 공통코드 조회 조회 */
   cmmCodeComp(codeNm) {
-    return axios.get(REQUEST_URL + `/common/code/${codeNm}`).then(res => {
+    let url;
+
+    if(codeNm === undefined || codeNm === null){
+      url =  '/common/code';
+
+    }else{
+      url=`/common/code/${codeNm}`;
+    }
+
+    return axios.get(REQUEST_URL + url).then(res => {
+      console.log(res);
       return res.data.data;
     })
   }

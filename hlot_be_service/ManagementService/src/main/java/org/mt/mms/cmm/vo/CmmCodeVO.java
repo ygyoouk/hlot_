@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class CmmCodeVO {
     private String codeGroup;
+    private String codeGroupNm;
     private String code;
     private String codeNm;
 }

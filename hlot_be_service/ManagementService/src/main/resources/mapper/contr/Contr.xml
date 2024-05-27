@@ -8,7 +8,7 @@
         SELECT
             CONTR_ID,
             CONTR_NM,
-            FORMAT(CONTR_AMOUNT,',') AS CONTR_AMOUNT,
+            CONTR_AMOUNT,
             PAYMENT_TERM,
             CONCAT(SUBSTRING(SPECIAL_NOTE, 1, 50),'...') AS SPECIAL_NOTE,
             DATE_FORMAT(CONTR_ST_DATE, '%Y-%m-%d') As CONTR_ST_DATE,
@@ -42,7 +42,7 @@
             E.COMP_ID ,
             C.ESTIMATE_ID,
             CONTR_NM,
-            FORMAT(CONTR_AMOUNT, ',') AS CONTR_AMOUNT,
+            CONTR_AMOUNT,
             PAYMENT_TERM,
             SPECIAL_NOTE,
             CONTR_ST_DATE,
@@ -56,4 +56,37 @@
         WHERE
             CONTR_ID = #{contrId}
     </select>
+
+    <insert id="newContr" parameterType="org.mt.mms.contr.vo.ContrVO">
+        INSERT INTO CONTR
+            (
+                CONTR_ID,
+                ESTIMATE_ID,
+                CONTR_NM,
+                CONTR_AMOUNT,
+                PAYMENT_TERM,
+                SPECIAL_NOTE,
+                CONTR_ST_DATE,
+                CONTR_END_DATE,
+                REGIST_USER_NAME,
+                REGIST_DATE,
+                DEL_YN,
+                CONTR_FILE_ID
+            )
+        VALUES
+            (
+                CONCAT('20240402BCON',NEXTVAL(HLOT_SEQ)),
+                #{estimateId},
+                #{contrNm},
+                #{contrAmount},
+                #{paymentTerm},
+                #{specialNote},
+                #{contrStDate},
+                #{contrEndDate},
+                'tester',
+                sysdate(),
+                'N',
+                #{contrFileId}
+            )
+    </insert>
 </mapper>

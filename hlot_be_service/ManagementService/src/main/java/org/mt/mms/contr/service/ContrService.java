@@ -12,4 +12,6 @@ public interface ContrService {
     List<ContrVO> all(HashMap<String, String> params) throws Exception;
 
     ContrVO one(String contrId);
+
+    int newContr(ContrVO data);
 }

@@ -17,6 +17,13 @@
       :compDiv="compDiv"
     />
 
+    <PdfPrevModal
+      v-if="bPdfPrevModal"
+      @close="bPdfPrevModal = false"
+      :pdfFileLink="pdfFileLink"
+    />
+
+
     <div class="modal-title">
       견적서 등록
     </div>
@@ -78,6 +85,15 @@
                 ></v-icon>
                 {{ estimate.attachmentVO.orignFileName }}
               </a>
+              &nbsp;&nbsp;
+              <v-btn
+                density="compact"
+                color="green"
+                @click="openPdfPrevModal"
+              >
+                미리보기
+              </v-btn>
+
             </div>
           </v-col>
         </v-row>
@@ -230,6 +246,7 @@ import {MODAL_MODE} from "@/util/config";
 import validUtil from "@/util/validUtil";
 import TopContrSearch from "@/components/modal/search/TopContrSearch.vue";
 import CompanySearch from "@/components/modal/search/CompanySearch.vue";
+import PdfPrevModal from "@/components/modal/PdfPrevModal.vue"
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
@@ -262,6 +279,9 @@ export default {
       compDiv: '',
       bTopContrSearch: false,
       bCompanySearch: false,
+      bPdfPrevModal: false,
+
+      pdfFileLink: '',
 
       mode: store.getters.getParams.mode,
       key: store.getters.getParams.key,
@@ -309,6 +329,15 @@ export default {
     selectCompany(obj) {
       this.estimate.compNm = obj.nm;
       this.estimate.compId = obj.id;
+    },
+    /* pdf 미리보기 */
+    openPdfPrevModal() {
+      const BASE_URL = import.meta.env.VITE_BASE_URL;
+      const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
+      const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
+
+      this.pdfFileLink = `${REQUEST_URL}/common/download/${this.estimate.attachmentVO.fileId}`;
+      this.bPdfPrevModal = true;
     },
 
     /* 파일 선택 */

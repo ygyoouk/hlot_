@@ -1,21 +1,21 @@
 <template>
-  <TopContrSearch
-    v-if="bTopContrSearch"
-    @close="bTopContrSearch = !bTopContrSearch"
-    @select="selectTopContr"
-  />
-
-  <CompanySearch
-    v-if="bCompanySearch"
-    @close="bCompanySearch = !bCompanySearch"
-    @select="selectCompany"
-    :compDiv="compDiv"
-  />
-
 
   <ModalLayout
     @close="modalClose"
   >
+
+    <TopContrSearch
+      v-if="bTopContrSearch"
+      @close="bTopContrSearch = !bTopContrSearch"
+      @select="selectTopContr"
+    />
+
+    <CompanySearch
+      v-if="bCompanySearch"
+      @close="bCompanySearch = !bCompanySearch"
+      @select="selectCompany"
+      :compDiv="compDiv"
+    />
 
     <div class="modal-title">
       견적서 등록
@@ -223,6 +223,7 @@ import {MODAL_MODE} from "@/util/config";
 import validUtil from "@/util/validUtil";
 import TopContrSearch from "@/components/modal/search/TopContrSearch.vue";
 import CompanySearch from "@/components/modal/search/CompanySearch.vue";
+import CompanyModal from "@/components/modal/CompanyModal.vue";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;

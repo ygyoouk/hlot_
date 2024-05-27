@@ -1,5 +1,8 @@
 <template>
-  <div class="login-container">
+  <div
+    class="login-container"
+    @keyup.enter="login"
+  >
     <div class="login-form">
       <v-text-field
         v-model="user.userId"

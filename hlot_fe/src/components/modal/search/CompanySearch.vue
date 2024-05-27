@@ -1,5 +1,13 @@
 <template>
+
   <SubModalLayout>
+
+    <CompanyModal
+      v-if="bCompanyModal"
+      @close="bCompanyModal = false"
+      @update="search"
+    />
+
     <div class="modal-title">
       업체 검색
     </div>
@@ -38,6 +46,12 @@
       >
         초기화
       </v-btn>
+      <v-btn
+        color="green"
+        @click="bCompanyModal = true"
+      >
+        업체등록
+      </v-btn>
     </div>
 
     <div>
@@ -69,6 +83,7 @@
 
 <script setup>
 import SubModalLayout from "@/layouts/SubModalLayout.vue";
+import CompanyModal from "@/components/modal/CompanyModal.vue";
 </script>
 
 <script>
@@ -86,6 +101,8 @@ import companyApi from "@/api/company.js";
 
     data() {
       return {
+        bCompanyModal: false,
+
         compDivs:[],
         companys:[],
 

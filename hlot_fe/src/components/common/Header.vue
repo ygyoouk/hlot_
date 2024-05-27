@@ -34,7 +34,7 @@
 
               <v-list-item-title
                 class="sub-menu-item_mt"
-                @click="movePage('/')"
+                @click="movePage('/estimate/estimateCompare')"
               >견적서 비교</v-list-item-title>
             </v-list-item>
 
@@ -66,7 +66,7 @@
 
               <v-list-item-title
                 class="sub-menu-item_mt"
-                @click="movePage('/')"
+                @click="movePage('/cmmCode/cmmCodeList')"
               >공통코드관리</v-list-item-title>
             </v-list-item>
 

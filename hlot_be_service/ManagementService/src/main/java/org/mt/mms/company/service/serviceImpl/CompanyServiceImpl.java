@@ -22,7 +22,8 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyVO one(String companyId) throws Exception {
 
         CompanyVO cv = companyMapper.selectCompany(companyId);
-        cv.setCompanyManagers(companyMapper.selectCompanyManagers(companyId));
+        List<CompanyManagerVO> companyManagers = companyMapper.selectCompanyManagers(companyId);
+        cv.setCompanyManagers(companyManagers);
 
         return cv;
     }

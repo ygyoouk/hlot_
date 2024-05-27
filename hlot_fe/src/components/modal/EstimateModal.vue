@@ -69,9 +69,16 @@
             <v-file-input label="견적서" @change="selectFile" :readonly="mode === MODAL_MODE.DETAIL"></v-file-input>
           </v-col>
           <v-col v-else>
-            <a :href="`${REQUEST_URL}/common/download/${estimate.attachmentVO.fileId}`">
-              {{ estimate.attachmentVO.orignFileName }}
-            </a>
+            <div style="padding: 10px; display: inline-block">
+
+              <a :href="`${REQUEST_URL}/common/download/${estimate.attachmentVO.fileId}`">
+                <v-icon
+                  icon="mdi-arrow-up-bold-box-outline"
+                  size="large"
+                ></v-icon>
+                {{ estimate.attachmentVO.orignFileName }}
+              </a>
+            </div>
           </v-col>
         </v-row>
         <v-row>
@@ -223,7 +230,6 @@ import {MODAL_MODE} from "@/util/config";
 import validUtil from "@/util/validUtil";
 import TopContrSearch from "@/components/modal/search/TopContrSearch.vue";
 import CompanySearch from "@/components/modal/search/CompanySearch.vue";
-import CompanyModal from "@/components/modal/CompanyModal.vue";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;

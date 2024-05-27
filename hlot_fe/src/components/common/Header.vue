@@ -34,7 +34,7 @@
 
               <v-list-item-title
                 class="sub-menu-item_mt"
-                @click="movePage('/')"
+                @click="movePage('/estimate/estimateCompare')"
               >견적서 비교</v-list-item-title>
             </v-list-item>
 
@@ -45,7 +45,7 @@
           class="header-btn_mt"
           @click="movePage('/contr/contrList')"
         >
-          계약관리
+          계약조회
         </v-btn>
 
         <v-menu>
@@ -66,7 +66,7 @@
 
               <v-list-item-title
                 class="sub-menu-item_mt"
-                @click="movePage('/')"
+                @click="movePage('/cmmCode/cmmCodeList')"
               >공통코드관리</v-list-item-title>
             </v-list-item>
 
@@ -110,7 +110,7 @@ export default {
       { name: 'HOME',      path: '/' },
       { name: '원계약관리',  path: '/project/projectList' },
       { name: '견적서관리',   path: '/estimate/estimateList' },
-      { name: '계약관리',    path: '/contr/contrList' },
+      { name: '계약조회',    path: '/contr/contrList' },
 
       { name: '업체관리',    path: '/company/companyList' },
       { name: '공통코드관리', path: '/' }
@@ -146,9 +146,6 @@ export default {
       }
     },
 
-    subMenu(link){
-      console.log(link);
-    }
   }
 }
 </script>

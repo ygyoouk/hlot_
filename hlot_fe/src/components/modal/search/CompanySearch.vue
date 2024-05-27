@@ -6,6 +6,8 @@
       v-if="bCompanyModal"
       @close="bCompanyModal = false"
       @update="search"
+      :compDiv="compDiv"
+      :mode="MODAL_MODE.REG"
     />
 
     <div class="modal-title">
@@ -84,6 +86,7 @@
 <script setup>
 import SubModalLayout from "@/layouts/SubModalLayout.vue";
 import CompanyModal from "@/components/modal/CompanyModal.vue";
+import {MODAL_MODE} from "@/util/config";
 </script>
 
 <script>

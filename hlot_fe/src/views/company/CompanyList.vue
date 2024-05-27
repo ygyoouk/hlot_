@@ -3,6 +3,8 @@
     v-if="bCompanyModal"
     @close="bCompanyModal = !bCompanyModal"
     @update="getCompanys"
+    :mode="mode"
+    :companyModalKey="companyModalKey"
   />
 
   <v-card class="table-container_mt">
@@ -80,7 +82,6 @@ const headers = [
 
 <script>
 import companyApi from '@/api/company.js'
-import store from "@/store/store";
 import {MODAL_MODE} from "@/util/config";
 import commonApi from "@/api/common.js";
 
@@ -94,6 +95,9 @@ export default {
   },
   data() {
     return {
+      mode: '',
+      key: '',
+
       searchCondition: {
         compDiv: '',
         compNm: '',
@@ -113,13 +117,17 @@ export default {
 
     /* 등록화면 */
     openReg(){
-      store.commit('setModalParams', {key: '', mode: MODAL_MODE.REG});
+      this.companyModalKey = '';
+      this.mode = MODAL_MODE.REG;
+
       this.bCompanyModal = !this.bCompanyModal;
     },
 
     /* 상세조회화면 */
     openDetail(item, row) {
-      store.commit('setModalParams', {key: row.item.compId, mode: MODAL_MODE.DETAIL});
+      this.companyModalKey = row.item.compId;
+      this.mode = MODAL_MODE.DETAIL;
+
       this.bCompanyModal = !this.bCompanyModal;
     }
   }

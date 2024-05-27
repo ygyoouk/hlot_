@@ -185,24 +185,20 @@ import validUtil from "@/util/validUtil";
 
 <script>
 import companyApi from '@/api/company.js'
-import store from "@/store/store";
 import validUtil from "@/util/validUtil";
 import commonApi from "@/api/common";
 
 export default {
   name: "CompanyModal",
+  props: ['mode', 'companyModalKey'],
   async beforeMount() {
     this.compDivs = await commonApi.cmmCodeComp('COMP');
-    if(!validUtil.isNull(this.key)) await this.getCompany();
+    if(!validUtil.isNull(this.$props.companyModalKey)) await this.getCompany();
   },
   data() {
     return {
-
       compDivs: [],
       managerModal: false,
-
-      mode: store.getters.getParams.mode,
-      key: store.getters.getParams.key,
 
       company: {  // 업체
         compId: '',          // 업체ID
@@ -228,7 +224,7 @@ export default {
   methods : {
     /* company 상세조회 */
     async getCompany(){
-      this.company = await companyApi.company(this.key);
+      this.company = await companyApi.company(this.companyModalKey);
     },
     /* company 등록 */
     async newCompany() {

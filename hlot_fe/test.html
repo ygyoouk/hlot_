@@ -1,49 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        table {
-            margin:0 auto;
-            width:700px;
-            text-align:center
-        }
-        th {
-            width:120px;
-        }
-    </style>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+    <style>
+
+        .container{
+            text-align: center;
+        }
+
+        .menu-bar{
+            display: inline-block;
+            background-color: #D5D5D5;
+            padding: 0;
+        }
+        .menu{
+            display:inline-block;
+            padding: 25px;
+            color:#fff;
+        }
+        .cell{
+            display:inline-block;
+            top:80px;
+        }
+
+    </style>
 </head>
 <body>
-<table border="1">
-    <tbody align="center">
-    <tr>
-        <td rowspan="8" width="180">
-            <a href="Table.html">
-                <img src="image/모나리자.jpg">
-            </a>
-        </td>
-        <th>작품명</th>
-        <td colspan="2">모자리자</td>
-    </tr>
-    <tr>
-        <th>화가</th>
-        <td colspan="2">레오나르도 다 빈치</td>
-    </tr>
-    <tr>		 <th>시대</th><td colspan="2">15세기경</td></tr>
-    <tr>		 <th>기법</th><td colspan="2">패널에 유채</td></tr>
-    <tr>		 <th>크기</th><td colspan="2">77x53</td></tr>
-    <tr>		 <th rowspan="2">가<br>격</th><td>정가</td><td>700억원</td></tr>
-    <tr>		 				 <td>판매가</td><td>500억원</td></tr>
-    <tr>		 <th>소장기관</th><td colspan="2">루브르박물관</td></tr>
+    <div class="container">
+        <ul class="menu-bar">
+            <li class="menu">패션잡화</li>
+            <li class="menu">주방용품</li>
+            <li class="menu">생활건강</li>
+            <li class="menu">DIY가구</li>
+        </ul>
 
 
-    </tbody>
-
-</table>
-
-
-
-
+        <div>
+            <div class=cell>
+                <div>
+                    <img src="image/fashion1.png">
+                </div>
+                <span style="color:blue;">
+                    캐주얼화<br/>
+                    스니커즈
+                </span>
+                <p>35,000원</p>
+            </div>
+            <div class=cell>
+                <div>
+                    <img src="image/fashion2.png">
+                </div>
+                <span style="color:blue;">
+                    미니크로스<br/>
+                    여성 가방
+                </span>
+                <p>20,000원</p>
+            </div>
+            <div class=cell>
+                <div>
+                    <img src="image/fashion3.png">
+                </div>
+                <span style="color:blue;">
+                    페이퍼플레인<br/>
+                    겨울 신발
+                </span>
+                <p>25,800원</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -91,4 +91,10 @@ public class EstimateServiceImpl implements EstimateService {
     public int deleteEstimate(String id) throws Exception {
         return estimateMapper.deleteEstimate(id);
     }
+
+    @Override
+    public int contrEstimate(String id) throws Exception {
+        return estimateMapper.updateContrEstimate(id);
+    }
+
 }

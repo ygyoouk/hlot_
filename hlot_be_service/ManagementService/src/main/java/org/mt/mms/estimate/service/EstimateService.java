@@ -22,4 +22,6 @@ public interface EstimateService {
     int confirmEstimate(String id) throws Exception;
 
     int deleteEstimate(String id) throws Exception;
+
+    int contrEstimate(String id) throws Exception;
 }

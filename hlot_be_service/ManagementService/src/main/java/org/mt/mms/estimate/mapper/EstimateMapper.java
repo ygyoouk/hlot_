@@ -23,4 +23,6 @@ public interface EstimateMapper {
     int updateConfirmEstimate(String id) throws Exception;
 
     int deleteEstimate(String id) throws Exception;
+
+    int updateContrEstimate(String id) throws Exception;
 }

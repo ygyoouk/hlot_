@@ -106,4 +106,10 @@
             DEL_YN = 'Y'
         WHERE ESTIMATE_ID = #{id}
     </update>
+
+    <update id="updateContrEstimate" parameterType="string">
+        UPDATE ESTIMATE SET /* org.mt.mms.estimate.mapper.EstimateMapper.updateContrEstimate */
+            CONTR_YN = 'Y'
+        WHERE ESTIMATE_ID = #{id}
+    </update>
 </mapper>

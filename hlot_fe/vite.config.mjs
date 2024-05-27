@@ -44,4 +44,5 @@ export default defineConfig({
   server: {
     port: 80,
   },
+  optimizeDeps: { esbuildOptions: { target: "esnext" } }
 })

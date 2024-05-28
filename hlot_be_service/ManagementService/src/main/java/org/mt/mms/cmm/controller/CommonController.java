@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -107,8 +108,6 @@ public class CommonController {
     /* 공통코드 조회 */
     @GetMapping(value={"/code/{codeNm}", "/code"})
     public ResponseEntity<Result> code(@PathVariable(required = false) String codeNm) throws Exception {
-        log.info("codeNm : {}", codeNm);
-
         return ResponseEntity.ok()
                 .body(Result.resSuccess(commonService.getCode(codeNm)));
     }

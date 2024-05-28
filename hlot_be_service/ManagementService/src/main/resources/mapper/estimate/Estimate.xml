@@ -18,9 +18,11 @@
 
              , TC.TOP_CONTR_NM
              , C.COMP_NM
+             , CN.CONTR_ID
         FROM ESTIMATE E
             INNER JOIN TOP_CONTR TC ON TC.TOP_CONTR_ID = E.TOP_CONTR_ID
             INNER JOIN COMP C ON C.COMP_ID = E.COMP_ID
+            LEFT OUTER JOIN CONTR CN ON CN.ESTIMATE_ID = E.ESTIMATE_ID
         WHERE E.DEL_YN = 'N'
         <if test='topContrId != null and !topContrId.equals("")'>
             AND TC.TOP_CONTR_ID = #{topContrId}

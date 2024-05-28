@@ -24,6 +24,7 @@
     :compDiv="compDiv"
   />
 
+
   <v-card class="table-container_mt">
     <div class="table-title_mt">
       견적서 등록
@@ -92,6 +93,15 @@
           rounded="xl"
         >
           계약 등록
+        </v-btn>
+
+        <v-btn
+          v-if="item.contrYn === 'Y' && item.confirmYn === 'Y'"
+          color="green"
+          @click="openContr(item)"
+          rounded="xl"
+        >
+          계약 조회
         </v-btn>
       </template>
 
@@ -198,6 +208,11 @@ export default {
 
         mode: MODAL_MODE.REG
       };
+
+      if(item.contrYn === 'Y') { // 계약등록된 상태면
+        params.mode = MODAL_MODE.DETAIL
+        params.key = item.contrId
+      }
       store.commit("setModalParams", params);
       this.bContrModal = !this.bContrModal;
     },

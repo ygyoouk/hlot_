@@ -23,7 +23,11 @@
       <v-select
         label="계약구분(품명)"
         density="compact"
+        :items="topContrDivs"
+        item-title="codeNm"
+        item-value="code"
         v-model="searchCondition.topContrDiv"
+
       />
       <v-text-field
         label="발주처"
@@ -99,15 +103,19 @@ import CompanySearch from "@/components/modal/search/CompanySearch.vue";
 </script>
 <script>
 import projectApi from "@/api/project";
+import commonApi from "@/api/common"
 
 export default {
+  async beforeMount() {
+    this.topContrDivs = await commonApi.cmmCodeComp('TCTR');
+  },
   data() {
     return {
       bCompanySearch: false,
 
       compDiv: '',
 
-
+      topContrDivs: [],
       topContrs: [],
 
       searchCondition:{

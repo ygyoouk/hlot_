@@ -186,7 +186,6 @@
             <v-text-field
               v-model="prod.detailProdNm"
               label="세부품명"
-              :rules="[validUtil.required]"
             />
           </v-col>
         </v-row>
@@ -396,7 +395,7 @@ export default {
 
     /* ESTIMATE 등록 */
     async newEstimate(){
-      const { valid } = await this.$refs.managerForm.validate();
+      const { valid } = await this.$refs.form.validate();
       if(!valid) return false;
 
       if(!confirm("등록 하시겠습니까?")) return false;

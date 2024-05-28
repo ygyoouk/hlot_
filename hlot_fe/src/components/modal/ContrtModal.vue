@@ -20,18 +20,23 @@
               <v-file-input label="계약파일" @change="selectFile" ></v-file-input>
             </v-col>
             <v-col v-if="this.contr.contrFileId != ''">
-              <a :href="'http://localhost:8081/common/download/' + this.contr.contrFileId">{{this.contr.orignFileName}}</a>
-            </v-col>
-            <v-col>
-              <v-btn
-               v-if="this.contr.contrFileId != ''"
-                color="green"
-                density="compact"
-                @click="openPdfPrevModal"
-              >미리보기</v-btn>
+              <div style="padding: 10px; display: inline-block">
+                <v-icon
+                  icon="mdi-arrow-up-bold-box-outline"
+                  size="large"
+                ></v-icon>
+                <a :href="'http://localhost:8081/common/download/' + this.contr.contrFileId">{{this.contr.orignFileName}}</a>
+                &nbsp;&nbsp;
+                <v-btn
+                  v-if="this.contr.contrFileId != ''"
+                  color="green"
+                  density="compact"
+                  @click="openPdfPrevModal"
+                >미리보기</v-btn>
+              </div>
             </v-col>
           </v-row>
-          
+
           <v-row>
             <v-col>
               <v-text-field
@@ -248,7 +253,7 @@ export default {
        * 계약 정보 및 계약서 파일 저장
       */
       async newContr(){
-        
+
 
         if(utils.isNull(this.file)){
           alert("파일을 선택해주세요.");
@@ -265,7 +270,7 @@ export default {
         this.contr.contrStDate = utils.saveDate(this.contrStDate);
         this.contr.contrEndDate = utils.saveDate(this.contrEndDate);
 
-       
+
         this.contr.estimateId = this.params.estimateId;
 
         const blob = new Blob([JSON.stringify(this.contr)],{type:'application/json'});
@@ -285,8 +290,8 @@ export default {
 
         this.contrStDate = this.contr.contrStDate; // 계약시작일자
         this.contrEndDate = this.contr.contrEndDate; // 계약종료일자
-        
-        
+
+
       },
 
 
@@ -354,7 +359,7 @@ export default {
 
         this.pdfFileLink = `${REQUEST_URL}/common/download/${this.contr.contrFileId}`;
         this.bPdfPrevModal = true;
-        
+
       },
 
     }

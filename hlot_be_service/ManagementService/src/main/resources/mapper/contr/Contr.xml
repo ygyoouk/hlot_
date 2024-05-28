@@ -36,6 +36,7 @@
     <select id="one" resultType="org.mt.mms.contr.vo.ContrVO" parameterType="string">
         SELECT
             CONTR_ID,
+            A.ORIGN_FILE_NAME ,
             E.TOP_CONTR_ID ,
             (SELECT TOP_CONTR_NM FROM TOP_CONTR WHERE TOP_CONTR_ID = E.TOP_CONTR_ID) AS TOP_CONTR_NM,
             (SELECT COMP_NM FROM COMP WHERE COMP_ID = E.COMP_ID) AS COMP_NM,
@@ -53,6 +54,7 @@
             CONTR_FILE_ID
         FROM
             CONTR C INNER JOIN ESTIMATE E ON C.ESTIMATE_ID = E.ESTIMATE_ID
+                    INNER JOIN ATTACHMENT A ON C.CONTR_FILE_ID = A.FILE_ID
         WHERE
             CONTR_ID = #{contrId}
     </select>

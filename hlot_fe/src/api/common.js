@@ -46,9 +46,7 @@ export default {
     }else{
       url=`/common/code/${codeNm}`;
     }
-
-    console.log("URL : " + url);
-
+  
     return axios.get(REQUEST_URL + url).then(res => {
       console.log(res);
       return res.data.data;

@@ -11,21 +11,22 @@
       <v-row>
 
         <v-col cols="3">
-          <v-text-field
-            v-model="searchParam.codeGroupNm"
-            label="코드그룹명"
-            density="comfortable"
-            @keyup="enterKey()"
-          ></v-text-field>
+          <v-select
+              label="코드그룹"
+              :items="codeGroup"
+              item-title="codeGroupNm"
+              item-value="codeGroup"
+              v-model="searchParam.codeGroupNm"
+              ></v-select>
         </v-col>
 
         <v-col cols="auto">
           <v-btn color="green" @keyup="enterKey()" @click="getComCd()">조회</v-btn>
         </v-col>
 
-        <v-col cols="auto">
+        <!-- <v-col cols="auto">
           <v-btn color="red" @keyup="enterKey()" @click="clearSearchParam()">초기화</v-btn>
-        </v-col>
+        </v-col> -->
 
         <v-col cols="auto">
           <v-btn color="#5865f2"  @click="pushRegPop()">등록</v-btn>

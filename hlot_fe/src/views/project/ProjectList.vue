@@ -243,6 +243,7 @@ export default {
     },
 
     compSearchPopUp(compDiv){
+      console.log(compDiv)
       this.compDiv = compDiv; // 업체구분
       this.bCompanySearchModal =!this.bCompanySearchModal;
     },

@@ -35,6 +35,10 @@ export default createRouter({
     {
       path: '/estimate/estimateCompare',
       component: () => import('@/views/estimate/EstimateCompare.vue')
+    },
+    {
+      path: '/estimate/prodList',
+      component: () => import('@/views/estimate/prodList.vue')
     }
   ],
 })

@@ -36,6 +36,11 @@
                 class="sub-menu-item_mt"
                 @click="movePage('/estimate/estimateCompare')"
               >견적서 비교</v-list-item-title>
+
+              <v-list-item-title
+                class="sub-menu-item_mt"
+                @click="movePage('/estimate/prodList')"
+              >품목조회</v-list-item-title>
             </v-list-item>
 
           </v-list>

@@ -5,8 +5,17 @@
   @select="selectNm"
   @close="bCompanySearchModal = !bCompanySearchModal"
   />
+
+
+    
   <ModalLayout
     @close="this.$emit('close')">
+
+      <PdfPrevModal
+      v-if="bPdfPrevModal"
+      @close="bPdfPrevModal = false"
+      :pdfFileLink="pdfFileLink"
+      />
 
     <div class="modal-title">
       원계약 관리{{ mode === MODAL_MODE.DETAIL ? '상세'
@@ -162,6 +171,13 @@
                   color="green"
                   @click="newProject"
                 >저장</v-btn>
+                <v-btn v-if="this.topContr.fileId != '' && this.topContr.fileId !=null"
+                  density="compact"
+                  color="green"
+                  @click="openPdfPrevModal"
+                >
+                  미리보기
+                </v-btn>
             </div>
           </v-row>
         </v-form>
@@ -185,6 +201,7 @@ import {MODAL_MODE} from "@/util/config";
 import utils from "@/util/validUtil";
 import projectApi from '@/api/project.js'
 import CompnaySearchModal from "@/components/modal/search/CompanySearch.vue"
+import PdfPrevModal from "@/components/modal/PdfPrevModal.vue"
 
 export default {
   name: "ProjectModal",
@@ -218,7 +235,11 @@ export default {
 
       bCompanySearchModal : false,
 
+      bPdfPrevModal : false,
+
       compDiv : '',
+
+      pdfFileLink: '',
 
       topContrDate : '',
       contrStDate : '',
@@ -289,11 +310,9 @@ export default {
        * 원계약 validation checks
       */
       validSaveTopContr(){
-
         const { valid } =  this.$refs.form.validate();
 
         if(!valid) return false;
-
       },
 
       /**
@@ -309,8 +328,11 @@ export default {
       },
 
       compSearchPopUp(compDiv){
+        console.log(compDiv);
         if(this.mode !== MODAL_MODE.REG) return false;
+
         this.compDiv = compDiv;
+
         this.bCompanySearchModal =!this.bCompanySearchModal;
       },
 
@@ -337,7 +359,18 @@ export default {
 
       selectFile(file){
         this.image = file.target.files[0];
-      }
+      },
+
+      /* pdf 미리보기 */
+      openPdfPrevModal() {
+        const BASE_URL = import.meta.env.VITE_BASE_URL;
+        const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
+        const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
+
+        this.pdfFileLink = `${REQUEST_URL}/common/download/${this.topContr.topContrFileId}`;
+        this.bPdfPrevModal = true;
+        
+      },
 
 
     }

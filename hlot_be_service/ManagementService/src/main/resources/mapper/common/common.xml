@@ -67,7 +67,7 @@
             CODE_GROUP, CODE_NM, CODE, CODE_GROUP_NM
         FROM CMM_CODE
         <if test=" codeNm !=null and codeNm !='' ">
-        WHERE CODE_GROUP_NM = #{codeNm}
+        WHERE CODE_GROUP = #{codeNm}
         </if>
     </select>
 

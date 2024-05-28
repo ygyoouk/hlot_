@@ -2,6 +2,12 @@
   <ModalLayout
    @close="this.$emit('close')"
   >
+    <PdfPrevModal
+      v-if="bPdfPrevModal"
+      @close="bPdfPrevModal = false"
+      :pdfFileLink="pdfFileLink"
+      />
+
     <div class="modal-title">
       계약 관리{{ mode === MODAL_MODE.DETAIL ? '상세'
                 : mode === MODAL_MODE.REG ? '등록' : '수정' }}
@@ -14,8 +20,15 @@
               <v-file-input label="계약파일" @change="selectFile" ></v-file-input>
             </v-col>
             <v-col v-if="this.contr.contrFileId != ''">
-              <a :href="'http://localhost:8081/common/download/' + this.contr.contrFileId">{{this.contr.contrFileId}}</a>
-              
+              <a :href="'http://localhost:8081/common/download/' + this.contr.contrFileId">{{this.contr.orignFileName}}</a>
+            </v-col>
+            <v-col>
+              <v-btn
+               v-if="this.contr.contrFileId != ''"
+                color="green"
+                density="compact"
+                @click="openPdfPrevModal"
+              >미리보기</v-btn>
             </v-col>
           </v-row>
           
@@ -137,6 +150,7 @@ import utils from "@/util/validUtil";
 import contrApi from '@/api/contr';
 import companyApi from '@/api/company';
 import topContrApi from '@/api/project';
+import PdfPrevModal from "@/components/modal/PdfPrevModal.vue"
 
 export default {
   name: "ProjectModal",
@@ -172,6 +186,10 @@ export default {
 
       contrEndDate : '',
 
+      bPdfPrevModal : false,
+
+      pdfFileLink: '',
+
       contr : {
         topContrNm : '',
         topContrId : '',
@@ -185,6 +203,7 @@ export default {
         contrStDate : '',
         contrEndDate : '',
         contrFileId : '' ,
+        orignFileName : '',
       },
 
       params : store.getters.getParams,
@@ -203,6 +222,7 @@ export default {
        * @param {topContrId}
        * */
       async getTopContrNm() {
+        console.log(this.contr.contrFileId);
         const topContrId = this.params.topContrId;
 
         const data = await commonApi.topContrNm(topContrId);
@@ -324,7 +344,19 @@ export default {
           this.updateMode();
         }
 
-      }
+      },
+
+      /* pdf 미리보기 */
+      openPdfPrevModal() {
+        const BASE_URL = import.meta.env.VITE_BASE_URL;
+        const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
+        const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
+
+        this.pdfFileLink = `${REQUEST_URL}/common/download/${this.contr.contrFileId}`;
+        this.bPdfPrevModal = true;
+        
+      },
+
     }
 }
 </script>

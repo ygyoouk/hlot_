@@ -50,7 +50,6 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public List<CmmCodeVO> getCode(String codeNm) throws Exception {
-        System.out.println("service_codeNm ===>" + codeNm);
         return commonMapper.selectCode(codeNm);
     }
 

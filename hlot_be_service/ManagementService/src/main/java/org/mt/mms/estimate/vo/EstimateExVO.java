@@ -11,6 +11,7 @@ public class EstimateExVO extends EstimateVO{
 
     private String topContrNm;      // 원계약명
     private String compNm;          // 업체명
+    private String contrId;         // 계약ID
 
     private boolean possibleConfirm; // 확정가능 여부
     private boolean possibleConstr; // 계약가능 여부

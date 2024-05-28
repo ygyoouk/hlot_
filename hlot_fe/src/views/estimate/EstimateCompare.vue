@@ -18,6 +18,22 @@
     :compDiv="compDiv"
   />
 
+  <div>
+    <v-btn
+      color="red"
+      style="position: fixed; bottom: 5%; z-index: 1; right: 9%;"
+      @click="moveScreen('up')"
+    >
+      ▲
+    </v-btn>
+    <v-btn
+      color="red"
+      style="position: fixed; bottom: 5%; z-index: 1; right: 5%;"
+      @click="moveScreen('down')"
+    >
+      ▼
+    </v-btn>
+  </div>
   <v-card class="table-container_mt">
 
     <div class="table-title_mt">
@@ -87,7 +103,9 @@
         <span>{{ p.estimateDivNm }}</span>
         <span>{{ p.orderNo }}</span>
       </p>
-      <VuePDF :pdf="p.pdfObj.pdf" scale="1.1"></VuePDF>
+      <div class="pdf-box">
+        <VuePDF :pdf="p.pdfObj.pdf" scale="1.1"></VuePDF>
+      </div>
     </div>
   </div>
 </template>
@@ -154,7 +172,6 @@ export default {
       const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
 
       this.pdfs = this.selected.map(v => {
-        console.log(v);
         return {
           topContrNm: v.topContrNm,
           compNm: v.compNm,
@@ -163,6 +180,8 @@ export default {
           pdfObj: usePDF(`${REQUEST_URL}/common/download/${v.estimateFileId}`)
         }
       });
+
+      this.addEvent();
     },
   },
   methods: {
@@ -195,8 +214,51 @@ export default {
         store.commit("setModalParams", {key: row.item.estimateId , mode:MODAL_MODE.DETAIL});
         this.bEstimateModal = !this.bEstimateModal;
     },
+
+    moveScreen(opt) {
+      if(opt === 'up') {
+        window.scrollBy(0, -1000);
+      } else {
+        window.scrollBy(0, 1000);
+      }
+
+    },
+    addEvent() {
+      const slider = document.querySelector('.pdf-container');
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      slider.addEventListener('mousedown', e => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('active');
+      });
+
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+      });
+
+      slider.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = x - startX;
+        slider.scrollLeft = scrollLeft - walk;
+      });
+    }
   }
 }
+
+
+
 </script>
 
 <style scoped>
@@ -208,9 +270,12 @@ export default {
 </style>
 
 <style>
-.pdf-elem canvas {
+.pdf-elem .pdf-box {
   width: 654px !important;
-  height: 925px !important;
+  height: 800px !important;
+  overflow: auto;
+}
+.pdf-elem canvas {
   border: 1px solid black;
 }
 .pdf-elem span {

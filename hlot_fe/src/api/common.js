@@ -37,20 +37,15 @@ export default {
 
   /* 공통코드 조회 조회 */
   cmmCodeComp(codeNm) {
-    console.log(codeNm)
     let url;
 
     if(codeNm === undefined || codeNm === null || codeNm === ''){
       url =  '/common/code';
-
     }else{
       url=`/common/code/${codeNm}`;
     }
 
-    console.log("URL : " + url);
-
     return axios.get(REQUEST_URL + url).then(res => {
-      console.log(res);
       return res.data.data;
     })
   },
@@ -59,7 +54,7 @@ export default {
   codeGroup(){
     return axios.get(REQUEST_URL + '/common/codeGroup').then(res =>{
       return res.data.data;
-    }); 
+    });
   },
 
   /* 공통코드 추가*/

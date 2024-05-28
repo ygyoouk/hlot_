@@ -27,7 +27,7 @@ axios.interceptors.request.use(
 
 
     let data = request.data??{};
-    
+
     data.registUserName = user.getUserStorage('userName');
     data.userAuth = user.getUserStorage('userAuth');
 
@@ -56,7 +56,7 @@ router.beforeEach( (to, from, next) => {
   const auth = user.getUserStorage('userAuth');
 
   if(!auth && to.path !== '/login') {
-    alert('로그인 후 이용해주세요.');
+    if(to.path !== '/') alert('로그인 후 이용해주세요.');
     next({path: '/login'});
   } else {
     next();

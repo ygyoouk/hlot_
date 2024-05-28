@@ -9,6 +9,7 @@
              , E.COMP_ID
              , E.ORDER_NO
              , E.ESTIMATE_DIV
+             , E.ESTIMATE_FILE_ID
              , (SELECT CC.CODE_NM FROM CMM_CODE CC WHERE CC.CODE = E.ESTIMATE_DIV AND CC.CODE_GROUP = 'ESTD') AS ESTIMATE_DIV_NM
              , E.CONFIRM_YN
              , E.CONTR_YN

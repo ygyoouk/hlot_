@@ -10,14 +10,15 @@
     <div class="modal-content">
       <v-container>
           <v-row>
-            <v-col>
+            <v-col v-if="this.contr.contrFileId == ''">
               <v-file-input label="계약파일" @change="selectFile" ></v-file-input>
             </v-col>
-            <!-- <v-col>
-              <a :href="'http://localhost:8081/common/download/' + this.topContr.fileId">{{this.topContr.orignFileName}}</a>
-            </v-col> -->
+            <v-col v-if="this.contr.contrFileId != ''">
+              <a :href="'http://localhost:8081/common/download/' + this.contr.contrFileId">{{this.contr.contrFileId}}</a>
+              
+            </v-col>
           </v-row>
-
+          
           <v-row>
             <v-col>
               <v-text-field
@@ -183,6 +184,7 @@ export default {
         specialNote : '',
         contrStDate : '',
         contrEndDate : '',
+        contrFileId : '' ,
       },
 
       params : store.getters.getParams,
@@ -226,7 +228,8 @@ export default {
        * 계약 정보 및 계약서 파일 저장
       */
       async newContr(){
-        console.log(this.file)
+        
+
         if(utils.isNull(this.file)){
           alert("파일을 선택해주세요.");
           return false;
@@ -242,17 +245,17 @@ export default {
         this.contr.contrStDate = utils.saveDate(this.contrStDate);
         this.contr.contrEndDate = utils.saveDate(this.contrEndDate);
 
-        console.log("this.contr.contrAmount ======>" + this.contr.contrAmount);
-
+       
         this.contr.estimateId = this.params.estimateId;
 
         const blob = new Blob([JSON.stringify(this.contr)],{type:'application/json'});
 
         formData.append('data' ,blob);
 
+        //계약 저장
         await contrApi.newContr(formData);
 
-        this.close();
+        this.$emit("close");
       },
 
       // 계약 단건조회
@@ -260,8 +263,10 @@ export default {
 
         this.contr = await contrApi.contr(this.key);
 
-        this.contr.contrStDate = utils.formatDate(this.contr.contrStDate); // 계약시작일자
-        this.contr.contrEndDate = utils.formatDate(this.contr.contrEndDate); // 계약종료일자
+        this.contrStDate = this.contr.contrStDate; // 계약시작일자
+        this.contrEndDate = this.contr.contrEndDate; // 계약종료일자
+        
+        
       },
 
 

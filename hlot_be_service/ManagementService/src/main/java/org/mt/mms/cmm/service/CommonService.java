@@ -21,4 +21,10 @@ public interface CommonService {
     TopContrVO topContrNm(String topContrId);
 
     CompanyVO compNm(String compId);
+
+    List<CmmCodeVO> getCodeGroup();
+
+    int newCmmCode(CmmCodeVO data);
+
+    int deleteCmmCode(String code);
 }

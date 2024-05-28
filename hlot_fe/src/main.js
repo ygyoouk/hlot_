@@ -27,6 +27,7 @@ axios.interceptors.request.use(
 
 
     let data = request.data??{};
+    
     data.registUserName = user.getUserStorage('userName');
     data.userAuth = user.getUserStorage('userAuth');
 

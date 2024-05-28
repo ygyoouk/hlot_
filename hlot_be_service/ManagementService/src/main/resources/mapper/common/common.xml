@@ -67,7 +67,7 @@
             CODE_GROUP, CODE_NM, CODE, CODE_GROUP_NM
         FROM CMM_CODE
         <if test=" codeNm !=null and codeNm !='' ">
-        WHERE CODE_GROUP = #{codeNm}
+        WHERE CODE_GROUP_NM = #{codeNm}
         </if>
     </select>
 
@@ -85,5 +85,40 @@
         FROM COMP
         WHERE COMP_ID = #{compId}
     </select>
+
+    <select id="getCodeGroup" resultType="org.mt.mms.cmm.vo.CmmCodeVO">
+        SELECT
+            CODE_GROUP,
+            CODE_GROUP_NM
+        FROM
+            CODE_GROUP
+    </select>
+
+    <select id="getcodeGroupNm" resultType="string">
+        SELECT CODE_GROUP_NM FROM CODE_GROUP WHERE CODE_GROUP = #{codeGroup}
+    </select>
+
+    <insert id="newCmmCode" parameterType="org.mt.mms.cmm.vo.CmmCodeVO">
+        INSERT INTO CMM_CODE
+            (
+                CODE_GROUP,
+                CODE_NM,
+                CODE,
+                CODE_GROUP_NM
+            )
+        VALUES
+            (
+                #{codeGroup},
+                #{codeNm},
+                CONCAT(#{codeGroup},NEXTVAL(CD_SEQ)),
+                #{codeGroupNm}
+            )
+    </insert>
+
+
+    <delete id="deleteCmmCode" parameterType="string">
+
+        DELETE FROM CMM_CODE WHERE CODE = #{code}
+    </delete>
 
 </mapper>

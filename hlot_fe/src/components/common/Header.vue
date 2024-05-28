@@ -113,7 +113,7 @@ export default {
       { name: '계약조회',    path: '/contr/contrList' },
 
       { name: '업체관리',    path: '/company/companyList' },
-      { name: '공통코드관리', path: '/' }
+      { name: '공통코드관리', path: '/cmmCode/cmmCodeList' }
     ];
 
     if(user.getUserStorage('userAuth') === '00'){

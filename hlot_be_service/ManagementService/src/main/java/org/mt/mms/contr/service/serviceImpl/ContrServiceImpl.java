@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mt.mms.contr.mapper.ContrMapper;
 import org.mt.mms.contr.service.ContrService;
 import org.mt.mms.contr.vo.ContrVO;
+import org.mt.mms.estimate.service.EstimateService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import java.util.List;
 public class ContrServiceImpl implements ContrService {
 
     private final ContrMapper contrMapper;
-
+    private final EstimateService estimateService;
     /**
      * 계약 전체 조회
      * */
@@ -33,8 +34,19 @@ public class ContrServiceImpl implements ContrService {
         return contrMapper.one(contrId);
     }
 
+    /**
+     * 계약 등록
+     * */
     @Override
-    public int newContr(ContrVO data) {
-        return contrMapper.newContr(data);
+    public int newContr(ContrVO data) throws Exception{
+        int cnt= contrMapper.newContr(data);
+
+
+
+        if(cnt>0){
+            estimateService.contrEstimate(data.getEstimateId());
+        }
+
+        return cnt;
     }
 }

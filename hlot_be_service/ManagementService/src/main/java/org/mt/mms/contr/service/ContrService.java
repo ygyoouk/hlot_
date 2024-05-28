@@ -13,5 +13,5 @@ public interface ContrService {
 
     ContrVO one(String contrId);
 
-    int newContr(ContrVO data);
+    int newContr(ContrVO data)throws Exception;
 }

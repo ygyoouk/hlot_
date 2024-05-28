@@ -6,6 +6,7 @@ import org.mt.mms.cmm.dto.Result;
 import org.mt.mms.cmm.service.AttachmentService;
 import org.mt.mms.cmm.service.CommonService;
 import org.mt.mms.cmm.vo.AttachmentVO;
+import org.mt.mms.cmm.vo.CmmCodeVO;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -126,5 +127,26 @@ public class CommonController {
         log.info("compId : {}", compId);
         return ResponseEntity.ok()
                 .body(Result.resSuccess(commonService.compNm(compId)));
+    }
+
+    @GetMapping(value="/codeGroup")
+    public ResponseEntity<Result> getCodeGroup(){
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(commonService.getCodeGroup()));
+    }
+
+    @PostMapping(value="/newCmmCode")
+    public ResponseEntity<Result> newCmmCode(@RequestBody CmmCodeVO data){
+        log.info("공통코드 저장 : {}", data);
+
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(commonService.newCmmCode(data),true));
+    }
+
+    @DeleteMapping(value="/delCmmCode")
+    public ResponseEntity<Result> deleteCmmCode(@RequestBody CmmCodeVO data){
+        log.info("코드 : {}", data.getCode());
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(commonService.deleteCmmCode(data.getCode()),true));
     }
 }

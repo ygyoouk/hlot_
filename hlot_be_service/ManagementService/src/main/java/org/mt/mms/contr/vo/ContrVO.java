@@ -16,7 +16,7 @@ public class ContrVO {
     private String estimateId; //견적서ID
     private String contrNm; // 계약명
     private String compId; // 업체ID
-    private String compName; // 업체명
+    private String compNm; // 업체명
     private String contrAmount; //계약금액
     private String paymentTerm; // 지불조건
     private String specialNote; // 특이사항

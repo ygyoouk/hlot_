@@ -27,4 +27,12 @@ public interface CommonMapper {
     TopContrVO topContrNm(String topContrId);
 
     CompanyVO compNm(String compId);
+
+    List<CmmCodeVO> getCodeGroup();
+
+    int newCmmCode(CmmCodeVO data);
+
+    String getcodeGroupNm(String codeGroup);
+
+    int deleteCmmCode(String code);
 }

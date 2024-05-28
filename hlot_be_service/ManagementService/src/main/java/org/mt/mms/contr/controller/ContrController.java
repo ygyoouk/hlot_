@@ -30,11 +30,8 @@ public class ContrController {
      * 계약 전체 조회
      * */
     @GetMapping("/contrs")
-    public ResponseEntity<Result> all(HttpServletRequest request) throws Exception{
-        log.info("request : {}", request);
-        HashMap<String, String> params = Util.requestToMap(request);
-
-        log.info("params : {}", params);
+    public ResponseEntity<Result> all(@RequestParam HashMap<String,String> params) throws Exception{
+        log.info("request : {}", params);
 
         return ResponseEntity.ok()
                 .body(Result.resSuccess(contrService.all(params)));
@@ -53,8 +50,6 @@ public class ContrController {
 
         log.info("data : {}", data);
         log.info("file : {}", file);
-
-
 
         AttachmentVO attachmentVO =  attachmentService.upload(file);
 

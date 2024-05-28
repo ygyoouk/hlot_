@@ -1,6 +1,7 @@
 package org.mt.mms.cmm.service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mt.mms.cmm.Util;
 import org.mt.mms.cmm.mapper.CommonMapper;
 import org.mt.mms.cmm.service.CommonService;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CommonServiceImpl implements CommonService {
 
     private final CommonMapper commonMapper;
@@ -60,5 +62,26 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public CompanyVO compNm(String compId) {
         return commonMapper.compNm(compId);
+    }
+
+    @Override
+    public List<CmmCodeVO> getCodeGroup() {
+        return commonMapper.getCodeGroup();
+    }
+
+    @Override
+    public int newCmmCode(CmmCodeVO data) {
+
+        // 코드그룹명 추출
+        String codeGroupNm = commonMapper.getcodeGroupNm(data.getCodeGroup());
+        log.info("codeGroupNm : {}", codeGroupNm);
+        data.setCodeGroupNm(codeGroupNm);
+
+        return commonMapper.newCmmCode(data);
+    }
+
+    @Override
+    public int deleteCmmCode(String code) {
+        return commonMapper.deleteCmmCode(code);
     }
 }

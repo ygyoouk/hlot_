@@ -71,3 +71,16 @@
     </div>
 </body>
 </html>
+
+<script>
+if (amount>=1000000) {
+    var discount = amount * 0.1;
+}
+else if (amount >= 500000) {
+    var discount = amount + 0.05;
+}
+else {
+    discount = 0;
+}
+var total = amount - discount;
+</script>

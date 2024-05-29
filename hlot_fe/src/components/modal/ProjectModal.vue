@@ -82,7 +82,7 @@
                 label="계약금액"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                :rules="[utils.required,number_valid]"
+                :rules="[utils.required, utils.number]"
                 v-model="topContr.contrAmount">
               </v-text-field>
             </v-col>
@@ -157,7 +157,7 @@
           </v-row>
 
           <v-row>
-            <v-col v-if=" topContr.fileId === '' && topContr.fileId === null ">
+            <v-col v-if=" topContr.fileId === '' || topContr.fileId === null ">
               <v-file-input density="comfortable" label="원계약파일" :rules="[utils.required]" @change="selectFile"></v-file-input>
             </v-col>
             <v-col v-else>

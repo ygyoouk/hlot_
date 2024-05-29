@@ -58,6 +58,7 @@ const ValidUtil = {
   number(v) {
     let n = v.replaceAll('-', '');
     n = n.replaceAll(',', '');
+
     if (isNaN(n)){
       return '숫자만 입력 가능합니다.';
     }

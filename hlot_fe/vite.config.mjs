@@ -44,5 +44,14 @@ export default defineConfig({
   server: {
     port: 80,
   },
-  optimizeDeps: { esbuildOptions: { target: "esnext" } }
+  optimizeDeps: {
+    esbuildOptions: {
+      target: "esnext"
+    }
+  },
+  esbuild: {
+    supported: {
+      'top-level-await': true //browsers can handle top-level-await features
+    },
+  }
 })

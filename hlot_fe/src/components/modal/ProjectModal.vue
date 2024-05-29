@@ -144,14 +144,15 @@
           <v-row>
            <v-col>
              <v-select
-            label="구분"
-            density="comfortable"
-            :rules="[utils.required]"
-            :items="['유지관리', '구축', '개발']"
-            v-model="topContr.topContrDiv"
-            :readonly="mode === 'D'"
-            >
-            </v-select>
+              label="원계약구분"
+              :items="topContrDivs"
+              item-title="codeNm"
+              item-value="code"
+              :readonly="mode === 'D'"
+              :rules="[utils.required]"
+              density="comfortable"
+              v-model="topContr.topContrDiv"
+              />
            </v-col>
           </v-row>
 
@@ -202,11 +203,13 @@ import utils from "@/util/validUtil";
 import projectApi from '@/api/project.js'
 import CompnaySearchModal from "@/components/modal/search/CompanySearch.vue"
 import PdfPrevModal from "@/components/modal/PdfPrevModal.vue"
+import commonApi from "@/api/common"
 
 export default {
   name: "ProjectModal",
 
-  beforeMount(){
+  async beforeMount(){
+    this.topContrDivs = await commonApi.cmmCodeComp('TCTR');
     //상세조회
     if(this.mode == 'D'){
         this.getProject();
@@ -245,6 +248,8 @@ export default {
       contrStDate : '',
       contrEndDate : '',
       deliveryDeadline : '',
+
+      topContrDivs: [],
 
       topContr : {
         topContrId : '',

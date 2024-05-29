@@ -26,14 +26,14 @@
           ></v-text-field>
         </v-col>
         <v-col>
-            <v-select
-            label="원계약구분"
-            density="comfortable"
-            @keyup="enterKey()"
-            :items="['유지관리', '구축', '개발']"
-            v-model="searchParam.topContrDiv"
-            >
-            </v-select>
+          <v-select
+              label="원계약구분"
+              :items="topContrDivs"
+              item-title="codeNm"
+              item-value="code"
+              density="comfortable"
+              v-model="searchParam.topContrDiv"
+            />
         </v-col>
         <v-col>
           <v-text-field
@@ -71,7 +71,7 @@
           </v-text-field>
         </v-col>
 
-        <v-col>
+        <!-- <v-col>
           <v-text-field
             v-model="searchParam.prodNm"
             density="comfortable"
@@ -79,7 +79,7 @@
             prepend-inner-icon="mdi-magnify"
             label="품명"
           ></v-text-field>
-        </v-col>
+        </v-col> -->
 
         <v-col>
           <v-text-field
@@ -161,11 +161,16 @@ import axios from "axios";
 import {MODAL_MODE} from "@/util/config";
 import projectApi from '@/api/project.js'
 import utils from "@/util/validUtil";
+import commonApi from "@/api/common"
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_PORT = import.meta.env.VITE_BE_PORT;
 
 export default {
+  async beforeMount(){
+    this.topContrDivs = await commonApi.cmmCodeComp('TCTR');
+  },
+
   mounted() {
     // this.projects = api.projectSampleData();
 
@@ -183,6 +188,7 @@ export default {
       search: '',
       topContrs: [],
       selected : [],
+      topContrDivs: [],
       bProjectModal: false,
       bCompanySearchModal : false,
       compDiv : '',

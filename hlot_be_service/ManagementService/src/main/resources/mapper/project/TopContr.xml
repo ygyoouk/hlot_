@@ -7,7 +7,7 @@
         SELECT
             TOP_CONTR_ID,
             TOP_CONTR_NM,
-            TOP_CONTR_DIV,
+            (SELECT CODE_NM FROM CMM_CODE WHERE CODE = TC.TOP_CONTR_DIV) AS TOP_CONTR_DIV,
             CLIENT_COMP_ID,
             DATE_FORMAT(TOP_CONTR_DATE, '%Y-%m-%d') AS TOP_CONTR_DATE,
             DATE_FORMAT(CONTR_ST_DATE, '%Y-%m-%d') AS CONTR_ST_DATE,

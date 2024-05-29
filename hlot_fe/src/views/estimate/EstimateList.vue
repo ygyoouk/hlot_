@@ -142,7 +142,7 @@ import commonApi from "@/api/common";
 export default {
   async beforeMount() {
     this.estimateDivs = await commonApi.cmmCodeComp('ESTD');
-    await this.getEstimates();
+    // await this.getEstimates();
   },
   data() {
     return {

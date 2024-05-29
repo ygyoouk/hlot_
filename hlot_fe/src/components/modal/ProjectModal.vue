@@ -7,7 +7,7 @@
   />
 
 
-    
+
   <ModalLayout
     @close="this.$emit('close')">
 
@@ -28,11 +28,11 @@
         <v-form ref="form">
           <v-row>
             <v-col>
-              <v-text-field 
+              <v-text-field
                 label="원계약일자"
-                type="date" 
-                :readonly="mode === 'D'" 
-                v-model="topContrDate" 
+                type="date"
+                :readonly="mode === 'D'"
+                v-model="topContrDate"
                 :rules="[utils.required]">
               </v-text-field>
             </v-col>
@@ -92,20 +92,20 @@
             <v-col>
               <v-text-field
                 label="계약시작일자"
-                type="date" 
-                :readonly="mode === 'D'" 
+                type="date"
+                :readonly="mode === 'D'"
                 :rules="[utils.required]"
                 v-model="contrStDate"
                 @change="checkDateValid"
               >
               </v-text-field>
             </v-col>
-            
+
             <v-col>
               <v-text-field
                 label="계약종료일자"
-                type="date" 
-                :readonly="mode === 'D'" 
+                type="date"
+                :readonly="mode === 'D'"
                 :rules="[utils.required]"
                 v-model="contrEndDate"
                 @change="checkDateValid"
@@ -113,20 +113,20 @@
               </v-text-field>
             </v-col>
           </v-row>
-         
+
           <v-row>
              <v-col>
               <v-text-field
                 label="납품기한"
                 :rules="[utils.required]"
-                type="date" 
-                :readonly="mode === 'D'" 
+                type="date"
+                :readonly="mode === 'D'"
                 v-model="deliveryDeadline"
               >
               </v-text-field>
             </v-col>
           </v-row>
-          
+
           <v-row>
             <v-col>
               <v-text-field
@@ -374,7 +374,7 @@ export default {
 
         this.pdfFileLink = `${REQUEST_URL}/common/download/${this.topContr.topContrFileId}`;
         this.bPdfPrevModal = true;
-        
+
       },
 
 

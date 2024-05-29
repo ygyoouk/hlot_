@@ -54,7 +54,7 @@
             CONTR_FILE_ID
         FROM
             CONTR C INNER JOIN ESTIMATE E ON C.ESTIMATE_ID = E.ESTIMATE_ID
-                    INNER JOIN ATTACHMENT A ON C.CONTR_FILE_ID = A.FILE_ID
+                    LEFT OUTER JOIN ATTACHMENT A ON C.CONTR_FILE_ID = A.FILE_ID
         WHERE
             CONTR_ID = #{contrId}
     </select>

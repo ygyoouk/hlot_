@@ -334,10 +334,10 @@ export default {
     async getProject() {
       this.topContr = await projectApi.project(this.key) || {};
 
-      this.topContr.contrStDate = utils.formatDate(this.topContr.contrStDate); // 원계약시작일자
-      this.topContr.contrEndDate = utils.formatDate(this.topContr.contrEndDate); // 원계약종료일자
-      this.topContr.topContrDate = utils.formatDate(this.topContr.topContrDate);  // 원계약일자
-      this.topContr.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한
+      this.contrStDate = utils.formatDate(this.topContr.contrStDate); // 원계약시작일자
+      this.contrEndDate = utils.formatDate(this.topContr.contrEndDate); // 원계약종료일자
+      this.topContrDate = utils.formatDate(this.topContr.topContrDate);  // 원계약일자
+      this.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한
     },
 
     compSearchPopUp(compDiv) {

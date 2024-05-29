@@ -7,7 +7,7 @@
   />
 
 
-    
+
   <ModalLayout
     @close="this.$emit('close')">
 
@@ -28,11 +28,11 @@
         <v-form ref="form">
           <v-row>
             <v-col>
-              <v-text-field 
+              <v-text-field
                 label="원계약일자"
-                type="date" 
-                :readonly="mode === 'D'" 
-                v-model="topContrDate" 
+                type="date"
+                :readonly="mode === 'D'"
+                v-model="topContrDate"
                 :rules="[utils.required]">
               </v-text-field>
             </v-col>
@@ -92,20 +92,20 @@
             <v-col>
               <v-text-field
                 label="계약시작일자"
-                type="date" 
-                :readonly="mode === 'D'" 
+                type="date"
+                :readonly="mode === 'D'"
                 :rules="[utils.required]"
                 v-model="contrStDate"
                 @change="checkDateValid"
               >
               </v-text-field>
             </v-col>
-            
+
             <v-col>
               <v-text-field
                 label="계약종료일자"
-                type="date" 
-                :readonly="mode === 'D'" 
+                type="date"
+                :readonly="mode === 'D'"
                 :rules="[utils.required]"
                 v-model="contrEndDate"
                 @change="checkDateValid"
@@ -113,20 +113,20 @@
               </v-text-field>
             </v-col>
           </v-row>
-         
+
           <v-row>
              <v-col>
               <v-text-field
                 label="납품기한"
                 :rules="[utils.required]"
-                type="date" 
-                :readonly="mode === 'D'" 
+                type="date"
+                :readonly="mode === 'D'"
                 v-model="deliveryDeadline"
               >
               </v-text-field>
             </v-col>
           </v-row>
-          
+
           <v-row>
             <v-col>
               <v-text-field
@@ -190,48 +190,6 @@
 
 <script setup>
 import ModalLayout from "@/layouts/ModalLayout.vue";
-// import { reactive, computed, onMounted, onBeforeMount } from 'vue'
-// import projectApi from '@/api/project.js'
-
-// const state = reactive({
-//   username : 'choisungju',
-//   password : 'dkfl1004@@',
-//   topContr : {
-//       topContrId : '',
-//         topContrNm : '',  // 원계약명
-//         topContrDiv : '', // 원계약구분
-//         clientComp : '', // 발주처
-//         clientCompId : '', // 발주처ID
-//         topContrDate : '', // 원계약일자
-//         contrStDate : '', // 계약시작일자
-//         contrEndDate : '', // 계약종료일자
-//         prodNm : '', // 품명
-//         contrAmount : '', // 계약금액
-//         deliveryDeadline : '', // 납품기한
-//         demandInst : '', // 수요기관명
-//         demandInstId : '', // 수요기관ID
-//         topContrFileId : '',  // 첨부파일ID
-//         fileId : '', // 파일ID
-//         filePath : '', // 파일 경로
-//         orignFileName : '', // 파일 원본명
-//   },
-// })
-
-// async function getTopcontr(){
-//   console.log("!@#!@#!@#!#@");
-//    state.topContr = await projectApi.project('20240402ATCO10083');
-//    console.log(state.topContr.topContrNm)
-// }
- 
-
-
-// onMounted(()=>{
-  
-//   getTopcontr();
-//   console.log('mounted');
-//   console.log(state.username);
-  
-// })
 </script>
 
 <script>
@@ -260,7 +218,7 @@ export default {
   },
 
   mounted(){
-
+    console.log(this.topContr.fileId);
     if(this.mode == 'D'){
 
     }
@@ -367,12 +325,11 @@ export default {
        * */
       async getProject(){
         this.topContr = await projectApi.project(this.key);
-        
 
-        this.contrStDate = utils.formatDate(this.topContr.contrStDate); // 원계약시작일자
-        this.contrEndDate = utils.formatDate(this.topContr.contrEndDate); // 원계약종료일자
-        this.topContrDate = utils.formatDate(this.topContr.topContrDate);  // 원계약일자
-        this.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한
+        this.topContr.contrStDate = utils.formatDate(this.topContr.contrStDate); // 원계약시작일자
+        this.topContr.contrEndDate = utils.formatDate(this.topContr.contrEndDate); // 원계약종료일자
+        this.topContr.topContrDate = utils.formatDate(this.topContr.topContrDate);  // 원계약일자
+        this.topContr.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한
       },
 
       compSearchPopUp(compDiv){
@@ -417,7 +374,7 @@ export default {
 
         this.pdfFileLink = `${REQUEST_URL}/common/download/${this.topContr.topContrFileId}`;
         this.bPdfPrevModal = true;
-        
+
       },
 
 

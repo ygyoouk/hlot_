@@ -24,7 +24,7 @@ const ValidUtil = {
 
     return `${year}-${month}-${day}`;
   },
-  
+
   /**
    * yyy-MM-dd => yyyymmdd
    */
@@ -56,7 +56,9 @@ const ValidUtil = {
   },
 
   number(v) {
-    if (isNaN(v.replaceAll('-', ''))){
+    let n = v.replaceAll('-', '');
+    n = n.replaceAll(',', '');
+    if (isNaN(n)){
       return '숫자만 입력 가능합니다.';
     }
   }

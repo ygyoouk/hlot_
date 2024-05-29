@@ -8,8 +8,8 @@
              , ORDER_NO
              , PROD_NM
              , DETAIL_PROD_NM
-             , CLIENT_UNIT_PRICE
-             , PROV_PROD_PRICE
+             , FORMAT(CLIENT_UNIT_PRICE, ',') AS CLIENT_UNIT_PRICE
+             , FORMAT(PROV_PROD_PRICE, ',') AS PROV_PROD_PRICE
              , DC_PER
              , QUANTITY
              , REGIST_USER_NAME
@@ -27,6 +27,7 @@
         <if test="detailProdNm != null and detailProdNm !='' ">
             AND DETAIL_PROD_NM LIKE '%'#{detailProdNm}'%'
         </if>
+        ORDER BY REGIST_DATE DESC
 
     </select>
 
@@ -52,8 +53,8 @@
         )
         , #{prodNm}
         , #{detailProdNm}
-        , #{clientUnitPrice}
-        , #{provProdPrice}
+        , REPLACE(#{clientUnitPrice}, ',', '')
+        , REPLACE(#{provProdPrice}, ',', '')
         , #{dcPer}
         , #{quantity}
         , #{registUserName}

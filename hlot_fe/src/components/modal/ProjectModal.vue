@@ -1,4 +1,7 @@
 <template>
+ <ModalLayout
+    @close="this.$emit('close')">
+    
   <CompnaySearchModal
     v-if="bCompanySearchModal"
     :compDiv="compDiv"
@@ -8,8 +11,7 @@
 
 
 
-  <ModalLayout
-    @close="this.$emit('close')">
+ 
 
     <PdfPrevModal
       v-if="bPdfPrevModal"

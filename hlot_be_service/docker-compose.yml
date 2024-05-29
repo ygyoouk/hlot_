@@ -9,17 +9,6 @@ services:
       - 8081:8081
     container_name: ManagementService
     volumes:
-      - /home/ubuntu/hlot/hlot_be_service/temp:/var/temp
-      - /home/ubuntu/hlot/hlot_be_service/logs/cs:/logs
+      - /home/ubuntu/hlot_/hlot_be_service/temp:/var/temp
+      - /home/ubuntu/hlot_/hlot_be_service/logs/cs:/logs
 
-  outsideprotocolservice:
-    build:
-      context: ./OutsideProtocolService
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - 8082:8082
-    container_name: OutsideProtocolService
-    volumes:
-      - /home/ubuntu/hlot/hlot_be_service/temp:/var/temp
-      - /home/ubuntu/hlot/hlot_be_service/logs/ops:/logs

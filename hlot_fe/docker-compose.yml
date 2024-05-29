@@ -1,22 +1,12 @@
 version: '3'
 services:
-        node_nginx:
-            build:
-                context: .
-                dockerfile: Dockerfile
-            volumes:
-                #     - '/home/ubuntu/hlot/hlot_fe/dist:/etc/nginx/templates'
-                    - '/home/ubuntu/hlot/hlot_fe/nginx.conf:/etc/nginx/'
-                    - '/home/ubuntu/hlot/hlot_fe/log:/var/log'
-            ports:
-                    - "80:80"
-            stdin_open: true # 추가
-            tty: true        # 추가
-            command :
-              sh -c "
-                cd /var/log
-                mkdir nginx
-                chown -R www-data:www-data /var/log/nginx
-                nginx -t -c /etc/nginx/nginx.conf
-              "
-
+    node_nginx:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - '/home/ubuntu/hlot_/hlot_fe/log:/var/log'
+        ports:
+            - "80:80"
+        stdin_open: true # 추가
+        tty: true        # 추가

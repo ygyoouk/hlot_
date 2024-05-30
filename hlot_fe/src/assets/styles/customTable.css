@@ -6,7 +6,7 @@
 .custom-table_mt th,
 .custom-table_mt td {
     padding: 6px 15px;
-    max-width: 200px;
+    max-width: 400px;
 }
 
 .custom-table_mt tbody tr:hover {

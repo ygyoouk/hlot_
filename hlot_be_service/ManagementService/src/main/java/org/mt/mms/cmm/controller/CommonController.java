@@ -1,6 +1,7 @@
 package org.mt.mms.cmm.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.mt.mms.cmm.dto.Result;
 import org.mt.mms.cmm.service.AttachmentService;
@@ -34,6 +35,10 @@ public class CommonController {
 
     private final CommonService commonService;
 
+    @Value("${hlot.file.upload.path}")
+    private String filePath;
+
+
 
     @PostMapping(value = "/upload" ,consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Result> upload(@RequestPart(value = "file", required = false) MultipartFile file) throws Exception{
@@ -55,7 +60,7 @@ public class CommonController {
 
         log.info("result : {}", result);
 
-        String filePath = result.getFilePath();
+//        String filePath = result.getFilePath();
         String uploadFileName = result.getOrignFileName();
 
         Path p = Paths.get(filePath + File.separator + result.getChangeFileName()); // 경로 정의하기

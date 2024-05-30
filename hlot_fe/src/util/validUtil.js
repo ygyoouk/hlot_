@@ -48,20 +48,25 @@ const ValidUtil = {
   required(v) {
     if (ValidUtil.isNull(v))  // ValidUtil을 사용하여 isNull 참조
       return '필수항목 항목입니다.';
+    else
+      return true;
   },
 
   email(v) {
     if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(v))
       return '이메일 형식이 아닙니다.';
+    else
+      return true;
   },
 
   number(v) {
     let n = v.replaceAll('-', '');
     n = n.replaceAll(',', '');
 
-    if (isNaN(n)){
+    if (isNaN(n))
       return '숫자만 입력 가능합니다.';
-    }
+    else
+      return true;
   }
 };
 

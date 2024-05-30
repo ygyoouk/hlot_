@@ -1,7 +1,7 @@
 <template>
   <CompanyModal
     v-if="bCompanyModal"
-    @close="bCompanyModal = !bCompanyModal"
+    @close="bCompanyModal = false"
     @update="getCompanys"
     :mode="mode"
     :companyModalKey="companyModalKey"
@@ -96,7 +96,7 @@ export default {
   data() {
     return {
       mode: '',
-      key: '',
+      companyModalKey: '',
 
       searchCondition: {
         compDiv: '',
@@ -126,7 +126,7 @@ export default {
     /* 상세조회화면 */
     openDetail(item, row) {
       this.companyModalKey = row.item.compId;
-      this.mode = MODAL_MODE.DETAIL;
+      this.mode = MODAL_MODE.MOD;
 
       this.bCompanyModal = !this.bCompanyModal;
     }

@@ -98,10 +98,10 @@
             CONTR_ST_DATE,
             CONTR_END_DATE,
             PROD_NM,
-        CONTR_AMOUNT,
-        TOTAL_SERV_BOK_AMOUNT,
-<!--            FORMAT(CONTR_AMOUNT, ',') AS CONTR_AMOUNT,-->
-<!--            FORMAT(TOTAL_SERV_BOK_AMOUNT, ',') AS TOTAL_SERV_BOK_AMOUNT,-->
+<!--        CONTR_AMOUNT,-->
+<!--        TOTAL_SERV_BOK_AMOUNT,-->
+            FORMAT(CONTR_AMOUNT, ',') AS CONTR_AMOUNT,
+            FORMAT(TOTAL_SERV_BOK_AMOUNT, ',') AS TOTAL_SERV_BOK_AMOUNT,
             DELIVERY_DEADLINE,
             DEMAND_INST_ID,
             TOP_CONTR_FILE_ID,

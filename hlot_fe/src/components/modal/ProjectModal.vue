@@ -235,6 +235,9 @@
             </v-col>
             <v-col v-else>
               <div style="padding: 10px; display: inline-block">
+              
+                <v-icon icon="mdi-delete" @click="topContr.fileId ='' "></v-icon>
+
                 <a :href="`${REQUEST_URL}/common/download/${topContr.fileId}`">
                   <v-icon
                     icon="mdi-arrow-up-bold-box-outline"

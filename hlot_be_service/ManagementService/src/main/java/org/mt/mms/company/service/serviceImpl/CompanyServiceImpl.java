@@ -2,6 +2,8 @@ package org.mt.mms.company.service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mt.mms.cmm.Util;
+import org.mt.mms.cmm.service.CommonService;
 import org.mt.mms.company.mapper.CompanyMapper;
 import org.mt.mms.company.service.CompanyService;
 import org.mt.mms.company.vo.CompanyManagerVO;
@@ -17,6 +19,10 @@ import java.util.List;
 public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyMapper companyMapper;
+
+    private final CommonService commonService;
+
+    private final Util util;
 
     @Override
     public CompanyVO one(String companyId) throws Exception {
@@ -35,12 +41,35 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public int newCompany(CompanyVO companyVO) throws Exception {
+        String loginUserNm = util.getLoginUserName();
+        int re =0;
+
         if(companyVO.getCompId() == null || companyVO.getCompId().isEmpty()){
-            return companyMapper.insertCompany(companyVO);
+            String compId = commonService.selectHlotSeq("A", "CMP");
+            companyVO.setCompId(compId);
+
+            if(companyMapper.insertCompany(companyVO) > 0){
+                for(CompanyManagerVO m : companyVO.getCompanyManagers()){
+                    m.setCompId(compId);
+                    m.setRegistUserName(loginUserNm);
+                    re = companyMapper.insertCompanyManager(m);
+                }
+            }
         } else {
-            return companyMapper.updateCompany(companyVO);
+            re = companyMapper.updateCompany(companyVO);
+            for(CompanyManagerVO m : companyVO.getCompanyManagers()){
+                m.setRegistUserName(loginUserNm);
+                m.setCompId(companyVO.getCompId());
+
+                if(m.getCompMngerId() == null || m.getCompMngerId().isEmpty()){
+                    re = companyMapper.insertCompanyManager(m);
+                } else {
+                    re = companyMapper.updateCompanyManager(m);
+                }
+            }
         }
 
+        return re;
     }
 
     @Override

@@ -16,6 +16,7 @@
 
     <div class="d-flex flex-wrap ga-3 mb-0">
       <v-select
+        v-if="false"
         label="업체구분"
         density="compact"
         :items="compDivs"
@@ -97,7 +98,7 @@ import companyApi from "@/api/company.js";
     props: ['compDiv'],
 
     async beforeMount() {
-      
+
       /* 업체구분 공통코드 조회 */
       this.compDivs = await commonApi.cmmCodeComp("COMP");
       this.searchCondition.compDiv = this.compDiv;

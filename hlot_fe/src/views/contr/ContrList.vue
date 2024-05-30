@@ -72,7 +72,6 @@
       :items-per-page-options="ITEMS_PER_PAGE_OPTIONS"
       class="elevation-1 table-list_mt"
       @click:row="popUpOpen"
-      @emitSelectProjectList="selectProjectList"
     >
     </v-data-table>
 

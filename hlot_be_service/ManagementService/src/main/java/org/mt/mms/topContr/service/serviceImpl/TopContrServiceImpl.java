@@ -108,7 +108,7 @@ public class TopContrServiceImpl implements TopContrService {
 
     @Override
     public int updateTopContr(TopContrVO data, MultipartFile file) throws Exception{
-
+        log.info("s-data : {}", data);
         return topContrMapper.updateTopContr(data);
     }
 

@@ -15,7 +15,7 @@
     </div>
 
     <div class="d-flex flex-wrap ga-3 mb-0">
-      <v-select
+      <!-- <v-select
         label="업체구분"
         density="compact"
         :items="compDivs"
@@ -23,7 +23,7 @@
         item-value="code"
         readonly="readonly"
         v-model="searchCondition.compDiv"
-      />
+      /> -->
 
       <v-text-field
         label="업체명"

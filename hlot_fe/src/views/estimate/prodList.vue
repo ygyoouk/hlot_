@@ -7,17 +7,16 @@
     </div>
 
     <div class="d-flex flex-wrap ga-3 mb-0">
-      <v-text-field
-        label="품명"
-        v-model="searchCondition.prodNm"
-        density="compact"
-      ></v-text-field>
-
-      <v-text-field
-        label="세부품명"
-        v-model="searchCondition.detailProdNm"
-        density="compact"
-      ></v-text-field>
+      <v-row>
+        <v-col cols="3">
+          <v-text-field
+            label="품명"
+            v-model="searchCondition.prodNm"
+            @keyup="enterKey()"
+            density="compact"
+          ></v-text-field>
+        </v-col>
+      </v-row>
 
       <v-btn
         color="green"
@@ -34,8 +33,6 @@
       </v-btn>
     </div>
 
-
-
     <v-data-table
       @click:row="openDetail"
       :headers="headers"
@@ -43,8 +40,6 @@
       :items-per-page-options="ITEMS_PER_PAGE_OPTIONS"
       class="elevation-1 table-list_mt"
     >
-
-
     </v-data-table>
   </v-card>
 
@@ -76,7 +71,7 @@ export default {
     return {
       searchCondition: {
         prodNm: '',
-        detailProdNm: '',
+        
       },
       prods: [],
       id : '',
@@ -87,6 +82,17 @@ export default {
     /* ESTIMATE 목록 조회 */
     async getProds() {
       this.prods = await prodApi.prods(this.id, this.searchCondition);
+
+      if(this.prods.length <= 0){
+        alert("조회된 내용이 없습니다.");
+      }
+    },
+
+    enterKey(){
+      if(window.event.keyCode == 13){
+        
+        this.getProds();
+      }
     },
 
   }

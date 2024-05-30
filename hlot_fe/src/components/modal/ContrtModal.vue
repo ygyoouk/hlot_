@@ -16,19 +16,19 @@
     <div class="modal-content">
       <v-container>
           <v-row>
-            <v-col v-if="this.contr.contrFileId == ''">
+            <v-col v-if="contr.contrFileId == ''">
               <v-file-input label="계약파일" @change="selectFile" ></v-file-input>
             </v-col>
-            <v-col v-if="this.contr.contrFileId != ''">
+            <v-col v-if="contr.contrFileId != ''">
               <div style="padding: 10px; display: inline-block">
                 <v-icon
                   icon="mdi-arrow-up-bold-box-outline"
                   size="large"
                 ></v-icon>
-                <a :href="'http://localhost:8081/common/download/' + this.contr.contrFileId">{{this.contr.orignFileName}}</a>
+                <a :href="`${REQUEST_URL}/common/download/${contr.contrFileId}`">{{contr.orignFileName}}</a>
                 &nbsp;&nbsp;
                 <v-btn
-                  v-if="this.contr.contrFileId != ''"
+                  v-if="contr.contrFileId != ''"
                   color="green"
                   density="compact"
                   @click="openPdfPrevModal"
@@ -142,12 +142,14 @@
 
 <script setup>
 import ModalLayout from "@/layouts/ModalLayout.vue";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
+const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
 </script>
 
 <script>
 import store from "@/store/store";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_PORT = import.meta.env.VITE_BE_PORT;
 import {MODAL_MODE} from "@/util/config";
 import commonApi from "@/api/common.js"

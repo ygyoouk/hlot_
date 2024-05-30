@@ -22,7 +22,7 @@ export default {
 
   // TOP_CONTR 등록
   newProject(projectData){
-    console.log(projectData);
+    console.log(JSON.stringify(projectData));
     return axios.post(REQUEST_URL + '/api/topContr',projectData,{header:{'Content-Type' : 'multipart/form-data'}}).then(res => {
       alert("등록되었습니다");
 

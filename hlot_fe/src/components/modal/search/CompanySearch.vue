@@ -16,7 +16,6 @@
 
     <div class="d-flex flex-wrap ga-3 mb-0">
       <v-select
-        v-if="false"
         label="업체구분"
         density="compact"
         :items="compDivs"

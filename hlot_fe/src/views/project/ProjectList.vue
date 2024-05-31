@@ -1,13 +1,16 @@
 <template>
   <ProjectModal
   v-if="bProjectModal"
-   @close="bProjectModal = false"/>
+   @close="bProjectModal = false"
+   @searchTopContr="searchTopContr" 
+   />
 
   <CompnaySearchModal
   v-if="bCompanySearchModal"
   :compDiv="compDiv"
   @select="selectNm"
   @close="bCompanySearchModal = !bCompanySearchModal"
+  
   />
 
   <v-card class="table-container_mt">
@@ -143,11 +146,11 @@
     { title: '원계약명', key:'topContrNm' },
     { title: '원계약구분', key:'topContrDiv'},
     { title: '발주처', key:'clientComp'},
-    { title: '원계약일자', key:'topContrDate'},
+    { title: '원계약일자',  key:'topContrDate'},
     { title: '계약시작일자',  key:'contrStDate'},
     { title: '계약종료일자',  key:'contrEndDate'},
     { title: '품명',  key:'prodNm'},
-    { title: '계약금액',  key:'contrAmount'},
+    { title: '계약금액', align: 'end', key:'contrAmount'},
     { title: '납품기한',  key:'deliveryDeadline'},
     { title: '수요기관명',  key:'demandInst'},
   ];

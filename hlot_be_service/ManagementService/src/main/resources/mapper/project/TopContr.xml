@@ -14,6 +14,7 @@
             DATE_FORMAT(CONTR_END_DATE, '%Y-%m-%d') AS CONTR_END_DATE,
             PROD_NM,
             FORMAT(CONTR_AMOUNT,',') AS CONTR_AMOUNT,
+            FORMAT(TOTAL_SERV_BOK_AMOUNT, ',') AS TOTAL_SERV_BOK_AMOUNT,
             DATE_FORMAT(DELIVERY_DEADLINE, '%Y-%m-%d') AS DELIVERY_DEADLINE,
             DEMAND_INST_ID,
             REGIST_USER_NAME,
@@ -58,6 +59,7 @@
             CONTR_END_DATE,
             PROD_NM,
             CONTR_AMOUNT,
+            TOTAL_SERV_BOK_AMOUNT,
             DELIVERY_DEADLINE,
             DEMAND_INST_ID,
             REGIST_USER_NAME,
@@ -76,9 +78,10 @@
             #{contrEndDate},
             #{prodNm},
             #{contrAmount},
+            #{totalServBokAmount},
             #{deliveryDeadline},
             #{demandInstId},
-            '최성주',
+            #{registUserName},
             sysdate(),
             'N',
             #{topContrFileId}
@@ -95,7 +98,10 @@
             CONTR_ST_DATE,
             CONTR_END_DATE,
             PROD_NM,
+<!--        CONTR_AMOUNT,-->
+<!--        TOTAL_SERV_BOK_AMOUNT,-->
             FORMAT(CONTR_AMOUNT, ',') AS CONTR_AMOUNT,
+            FORMAT(TOTAL_SERV_BOK_AMOUNT, ',') AS TOTAL_SERV_BOK_AMOUNT,
             DELIVERY_DEADLINE,
             DEMAND_INST_ID,
             TOP_CONTR_FILE_ID,
@@ -111,22 +117,23 @@
         WHERE TOP_CONTR_ID  = #{topContrId}
     </select>
 
-    <update id="updateTopContr" parameterType="org.mt.mms.topContr.vo.TopContrVO">
+    <update id="updateTopContr"  parameterType="org.mt.mms.topContr.vo.TopContrVO">
         UPDATE TOP_CONTR
         SET
-        TOP_CONTR_NM 	= #{topContrNm},
-        TOP_CONTR_DIV 	= #{topContrDiv},
-        CLIENT_COMP_ID	    = #{clientComp},
-        TOP_CONTR_DATE 	= #{topContrDate},
-        CONTR_ST_DATE 	= #{contrStDate},
-        CONTR_END_DATE 	= #{contrEndDate},
-        PROD_NM 		= #{prodNm},
-        CONTR_AMOUNT 	= #{contrAmount},
+        TOP_CONTR_NM 	    = #{topContrNm},
+        TOP_CONTR_DIV 	    = #{topContrDiv},
+        CLIENT_COMP_ID	    = #{clientCompId},
+        TOP_CONTR_DATE 	    = #{topContrDate},
+        CONTR_ST_DATE 	    = #{contrStDate},
+        CONTR_END_DATE 	    = #{contrEndDate},
+        PROD_NM 		    = #{prodNm},
+        CONTR_AMOUNT 	    = #{contrAmount},
+        TOTAL_SERV_BOK_AMOUNT 	= #{totalServBokAmount},
         DELIVERY_DEADLINE   = #{deliveryDeadline},
-        DEMAND_INST_ID 	    = #{demandInstNm},
+        DEMAND_INST_ID 	    = #{demandInstId},
         TOP_CONTR_FILE_ID   = #{topContrFileId},
         MODIFY_DATE         = SYSDATE(),
-        MODIFY_USER_NAME    = '최성주'
+        MODIFY_USER_NAME    = #{registUserName}
         WHERE
         TOP_CONTR_ID = #{topContrId}
     </update>

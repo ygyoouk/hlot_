@@ -3,6 +3,7 @@ package org.mt.mms.topContr.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.mt.mms.cmm.Util;
 import org.mt.mms.cmm.dto.Result;
 import org.mt.mms.topContr.service.TopContrService;
 
@@ -37,7 +38,7 @@ public class TopContrController {
 
 
     private final TopContrService topContrService;
-
+    private final Util util;
     @PostMapping("/topContr")
     public ResponseEntity<Result> all(@RequestBody TopContrVO searchParam) throws Exception{
     log.info("searchParam : {}",searchParam);
@@ -50,8 +51,10 @@ public class TopContrController {
 
     @PostMapping(value = "/topContr" ,consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Result> newContr(@RequestPart TopContrVO data, @RequestPart(value = "file", required = false)MultipartFile file) throws Exception{
-        log.info("data====>" +  data);
+        // 로그인한 사용자명 추가
+        data.setRegistUserName(util.getLoginUserName());
 
+        log.info("data====>" +  data);
         // 프로젝트 Id
         String topContrId = data.getTopContrId();
 
@@ -77,15 +80,6 @@ public class TopContrController {
                 .body(Result.resSuccess(topContrService.one(topContrId)));
     }
 
-//    @PutMapping("/topContr")
-//    public void updateProject(@RequestBody TopContrVO data) throws Exception{
-//        log.info("update-project");
-//        log.info("info {}", data.toString());
-//
-//        // 프로젝트 관리 수정
-//        topContrService.updateTopContr(data);
-//
-//    }
 
     @DeleteMapping("/topContr")
     public void deleteProject(@RequestBody ArrayList<String> deldata) throws Exception{

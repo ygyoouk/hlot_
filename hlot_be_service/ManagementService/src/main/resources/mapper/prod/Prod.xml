@@ -21,11 +21,8 @@
             AND ESTIMATE_ID = #{id}
         </if>
         <if test="prodNm != null and prodNm !='' ">
-            AND PROD_NM LIKE '%'#{prodNm}'%'
-        </if>
-
-        <if test="detailProdNm != null and detailProdNm !='' ">
-            AND DETAIL_PROD_NM LIKE '%'#{detailProdNm}'%'
+            AND PROD_NM LIKE '%' #{prodNm} '%'
+            OR DETAIL_PROD_NM LIKE '%'#{prodNm}'%'
         </if>
         ORDER BY ORDER_NO, REGIST_DATE DESC
 

@@ -12,4 +12,5 @@ public class CmmCodeVO {
     private String codeGroupNm;
     private String code;
     private String codeNm;
+    private String upperCode;
 }

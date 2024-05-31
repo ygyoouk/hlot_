@@ -53,6 +53,8 @@ const ValidUtil = {
   },
 
   email(v) {
+    if (ValidUtil.isNull(v)) return true;
+
     if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(v))
       return '이메일 형식이 아닙니다.';
     else
@@ -60,6 +62,8 @@ const ValidUtil = {
   },
 
   number(v) {
+    if (ValidUtil.isNull(v)) return true;
+
     let n = v.replaceAll('-', '');
     n = n.replaceAll(',', '');
 

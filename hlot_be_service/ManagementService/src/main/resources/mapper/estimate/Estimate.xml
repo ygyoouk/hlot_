@@ -9,8 +9,10 @@
              , E.COMP_ID
              , E.ORDER_NO
              , E.ESTIMATE_DIV
-             , E.ESTIMATE_FILE_ID
              , (SELECT CC.CODE_NM FROM CMM_CODE CC WHERE CC.CODE = E.ESTIMATE_DIV AND CC.CODE_GROUP = 'ESTD') AS ESTIMATE_DIV_NM
+             , E.ESTIMATE_LOW_DIV
+             , (SELECT CC.CODE_NM FROM CMM_CODE CC WHERE CC.CODE = E.ESTIMATE_LOW_DIV AND CC.CODE_GROUP = 'ESTDL') AS ESTIMATE_LOW_DIV_NM
+             , E.ESTIMATE_FILE_ID
              , E.CONFIRM_YN
              , E.CONTR_YN
              , DATE_FORMAT(E.REGIST_DATE, '%Y-%m-%d') AS REGIST_DATE
@@ -33,6 +35,9 @@
         <if test='estimateDiv != null and !estimateDiv.equals("")'>
             AND E.ESTIMATE_DIV = #{estimateDiv}
         </if>
+        <if test='estimateLowDiv != null and !estimateLowDiv.equals("")'>
+            AND E.ESTIMATE_LOW_DIV = #{estimateLowDiv}
+        </if>
         ORDER BY E.REGIST_DATE DESC
     </select>
 
@@ -43,6 +48,7 @@
              , E.COMP_ID
              , E.ORDER_NO
              , E.ESTIMATE_DIV
+             , E.ESTIMATE_LOW_DIV
              , E.CONFIRM_YN
              , E.CONTR_YN
              , E.ESTIMATE_FILE_ID
@@ -66,6 +72,7 @@
         , COMP_ID
         , ORDER_NO
         , ESTIMATE_DIV
+        , ESTIMATE_LOW_DIV
         , CONFIRM_YN
         , CONTR_YN
         , ESTIMATE_FILE_ID
@@ -81,6 +88,7 @@
            WHERE TOP_CONTR_ID=#{topContrId} AND COMP_ID=#{compId} AND ESTIMATE_DIV = #{estimateDiv}
         )
         , #{estimateDiv}
+        , #{estimateLowDiv}
         , 'N'
         , 'N'
         , #{estimateFileId}
@@ -95,6 +103,7 @@
           AND TOP_CONTR_ID = #{topContrId}
           AND COMP_ID = #{compId}
           AND ESTIMATE_DIV = #{estimateDiv}
+          AND ESTIMATE_LOW_DIV = #{estimateLowDiv}
           AND CONFIRM_YN = 'Y'
     </select>
 
@@ -114,5 +123,15 @@
         UPDATE ESTIMATE SET /* org.mt.mms.estimate.mapper.EstimateMapper.updateContrEstimate */
             CONTR_YN = 'Y'
         WHERE ESTIMATE_ID = #{id}
+    </update>
+
+    <update id="updateEstimate" parameterType="org.mt.mms.estimate.vo.EstimateVO">
+        UPDATE ESTIMATE SET /* org.mt.mms.estimate.mapper.EstimateMapper.updateEstimate */
+            TOP_CONTR_ID = #{topContrId}
+            , COMP_ID = #{compId}
+            , ESTIMATE_DIV = #{estimateDiv}
+            , ESTIMATE_LOW_DIV = #{estimateLowDiv}
+            , REGIST_USER_NAME = #{registUserName}
+        WHERE ESTIMATE_ID = #{estimateId}
     </update>
 </mapper>

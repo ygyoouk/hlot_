@@ -1,6 +1,7 @@
 package org.mt.mms.estimate.service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
+import org.mt.mms.cmm.Util;
 import org.mt.mms.cmm.service.AttachmentService;
 import org.mt.mms.cmm.service.CommonService;
 import org.mt.mms.cmm.vo.AttachmentVO;
@@ -28,6 +29,9 @@ public class EstimateServiceImpl implements EstimateService {
 
     private final ProdService prodService;
 
+    private final Util util;
+
+
 
     @Override
     public List<EstimateExVO> all(HashMap params) throws Exception {
@@ -44,26 +48,43 @@ public class EstimateServiceImpl implements EstimateService {
         boolean isPossible = possibleConfirm(vo.getTopContrId(), vo.getCompId(), vo.getEstimateDiv());
         vo.setPossibleConfirm(isPossible);
 
+        HashMap<String, String> param = new HashMap<>();
+        param.put("id", id);
+        List<ProdVO> prods = prodService.all(param);
+
+        vo.setProds(prods);
+
         return vo;
     }
 
     @Override
     public int newEstimate(EstimateVO estimateVO, MultipartFile file) throws Exception {
+        String loginUserNm = util.getLoginUserName();
+        int re = 0;
+
         if(file!=null)
             estimateVO.setEstimateFileId(attachmentService.upload(file).getFileId());
 
-        String estimateId = commonService.selectHlotSeq("A", "EST");
-        estimateVO.setEstimateId(estimateId);
-
-        int result = estimateMapper.insertEstimate(estimateVO);
-
-        for(ProdVO p : estimateVO.getProds()){
-            p.setEstimateId(estimateId);
-            p.setRegistUserName(estimateVO.getRegistUserName());
-            prodService.newProd(p);
+        if(estimateVO.getEstimateId() == null || estimateVO.getEstimateId().isEmpty()){
+            String estimateId = commonService.selectHlotSeq("A", "EST");
+            estimateVO.setEstimateId(estimateId);
+            if(estimateMapper.insertEstimate(estimateVO) > 0) {
+                for(ProdVO p : estimateVO.getProds()){
+                    p.setEstimateId(estimateId);
+                    p.setRegistUserName(loginUserNm);
+                    re = prodService.newProd(p);
+                }
+            }
+        } else {
+            if(estimateMapper.updateEstimate(estimateVO) > 0) {
+                for (ProdVO p : estimateVO.getProds()) {
+                    p.setEstimateId(estimateVO.getEstimateId());
+                    p.setRegistUserName(loginUserNm);
+                    re = prodService.newProd(p);
+                }
+            }
         }
-
-        return result;
+        return re;
     }
 
     /**

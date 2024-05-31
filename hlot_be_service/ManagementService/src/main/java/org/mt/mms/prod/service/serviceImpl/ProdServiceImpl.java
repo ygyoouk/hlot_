@@ -22,6 +22,13 @@ public class ProdServiceImpl implements ProdService {
 
     @Override
     public int newProd(ProdVO prodVO) throws Exception {
-        return prodMapper.insertProd(prodVO);
+        int result = 0;
+        if(prodVO.getOrderNo() == null || prodVO.getOrderNo().isEmpty()){
+            result = prodMapper.insertProd(prodVO);
+        } else {
+            prodMapper.updateProd(prodVO);
+        }
+
+        return result;
     }
 }

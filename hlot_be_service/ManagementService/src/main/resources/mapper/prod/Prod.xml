@@ -27,7 +27,7 @@
         <if test="detailProdNm != null and detailProdNm !='' ">
             AND DETAIL_PROD_NM LIKE '%'#{detailProdNm}'%'
         </if>
-        ORDER BY REGIST_DATE DESC
+        ORDER BY ORDER_NO, REGIST_DATE DESC
 
     </select>
 
@@ -60,4 +60,17 @@
         , #{registUserName}
         )
     </insert>
+
+    <update id="updateProd" parameterType="org.mt.mms.prod.vo.ProdVO">
+        UPDATE PROD SET /* org.mt.mms.prod.mapper.ProdMapper.updateProd : PROD 수정 */
+            PROD_NM = #{prodNm}
+            , DETAIL_PROD_NM = #{detailProdNm}
+            , CLIENT_UNIT_PRICE = REPLACE(#{clientUnitPrice}, ',', '')
+            , PROV_PROD_PRICE = REPLACE(#{provProdPrice}, ',', '')
+            , DC_PER = #{dcPer}
+            , QUANTITY = #{quantity}
+            , REGIST_USER_NAME = #{registUserName}
+        WHERE ESTIMATE_ID = #{estimateId}
+            AND ORDER_NO = #{orderNo}
+    </update>
 </mapper>

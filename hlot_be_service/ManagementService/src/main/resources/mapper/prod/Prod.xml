@@ -22,7 +22,7 @@
         </if>
         <if test="prodNm != null and prodNm !='' ">
             AND PROD_NM LIKE '%' #{prodNm} '%'
-            OR DETAIL_PROD_NM LIKE '%'#{prodNm}'%'
+            OR DETAIL_PROD_NM LIKE '%' #{prodNm} '%'
         </if>
         ORDER BY REGIST_DATE DESC
 

@@ -1,5 +1,9 @@
 <template>
-
+  <EstimateModal
+    v-if="bEstimateModal"
+    @update="getEstimates"
+    @close="bEstimateModal = false"
+  />
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
@@ -34,7 +38,7 @@
     </div>
 
     <v-data-table
-      @click:row="openDetail"
+      @click:row="openEstimate"
       :headers="headers"
       :items="prods"
       :items-per-page-options="ITEMS_PER_PAGE_OPTIONS"
@@ -47,6 +51,7 @@
 
 <script setup>
 import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
+import EstimateModal from "@/components/modal/EstimateModal.vue";
 
 const headers = [
   {title: '품명', key: 'prodNm'},
@@ -73,6 +78,9 @@ export default {
         prodNm: '',
         
       },
+
+      bEstimateModal: false,
+
       prods: [],
       id : '',
     };
@@ -94,6 +102,17 @@ export default {
         this.getProds();
       }
     },
+
+    /*견적상세로 이동*/
+    openEstimate(event,{item}){
+      console.log(item.estimateId);
+
+      const estimateId = item.estimateId;
+
+      store.commit("setModalParams", {key: estimateId , mode:MODAL_MODE.DETAIL});
+      this.bEstimateModal = !this.bEstimateModal;
+
+    }
 
   }
 };

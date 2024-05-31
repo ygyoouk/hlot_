@@ -223,6 +223,7 @@ export default {
       console.log("searchParam" + JSON.stringify(this.searchParam));
 
       this.getTopContrs(this.searchParam); // 프로젝트리스트 조회
+      
     },
 
     enterKey(){
@@ -260,8 +261,9 @@ export default {
     async getTopContrs(searchParam){ // 원계약 리스트 조회
       this.topContrs = await projectApi.projects(searchParam);
 
-      // 조회조건 초기화
-      // this.searchParam = {};
+      if(this.topContrs.length <= 0){
+        alert("조회된 내용이 없습니다.");
+      }
     },
 
     /**

@@ -113,7 +113,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amout1">
+                v-model="amout.amout1">
               </v-text-field>
             </v-col>
             <v-col>
@@ -123,7 +123,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amout2">
+                v-model="amout.amout2">
               </v-text-field>
             </v-col>
             <v-col>
@@ -133,7 +133,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amout3">
+                v-model="amout.amout3">
               </v-text-field>
             </v-col>
             <v-col>
@@ -143,7 +143,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amout4">
+                v-model="amout.amout4">
               </v-text-field>
             </v-col>
             <v-col>
@@ -153,7 +153,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amout5">
+                v-model="amout.amout5">
               </v-text-field>
             </v-col>
           </v-row>
@@ -333,6 +333,15 @@ export default {
     }
   },
 
+  computed:{
+    // 차수금액 합 계산
+    total : function(){
+      return Number(this.amout.amout1) + Number(this.amout.amout2) +
+             Number(this.amout.amout3) + Number(this.amout.amout4) +
+             Number(this.amout.amout5);
+    },
+  },
+
   data() {
     return {
       visible: false,
@@ -381,7 +390,16 @@ export default {
         filePath: '', // 파일 경로
         orignFileName: '', // 파일 원본명
       },
+
       image: '',
+      
+      amout : {
+         amout1 : '',
+         amout2 : '',
+         amout3 : '',
+         amout4 : '',
+         amout5 : '', 
+      },
     }
   },
 
@@ -389,8 +407,8 @@ export default {
 
     // 프로젝트 정보 등록
     async newProject() {
-
-      console.log("mode ===>" + this.mode)
+      
+      
 
       const formData = new FormData();
       formData.append('file', this.image);
@@ -404,8 +422,16 @@ export default {
       this.topContr.topContrDate = utils.saveDate(this.topContrDate);
       this.topContr.deliveryDeadline = utils.saveDate(this.deliveryDeadline);
 
-      console.log(JSON.stringify(this.topContr));
-
+      // 총용역부기금액
+      const totalServBokAmout = this.topContr.totalServBokAmount;
+      
+      if(this.total >0){
+        if(this.total != totalServBokAmout){
+          alert("총용역부기금액과 차수금액 합이 맞지않습니다.");
+          return false;
+        }
+      }
+      
       const {valid} = await this.$refs.form.validate();
       if (!valid) return false;
 

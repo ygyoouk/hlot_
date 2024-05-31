@@ -54,7 +54,8 @@ public class TopContrController {
         // 로그인한 사용자명 추가
         data.setRegistUserName(util.getLoginUserName());
 
-        log.info("data====>" +  data);
+        log.info("data : []" +  data);
+        log.trace("trace data : []" + data);
         // 프로젝트 Id
         String topContrId = data.getTopContrId();
 

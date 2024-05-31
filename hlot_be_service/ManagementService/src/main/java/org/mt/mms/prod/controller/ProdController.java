@@ -20,11 +20,6 @@ public class ProdController {
 
     @GetMapping(value={"/prods/{id}","/prods"})
     public ResponseEntity<Result> all(@PathVariable(required = false) String id ,@RequestParam HashMap<String,String> params) throws Exception {
-
-        params.put("id",id);
-
-        log.info("params : {}", params);
-
         return ResponseEntity.ok()
                 .body(Result.resSuccess(prodService.all(params)));
     }

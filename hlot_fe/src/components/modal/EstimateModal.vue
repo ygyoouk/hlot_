@@ -55,14 +55,25 @@
             </v-col>
             <v-col>
               <v-select
-                label="견적구분"
+                label="견적구분(대)"
                 :items="estimateDivs"
                 item-title="codeNm"
                 item-value="code"
                 v-model="estimate.estimateDiv"
                 :readonly="mode === MODAL_MODE.DETAIL"
                 :rules="[validUtil.required]"
+                @update:modelValue="filterDiv"
                 ></v-select>
+            </v-col>
+            <v-col>
+              <v-select
+                label="견적구분(소)"
+                :items="fEstimateLowDivs"
+                item-title="codeNm"
+                item-value="code"
+                v-model="estimate.estimateLowDiv"
+                :readonly="mode === MODAL_MODE.DETAIL"
+              ></v-select>
             </v-col>
           </v-row>
         </v-form>
@@ -104,38 +115,91 @@
           <v-col style="font-size: 20px">품목</v-col>
           <v-col style="text-align: right">
             <v-btn
-              v-if="mode === MODAL_MODE.REG && validUtil.isNull(key)"
-              @click="openProdModal()"
+              v-if="mode !== MODAL_MODE.DETAIL"
+              @click="addProd()"
               color="green">품목 추가</v-btn>
             <br><br>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <table class="custom-table_mt">
-              <thead>
-              <tr>
-                <th>순번</th>
-                <th>품명</th>
-                <th>세부품명</th>
-                <th>소비자단가</th>
-                <th>공급단가</th>
-                <th>할인율</th>
-                <th>수량</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="(prod, index) in prods" @click="openProdModal(prod, index)">
-                <td>{{ prod.orderNo }}</td>
-                <td>{{ prod.prodNm }}</td>
-                <td>{{ prod.detailProdNm }}</td>
-                <td>{{ prod.clientUnitPrice }}</td>
-                <td>{{ prod.provProdPrice }}</td>
-                <td>{{ prod.dcPer }}</td>
-                <td>{{ prod.quantity }}</td>
-              </tr>
-              </tbody>
-            </table>
+            <v-form ref="prodForm">
+              <table class="custom-table_mt">
+                <thead>
+                <tr>
+                  <th>순번</th>
+                  <th>품명</th>
+                  <th>세부품명</th>
+                  <th>소비자단가</th>
+                  <th>공급단가</th>
+                  <th>할인율</th>
+                  <th>수량</th>
+                  <th>-</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(prod, index) in estimate.prods">
+                  <td>{{ prod.orderNo }}</td>
+                  <td style="width: 200px"> <!-- 품명 -->
+                    <v-text-field
+                      v-model="prod.prodNm"
+                      density="compact"
+                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :rules="[validUtil.required]"
+                    />
+                  </td>
+                  <td style="width: 250px"> <!-- 세부품명 -->
+                    <v-text-field
+                      v-model="prod.detailProdNm"
+                      density="compact"
+                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :rules="[validUtil.required]"
+                    />
+                  </td>
+                  <td> <!-- 소비자단가 -->
+                    <v-text-field
+                      v-model="prod.clientUnitPrice"
+                      density="compact"
+                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :rules="[validUtil.number]"
+                    />
+                  </td>
+                  <td> <!-- 공급단가 -->
+                    <v-text-field
+                      v-model="prod.provProdPrice"
+                      density="compact"
+                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :rules="[validUtil.number]"
+                    />
+                  </td>
+                  <td> <!-- 할인율 -->
+                    <v-text-field
+                      v-model="prod.dcPer"
+                      density="compact"
+                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :rules="[validUtil.number]"
+                    />
+                  </td>
+                  <td> <!-- 수량 -->
+                    <v-text-field
+                      v-model="prod.quantity"
+                      density="compact"
+                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :rules="[validUtil.number]"
+                    />
+                  </td>
+                  <td style="text-align: center; width: 30px">
+                    <v-btn
+                      v-if="mode !== MODAL_MODE.DETAIL"
+                      color="red"
+                      density="compact"
+                      @click="deleteProd(index)"
+                    >행 삭제</v-btn>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </v-form>
           </v-col>
         </v-row>
         <v-row>
@@ -163,80 +227,6 @@
       </v-container>
     </div>
   </ModalLayout>
-
-  <!-- 업체 담당자 -->
-  <div v-if="prodModal" class="child-modal-overlay">
-    <div class="child-modal">
-
-      <div style="text-align: right">
-        <div @click="closeProdModal" class="close"></div>
-      </div>
-      <v-form ref="prodForm">
-        <v-row>
-          <v-col>
-            <v-text-field
-              v-model="prod.prodNm"
-              label="품명"
-              :rules="[validUtil.required]"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-text-field
-              v-model="prod.detailProdNm"
-              label="세부품명"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-text-field
-              v-model="prod.clientUnitPrice"
-              label="소비자 단가"
-              :rules="[validUtil.required, validUtil.number]"
-            />
-          </v-col>
-          <v-col>
-            <v-text-field
-              v-model="prod.provProdPrice"
-              label="공급 단가"
-              :rules="[validUtil.required, validUtil.number]"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-text-field
-              v-model="prod.dcPer"
-              label="할인율"
-              :rules="[validUtil.required, validUtil.number]"
-            />
-          </v-col>
-          <v-col>
-            <v-text-field
-              v-model="prod.quantity"
-              label="수량"
-              :rules="[validUtil.required, validUtil.number]"
-            />
-          </v-col>
-        </v-row>
-      </v-form>
-      <div class="modal-btn-list">
-        <v-btn
-          color="green"
-          @click="addProd"
-          v-if="mode !== MODAL_MODE.DETAIL"
-        >저장</v-btn>
-        　
-        <v-btn
-          color="red"
-          @click="deleteProd"
-          v-if="mode !== MODAL_MODE.DETAIL"
-        >삭제</v-btn>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script setup>
@@ -267,8 +257,15 @@ export default {
   async beforeMount() {
 
     this.estimateDivs = await commonApi.cmmCodeComp('ESTD');
-    if(this.mode === MODAL_MODE.DETAIL){
+    this.estimateLowDivs = await commonApi.cmmCodeComp('ESTDL');
+
+    if(!validUtil.isNull(this.key)){
       await this.getEstimate();
+
+      let temp = this.estimate.estimateLowDiv;
+      this.filterDiv();
+      this.estimate.estimateLowDiv = temp;
+
       await this.getProds();
     }
 
@@ -287,6 +284,9 @@ export default {
 
       file: '',
       estimateDivs: [],
+      estimateLowDivs: [],
+      fEstimateLowDivs: [],
+
       estimate: {
         topContrId: '',
         topContrNm: '',
@@ -295,17 +295,16 @@ export default {
         compNm: '',
 
         estimateDiv: '',
+        estimateLowDiv: '',
 
         attachmentVO:{
           fileId: '',
           orignFileName: '',
         },
-        possibleConfirm: false
+        possibleConfirm: false,
+
+        prods: [],
       },
-      prod: {},
-      prods: [],
-      prodModal: false,
-      prodIndex: 0,
 
     }
   },
@@ -355,42 +354,15 @@ export default {
       this.prods = await prodApi.prods(this.key);
     },
 
-    /* PROD 등록 모달 열기 */
-    openProdModal(prod = {}, index = -1) {
-      this.prodIndex = index;
-
-      this.prod = {...prod};
-      this.prodModal = true;
-    },
-    /* PROD 등록 모달 닫기 */
-    closeProdModal() {
-      this.prod = {};
-      this.prodModal = false;
-    },
-
     /* PROD 추가 */
     async addProd() {
-      const { valid } = await this.$refs.prodForm.validate();
-      if(!valid) return false;
-
-      if(!confirm("등록 하시겠습니까?")) return false;
-
-      if(this.prodIndex > -1){ // 수정상태
-        this.prods.splice(this.prodIndex, 1, this.prod);
-      } else {
-        this.prods.push(this.prod);
-      }
-
-      this.prod = {};
-
-      this.closeProdModal();
+      this.estimate.prods.push({});
     },
     /* PROD 삭제 */
-    deleteProd() {
+    deleteProd(index) {
       if(!confirm("삭제 하시겠습니까?")) return false;
 
-      this.prods.splice(this.prodIndex, 1);
-      this.closeProdModal();
+      this.estimate.prods.splice(index, 1);
     },
 
     /* ESTIMATE 등록 */
@@ -398,8 +370,12 @@ export default {
       const { valid } = await this.$refs.form.validate();
       if(!valid) return false;
 
+      if(this.estimate.prods.length > 0){
+        const prodFormValid = (await this.$refs.prodForm.validate()).valid;
+        if(!prodFormValid) return false;
+      }
+
       if(!confirm("등록 하시겠습니까?")) return false;
-      this.estimate.prods = this.prods;
 
       const blob = new Blob([JSON.stringify(this.estimate)], {type:'application/json'});
 
@@ -426,10 +402,19 @@ export default {
       this.modalClose();
     },
 
+    /* 견적하위구분 필터링 */
+    filterDiv() {
+      this.estimate.estimateLowDiv = '';
+      this.fEstimateLowDivs = this.estimateLowDivs.filter(e => {
+        return e.upperCode === this.estimate.estimateDiv;
+      });
+    },
+
     modalClose(){
       this.$emit('update');
       this.$emit('close');
     },
+
 
   }
 }

@@ -12,4 +12,6 @@ public interface ProdMapper {
     List<ProdVO> selectProds(HashMap<String,String> params) throws Exception;
 
     int insertProd(ProdVO prodVO) throws Exception;
+
+    int updateProd(ProdVO prodVO) throws Exception;
 }

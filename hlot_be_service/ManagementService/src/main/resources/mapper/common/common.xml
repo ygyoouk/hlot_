@@ -64,10 +64,10 @@
 
     <select id="selectCode" resultType="org.mt.mms.cmm.vo.CmmCodeVO" parameterType="string">
         SELECT /* org.mt.mms.cmm.mapper.CommonMapper.selectCode : 공통코드 조회 */
-            CODE_GROUP, CODE_NM, CODE, CODE_GROUP_NM
+            CODE_GROUP, CODE_NM, CODE, CODE_GROUP_NM, UPPER_CODE
         FROM CMM_CODE
         <if test=" codeNm !=null and codeNm !='' ">
-        WHERE CODE_GROUP = #{codeNm}
+            WHERE CODE_GROUP = #{codeNm}
         </if>
     </select>
 

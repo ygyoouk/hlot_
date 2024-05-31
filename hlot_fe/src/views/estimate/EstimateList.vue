@@ -50,11 +50,21 @@
       ></v-text-field>
 
       <v-select
-        label="견적구분"
+        label="견적구분(대)"
         :items="estimateDivs"
         item-title="codeNm"
         item-value="code"
         v-model="searchCondition.estimateDiv"
+        density="compact"
+        @update:modelValue="filterDiv"
+      ></v-select>
+
+      <v-select
+        label="견적구분(소)"
+        :items="fEstimateLowDivs"
+        item-title="codeNm"
+        item-value="code"
+        v-model="searchCondition.estimateLowDiv"
         density="compact"
       ></v-select>
 
@@ -121,10 +131,11 @@ import CompanySearch from "@/components/modal/search/CompanySearch.vue";
 const headers = [
   {title: '원계약 명', key: 'topContrNm'},
   {title: '업체 명', key: 'compNm'},
-  {title: '견적 구분', key: 'estimateDivNm'},
+  {title: '견적 구분(대)', key: 'estimateDivNm'},
+  {title: '견적 구분(소)', key: 'estimateLowDivNm'},
   {title: '견적 순번', key: 'orderNo'},
   {title: '확정 여부', key: 'confirmYn'},
-  {title: '계약 여부', key: 'contrYn'},
+  // {title: '계약 여부', key: 'contrYn'},
   {title: '', key: 'actions'},
   {title: '등록자', key: 'registUserName'},
   {title: '등록일자', key: 'registDate'},
@@ -142,18 +153,23 @@ import commonApi from "@/api/common";
 export default {
   async beforeMount() {
     this.estimateDivs = await commonApi.cmmCodeComp('ESTD');
+    this.estimateLowDivs = await commonApi.cmmCodeComp('ESTDL');
     // await this.getEstimates();
   },
   data() {
     return {
       compDiv: '',
       estimateDivs: [],
+      estimateLowDivs: [],
+      fEstimateLowDivs: [],
+
       searchCondition: {
         topContrId: '',
         topContrNm: '',
         compId: '',
         compNm: '',
         estimateDiv: '',
+        estimateLowDiv: '',
       },
       estimates: [],
 
@@ -195,7 +211,7 @@ export default {
     /* 상세화면 */
     openDetail(item, row) {
       if(!validUtil.isNull(item.target.cellIndex)){
-        store.commit("setModalParams", {key: row.item.estimateId , mode:MODAL_MODE.DETAIL});
+        store.commit("setModalParams", {key: row.item.estimateId , mode:MODAL_MODE.MOD});
         this.bEstimateModal = !this.bEstimateModal;
       }
     },
@@ -216,6 +232,15 @@ export default {
       store.commit("setModalParams", params);
       this.bContrModal = !this.bContrModal;
     },
+
+    /* 견적하위구분 필터링 */
+    filterDiv() {
+      this.searchCondition.estimateLowDiv = '';
+      this.fEstimateLowDivs = this.estimateLowDivs.filter(e => {
+        return e.upperCode === this.searchCondition.estimateDiv;
+      });
+
+    }
 
   }
 };

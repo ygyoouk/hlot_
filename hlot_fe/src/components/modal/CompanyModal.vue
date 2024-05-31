@@ -53,7 +53,7 @@
                 <v-text-field
                   :readonly="mode === MODAL_MODE.DETAIL"
                   v-model="company.compTel"
-                  :rules="[validUtil.required, validUtil.number]"
+                  :rules="[validUtil.number]"
                   label="전화번호"
                 />
               </v-col>
@@ -97,7 +97,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="manager in company.companyManagers">
+                    <tr v-for="(manager, index) in company.companyManagers">
                       <td style="width: 200px;">
                         <v-select
                           density="compact"
@@ -135,9 +135,10 @@
                       </td>
                       <td style="text-align: center; width: 30px">
                         <v-btn
+                          v-if="mode !== MODAL_MODE.DETAIL"
                           color="red"
                           density="compact"
-                          @click="deleteManager(manager)"
+                          @click="deleteManager(manager, index)"
                         >행 삭제</v-btn>
                       </td>
                     </tr>
@@ -171,55 +172,6 @@
     </div>
   </ModalLayout>
 
-  <!-- 업체 담당자 -->
-  <!-- 업체담당자 모달 제거
-  <div v-if="managerModal" class="child-modal-overlay">
-    <div v-if="managerModal"  class="child-modal">
-
-      <div style="text-align: right">
-        <div @click="closeManagerModal" class="close"></div>
-      </div>
-      <v-form ref="managerForm">
-        <v-row>
-          <v-col>
-            <v-text-field
-              v-model="companyManager.compMngerNm"
-              label="업체담당자 명"
-              :rules="[validUtil.required]"
-            />
-          </v-col>
-          <v-col>
-            <v-text-field
-              v-model="companyManager.compMngerTel"
-              label="전화번호"
-              :rules="[validUtil.required, validUtil.number]"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-text-field
-              v-model="companyManager.compMngerEmail"
-              label="이메일"
-              :rules="[validUtil.email]"
-            />
-          </v-col>
-        </v-row>
-      </v-form>
-      <div class="modal-btn-list">
-        <v-btn
-          color="green"
-          @click="addManager"
-        >저장</v-btn>
-        　
-        <v-btn
-          color="red"
-          @click="deleteManager"
-        >삭제</v-btn>
-      </div>
-    </div>
-  </div>
-  -->
 </template>
 
 <script setup>
@@ -245,7 +197,6 @@ export default {
     return {
       compDivs: [],
       compMngerDivs: [],
-      managerModal: false,
 
       company: {  // 업체
         compId: '',          // 업체ID
@@ -300,40 +251,12 @@ export default {
       this.$emit('update');
       this.$emit('close');
     },
-    /* company_manager 추가 */
-    async addManager() {
-      const { valid } = await this.$refs.managerForm.validate();
-      if(!valid) return false;
-
-      if(validUtil.isNull(this.companyManager.compMngerNm)) {
-        alert('담당자 명을 입력해주세요.');
-        return false;
-      }
-
-      if(!confirm("등록 하시겠습니까?")) return false;
-
-      this.companyManager.compId = this.company.compId;
-
-      if(validUtil.isNull(this.companyModalKey)){
-        this.company.companyManagers.push(this.companyManager);
-      } else {
-        await companyApi.newCompanyManager(this.companyManager);
-        await this.getCompany();
-      }
-      this.closeManagerModal();
-    },
     /* company_manager 삭제 */
-    async deleteManager(manager = {}) {
+    async deleteManager(manager, index) {
       if(!confirm("삭제 하시겠습니까?")) return false;
 
       if(!manager.compMngerId) {
-        this.company.companyManagers.forEach((v, i)=> {
-          if(v.compMngerNm === manager.compMngerNm
-            && v.compMngerTel === manager.compMngerTel
-            && v.compMngerEmail === manager.compMngerEmail) {
-            this.company.companyManagers.splice(i, 1);
-          }
-        });
+        this.company.companyManagers.splice(index, 1);
       } else {
         await companyApi.deleteCompanyManager(manager.compMngerId);
         await this.getCompany();
@@ -344,11 +267,7 @@ export default {
     addCompanyManager(){
       this.company.companyManagers.push({});
     },
-    /* company_manager modal 열기 */
-    openManagerModal(manager = {}) {
-      this.companyManager = {...manager};
-      this.managerModal = true;
-    },
+
     /* company_manager modal 닫기 */
     closeManagerModal() {
       this.companyManager = {};

@@ -60,7 +60,7 @@
                 item-title="codeNm"
                 item-value="code"
                 v-model="estimate.estimateDiv"
-                :readonly="mode === MODAL_MODE.DETAIL"
+                :readonly="!estimate.possibleConfirm"
                 :rules="[validUtil.required]"
                 @update:modelValue="filterDiv"
                 ></v-select>
@@ -72,7 +72,7 @@
                 item-title="codeNm"
                 item-value="code"
                 v-model="estimate.estimateLowDiv"
-                :readonly="mode === MODAL_MODE.DETAIL"
+                :readonly="!estimate.possibleConfirm"
               ></v-select>
             </v-col>
           </v-row>
@@ -115,7 +115,7 @@
           <v-col style="font-size: 20px">품목</v-col>
           <v-col style="text-align: right">
             <v-btn
-              v-if="mode !== MODAL_MODE.DETAIL"
+              v-if="estimate.possibleConfirm"
               @click="addProd()"
               color="green">품목 추가</v-btn>
             <br><br>
@@ -144,7 +144,7 @@
                     <v-text-field
                       v-model="prod.prodNm"
                       density="compact"
-                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.required]"
                     />
                   </td>
@@ -152,7 +152,7 @@
                     <v-text-field
                       v-model="prod.detailProdNm"
                       density="compact"
-                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.required]"
                     />
                   </td>
@@ -160,7 +160,7 @@
                     <v-text-field
                       v-model="prod.clientUnitPrice"
                       density="compact"
-                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.number]"
                     />
                   </td>
@@ -168,7 +168,7 @@
                     <v-text-field
                       v-model="prod.provProdPrice"
                       density="compact"
-                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.number]"
                     />
                   </td>
@@ -176,7 +176,7 @@
                     <v-text-field
                       v-model="prod.dcPer"
                       density="compact"
-                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.number]"
                     />
                   </td>
@@ -184,13 +184,13 @@
                     <v-text-field
                       v-model="prod.quantity"
                       density="compact"
-                      :readonly="mode === MODAL_MODE.DETAIL"
+                      :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.number]"
                     />
                   </td>
                   <td style="text-align: center; width: 30px">
                     <v-btn
-                      v-if="mode !== MODAL_MODE.DETAIL"
+                      v-if="estimate.possibleConfirm"
                       color="red"
                       density="compact"
                       @click="deleteProd(index)"
@@ -205,23 +205,24 @@
         <v-row>
           <div class="modal-btn-list">
             <v-btn
-              v-if="estimate.possibleConfirm"
+              v-if="estimate.possibleConfirm && mode !== MODAL_MODE.REG"
               color="primary"
               @click="confirmEstimate"
-            >
-              확정
-            </v-btn>
+            >확정</v-btn> &nbsp;&nbsp;&nbsp;&nbsp;
+
             <v-btn
-              v-if="mode !== MODAL_MODE.DETAIL"
+              v-if="estimate.possibleConfirm"
               color="green"
               @click="newEstimate"
             >저장</v-btn>
             　
             <v-btn
-              v-if="mode !== MODAL_MODE.DETAIL"
+              v-if="estimate.possibleConfirm"
               color="red"
               @click="deleteEstimate"
             >삭제</v-btn>
+            <br>
+            <sub v-if="estimate.possibleConfirm  && mode !== MODAL_MODE.REG" style="color: red; margin-right: 150px;">확정시 수정이 불가합니다.</sub>
           </div>
         </v-row>
       </v-container>
@@ -267,6 +268,8 @@ export default {
       this.estimate.estimateLowDiv = temp;
 
       await this.getProds();
+    } else {
+      this.estimate.possibleConfirm = true;
     }
 
   },
@@ -420,12 +423,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   @import "@/assets/styles/modal.css";
   @import "@/assets/styles/customTable.css";
-
-  .child-modal{
-    width: 500px;
-    height: 520px;
-  }
 </style>

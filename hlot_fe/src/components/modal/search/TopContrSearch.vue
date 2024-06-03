@@ -159,5 +159,5 @@ export default {
 
 <style scoped>
 @import "@/assets/styles/common.css";
-
+@import "@/assets/styles/customTable.css";
 </style>

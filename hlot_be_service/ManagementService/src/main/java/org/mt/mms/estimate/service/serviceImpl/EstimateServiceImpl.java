@@ -42,10 +42,9 @@ public class EstimateServiceImpl implements EstimateService {
     public EstimateExVO one(String id) throws Exception {
         EstimateExVO vo = estimateMapper.selectEstimate(id);
         AttachmentVO file = attachmentService.selectAttachmentInfo(vo.getEstimateFileId());
-
         vo.setAttachmentVO(file);
 
-        boolean isPossible = possibleConfirm(vo.getTopContrId(), vo.getCompId(), vo.getEstimateDiv());
+        boolean isPossible = possibleConfirm(vo.getTopContrId(), vo.getCompId(), vo.getEstimateDiv(), vo.getEstimateLowDiv());
         vo.setPossibleConfirm(isPossible);
 
         HashMap<String, String> param = new HashMap<>();
@@ -92,12 +91,13 @@ public class EstimateServiceImpl implements EstimateService {
      * 조회결과가 없으면 확정가능상태로 본다.
      */
     @Override
-    public boolean possibleConfirm(String topContrId, String compId, String estimateDiv) throws Exception {
+    public boolean possibleConfirm(String topContrId, String compId, String estimateDiv, String estimateLowDiv) throws Exception {
 
         HashMap<String, String> param = new HashMap<>();
         param.put("topContrId", topContrId);
         param.put("compId", compId);
         param.put("estimateDiv", estimateDiv);
+        param.put("estimateLowDiv", estimateLowDiv);
         int result = estimateMapper.selectPossibleConfirm(param);
 
         return result < 1;

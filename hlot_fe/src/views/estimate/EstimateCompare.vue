@@ -59,14 +59,23 @@
       ></v-text-field>
 
       <v-select
-        label="견적구분"
+        label="견적구분(대)"
         :items="estimateDivs"
         item-title="codeNm"
         item-value="code"
         v-model="searchCondition.estimateDiv"
         density="compact"
+        @update:modelValue="filterDiv"
       ></v-select>
 
+      <v-select
+        label="견적구분(소)"
+        :items="fEstimateLowDivs"
+        item-title="codeNm"
+        item-value="code"
+        v-model="searchCondition.estimateLowDiv"
+        density="compact"
+      ></v-select>
       <v-btn
         color="green"
         @click="getEstimates"
@@ -96,15 +105,24 @@
 
   <hr>
   <div class="pdf-container">
-    <div class="pdf-elem" v-for="p in pdfs">
-      <p style="text-align: right; background-color: skyblue">
-        <span>{{ p.topContrNm }}</span>
-        <span>{{ p.compNm }}</span>
-        <span>{{ p.estimateDivNm }}</span>
-        <span>{{ p.orderNo }}</span>
+    <div class="pdf-elem" v-for="p in selectedPdfs">
+
+      <p class="title" >
+        <span>
+          {{ p.topContrNm }} - {{ p.compNm }}<br>
+          ( {{ p.estimateDivNm }} / {{ p.estimateLowDivNm }} ) - {{ p.orderNo }}
+        </span>
       </p>
       <div class="pdf-box">
-        <VuePDF :pdf="p.pdfObj.pdf" scale="1.1"></VuePDF>
+        <div class="btn-group">
+          <span v-if="p.pdfObj.pages > 0" @click="zoom(p.tempKey, 0)">-</span>
+          <span v-if="p.pdfObj.pages > 0" @click="zoom(p.tempKey, 1)">+</span>
+          <span @click="deleteEstimate(p.tempKey)" style="background-color: red;">x</span>
+        </div>
+        <VuePDF :id="p.tempKey" v-if="p.pdfObj.pages > 0" :pdf="p.pdfObj.pdf" scale="1.1"></VuePDF>
+        <div v-else style=" font-size: 21px;">
+          PDF 파일이 존재하지 않습니다.
+        </div>
       </div>
     </div>
   </div>
@@ -120,7 +138,9 @@ import {VuePDF} from "@tato30/vue-pdf";
 const headers = [
   {title: '원계약 명', key: 'topContrNm'},
   {title: '업체 명', key: 'compNm'},
-  {title: '견적 구분', key: 'estimateDivNm'},
+  {title: '견적 구분(대)', key: 'estimateDivNm'},
+  {title: '견적 구분(소)', key: 'estimateLowDivNm'},
+
   {title: '견적 순번', key: 'orderNo'},
   {title: '계약 여부', key: 'contrYn'},
   {title: '등록자', key: 'registUserName'},
@@ -140,18 +160,26 @@ import { VuePDF, usePDF } from '@tato30/vue-pdf'
 export default {
   async beforeMount() {
     this.estimateDivs = await commonApi.cmmCodeComp('ESTD');
+    this.estimateLowDivs = await commonApi.cmmCodeComp('ESTDL');
     // await this.getEstimates();
+  },
+  mounted() {
+    this.addEvent();
   },
   data() {
     return {
       compDiv: '',
       estimateDivs: [],
+      estimateLowDivs: [],
+      fEstimateLowDivs: [],
+
       searchCondition: {
         topContrId: '',
         topContrNm: '',
         compId: '',
         compNm: '',
         estimateDiv: '',
+        estimateLowDiv: '',
       },
 
       selected: [],
@@ -163,25 +191,23 @@ export default {
       bCompanySearch: false,
       bEstimateModal: false,
       bContrModal: false,
+
+      BASE_URL : import.meta.env.VITE_BASE_URL,
+      BE_MANAGEMENT_PORT : import.meta.env.VITE_BE_MANAGEMENT_PORT,
     };
   },
-  watch: {
-    selected: function(selected) {
-      const BASE_URL = import.meta.env.VITE_BASE_URL;
-      const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
-      const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
+  computed: {
+    selectedPdfs() {
+      const REQUEST_URL = `${this.BASE_URL}:${this.BE_MANAGEMENT_PORT}`;
 
-      this.pdfs = this.selected.map(v => {
-        return {
-          topContrNm: v.topContrNm,
-          compNm: v.compNm,
-          estimateDivNm: v.estimateDivNm,
-          orderNo: v.orderNo,
-          pdfObj: usePDF(`${REQUEST_URL}/common/download/${v.estimateFileId}`)
+      this.selected.forEach(v => {
+        if(validUtil.isNull(v.tempKey)){
+          v.tempKey = Math.random().toString(36);
+          v.pdfObj  = usePDF(`${REQUEST_URL}/common/download/${v.estimateFileId}`);
         }
       });
 
-      this.addEvent();
+      return this.selected;
     },
   },
   methods: {
@@ -215,6 +241,43 @@ export default {
         this.bEstimateModal = !this.bEstimateModal;
     },
 
+    /* 견적하위구분 필터링 */
+    filterDiv() {
+      this.searchCondition.estimateLowDiv = '';
+      this.fEstimateLowDivs = this.estimateLowDivs.filter(e => {
+        return e.upperCode === this.searchCondition.estimateDiv;
+      });
+
+    },
+
+    /* 견적서 제외 */
+    deleteEstimate(key) {
+      this.selected = this.selected.filter(v => v.tempKey !== key);
+    },
+
+
+
+
+
+
+
+
+
+
+
+    /* UI 관련 이벤트 - 줌*/
+    zoom(key, type) {
+      let n = validUtil.isNull(document.getElementById(key).style.zoom) ? 1 :
+        parseFloat(document.getElementById(key).style.zoom);
+      if(type === 0) {
+        n -= 0.1;
+      } else {
+        n += 0.1;
+      }
+      document.getElementById(key).style.zoom = n;
+    },
+
+    /* UI 관련 이벤트 - 위아래*/
     moveScreen(opt) {
       if(opt === 'up') {
         window.scrollBy(0, -1000);
@@ -223,6 +286,8 @@ export default {
       }
 
     },
+
+    /* UI 관련 이벤트 - 드래그*/
     addEvent() {
       const slider = document.querySelector('.pdf-container');
       let isDown = false;
@@ -264,23 +329,49 @@ export default {
 <style scoped>
   .pdf-container {
     display: flex;
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 
-</style>
+  .pdf-elem {
+    position: relative;
+  }
 
-<style>
-.pdf-elem .pdf-box {
-  width: 654px !important;
-  height: 800px !important;
-  overflow: auto;
-}
-.pdf-elem canvas {
-  border: 1px solid black;
-}
-.pdf-elem span {
-  border: 1px solid black;
-  padding: 15px;
+  .pdf-elem .pdf-box {
+    width: 654px !important;
+    height: 779px !important;
+    overflow: auto;
+    position: relative;
+    border: 1px solid black;
+  }
 
-}
+  .pdf-elem canvas {
+    border: 1px solid black;
+  }
+
+  .pdf-elem .title {
+    width: 654px;
+    border: 1px solid black;
+    text-align: center;
+    background-color: black;
+    color: white;
+    overflow: hidden;
+  }
+
+  .pdf-elem .btn-group {
+    position: absolute;
+    top: 30px;
+    right: 25px;
+    z-index: 1;
+  }
+
+  .pdf-elem .btn-group span {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1px 5px;
+    margin: 2px;
+    border-radius: 10px;
+    font-size: 17px;
+    cursor: pointer;
+  }
+
 </style>

@@ -9,7 +9,6 @@ export default {
   /* ESTIMATE 목록조회 */
   estimates(params){
     return axios.get(REQUEST_URL + '/api/estimates', {params}).then(res => {
-      console.log(res);
       return res.data.data;
     });
   },

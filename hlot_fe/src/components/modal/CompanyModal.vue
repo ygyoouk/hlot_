@@ -2,6 +2,7 @@
   <ModalLayout
     @close="$emit('close')"
   >
+
     <div class="modal-title">
       업체관리 {{ mode === MODAL_MODE.DETAIL ? '상세'
                 : mode === MODAL_MODE.REG ? '등록' : '수정' }}
@@ -62,6 +63,7 @@
                   :readonly="mode === MODAL_MODE.DETAIL"
                   v-model="company.compAddr"
                   label="업체주소"
+                  @click="execDaumPostcode()"
                   :rules="[validUtil.required]"
                 />
               </v-col>
@@ -216,7 +218,13 @@ export default {
         compMngerEmail: '', // 업체담당자이메일
         compMngerDiv: '', // 업체담당자구분
         registUserName: '',
-      }
+      },
+
+      bAddressModal : false,
+
+      postcode: "",
+      address: "",
+      extraAddress: "",
     }
   },
   methods : {
@@ -274,6 +282,26 @@ export default {
       this.managerModal = false;
     },
 
+
+    execDaumPostcode() {
+      new window.daum.Postcode({
+        oncomplete: (data) => {
+          if (this.extraAddress !== "") {
+            this.extraAddress = "";
+          }
+          if (data.userSelectedType === "R") {
+            // 사용자가 도로명 주소를 선택했을 경우
+            this.address = data.roadAddress;
+            this.company.compAddr = data.roadAddress;
+          } else {
+            // 사용자가 지번 주소를 선택했을 경우(J)
+            this.address = data.jibunAddress;
+            this.company.compAddr = data.jibunAddress;
+          }
+ 
+        },
+      }).open();
+    },
 
 
   }

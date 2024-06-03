@@ -1,6 +1,7 @@
 package org.mt.mms.cmm.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.mt.mms.cmm.dto.Result;
@@ -152,5 +153,19 @@ public class CommonController {
         log.info("코드 : {}", data.getCode());
         return ResponseEntity.ok()
                 .body(Result.resSuccess(commonService.deleteCmmCode(data.getCode()),true));
+    }
+
+    @GetMapping(value="/selectLatestTopContrInfo/{userName}")
+    public ResponseEntity<Result> selectLatestInfo(@PathVariable String userName){
+        log.info("userName :{}", userName);
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(commonService.selectLatestTopContrInfo(userName)));
+    }
+
+    @GetMapping(value="/selectLatestEstimateInfo/{userName}")
+    public ResponseEntity<Result> selectLatestEstimateInfo(@PathVariable String userName){
+        log.info("userName :{}", userName);
+        return ResponseEntity.ok()
+                .body(Result.resSuccess(commonService.selectLatestEstimateInfo(userName)));
     }
 }

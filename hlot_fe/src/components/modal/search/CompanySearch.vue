@@ -121,6 +121,7 @@ import companyApi from "@/api/company.js";
     methods : {
       async search() {
         this.companys = await companyApi.companys(this.searchCondition);
+        console.log(this.companys);
       },
       select(id, nm, div){
         this.$emit('select', {id, nm, div});

@@ -41,8 +41,9 @@
             <v-col>
               <v-text-field
                 label="원계약"
-                :readonly="mode === 'R' || mode === 'D'"
+                readonly
                 v-model="contr.topContrNm"
+                variant="outlined"
                 >
               </v-text-field>
             </v-col>
@@ -50,8 +51,9 @@
              <v-col>
               <v-text-field
               label="업체"
-                :readonly="mode === 'R' || mode === 'D'"
+                readonly
                 v-model="contr.compNm"
+                variant="outlined"
                 >
               </v-text-field>
             </v-col>
@@ -64,6 +66,7 @@
               :readonly="mode === 'R' || mode === 'D'"
               v-model="contr.contrNm"
               :rules="[utils.required]"
+              variant="outlined"
               >
               </v-text-field>
             </v-col>
@@ -72,6 +75,7 @@
               label="계약금액"
               :readonly="mode === 'R' || mode === 'D'"
               :rules="[utils.required]"
+              variant="outlined"
               v-model="contr.contrAmount">
               </v-text-field>
             </v-col>
@@ -83,6 +87,7 @@
               label="지불조건"
               :readonly="mode === 'R' || mode === 'D'"
               :rules="[utils.required]"
+              variant="outlined"
               v-model="contr.paymentTerm">
               </v-text-field>
             </v-col>
@@ -95,6 +100,7 @@
                 type="date"
                 :readonly="mode === 'R' || mode === 'D'"
                 :rules="[utils.required]"
+                variant="outlined"
                 v-model="contrStDate"
               >
               </v-text-field>
@@ -107,6 +113,7 @@
                 type="date"
                 :readonly="mode === 'R' || mode === 'D'"
                 :rules="[utils.required]"
+                variant="outlined"
                 v-model="contrEndDate"
               >
               </v-text-field>
@@ -127,6 +134,12 @@
 
           <v-row>
              <div class="modal-btn-list">
+              <v-btn
+                    color="blue"
+                    v-if="mode !== 'D'"
+                    @click="updateMode()"
+                  >수동등록</v-btn>
+                  　
                 <v-btn
                   color="blue"
                   v-if="mode !== 'D'"
@@ -313,6 +326,7 @@ export default {
       // 모드 변경
       updateMode(){
           this.mode = 'M';
+          console.log("this.mode =>"+ this.mode);
       },
 
       /**
@@ -337,9 +351,19 @@ export default {
 
 
         if(data.contrNm == null){
+
           alert("자동등록에 실패하였습니다.");
+          this.contr.contrNm     = '';
+          this.contr.contrAmount = '';
+          this.contr.paymentTerm = '';
+          this.contr.specialNote = '';
+          this.contrStDate = '';
+          this.contrEndDate = '';
+          this.file = '';
           return false;
+
         }else{
+
           this.contr.contrNm     = data.contrNm;
           this.contr.contrAmount = data.contrAmount;
           this.contr.paymentTerm = data.paymentTerm;

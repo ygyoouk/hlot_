@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.mt.mms.cmm.vo.AttachmentVO;
 import org.mt.mms.cmm.vo.CmmCodeVO;
 import org.mt.mms.company.vo.CompanyVO;
+import org.mt.mms.estimate.vo.EstimateExVO;
+import org.mt.mms.estimate.vo.EstimateVO;
 import org.mt.mms.topContr.vo.TopContrVO;
 
 import java.util.HashMap;
@@ -35,4 +37,8 @@ public interface CommonMapper {
     String getcodeGroupNm(String codeGroup);
 
     int deleteCmmCode(String code);
+
+    List<TopContrVO> selectLatestTopContr(String userName);
+
+    List<EstimateExVO> selectLatestEstimate(String userName);
 }

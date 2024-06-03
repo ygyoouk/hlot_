@@ -89,7 +89,6 @@
             @click="this.$router.push('/login')"
           >로그인</v-btn>
         </v-responsive>
-
         <v-responsive max-width="130">
           <v-btn class="header-btn_mt"
                  variant="outlined"

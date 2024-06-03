@@ -75,6 +75,20 @@ export default {
     return axios.delete(REQUEST_URL + '/common/delCmmCode',{data : {"code" : code}}).then(res=>{
       return res;
     });
+  },
+
+  selectLatestTopContrInfo(userName){
+    return axios.get(REQUEST_URL + '/common/selectLatestTopContrInfo/'+ userName).then(res=>{
+      console.log(res.data.data);
+      return res.data.data;
+    });
+  },
+
+  selectLatestEstimateInfo(userName){
+    return axios.get(REQUEST_URL + '/common/selectLatestEstimateInfo/'+ userName).then(res=>{
+      console.log(res.data.data);
+      return res.data.data;
+    });
   }
 
 

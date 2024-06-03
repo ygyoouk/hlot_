@@ -121,4 +121,47 @@
         DELETE FROM CMM_CODE WHERE CODE = #{code}
     </delete>
 
+    <select id="selectLatestTopContr" parameterType="string" resultType="org.mt.mms.topContr.vo.TopContrVO">
+        SELECT
+            TOP_CONTR_ID,
+            TOP_CONTR_NM,
+            DATE_FORMAT(REGIST_DATE, '%Y-%m-%d') AS REGIST_DATE,
+            (SELECT CODE_NM FROM CMM_CODE WHERE CODE = TC.TOP_CONTR_DIV) AS TOP_CONTR_DIV
+        FROM
+            TOP_CONTR TC
+        WHERE
+            REGIST_USER_NAME = #{userName}
+        ORDER BY REGIST_DATE DESC
+        LIMIT 5
+    </select>
+
+    <select id="selectLatestEstimate" parameterType="string" resultType="org.mt.mms.estimate.vo.EstimateExVO">
+
+        SELECT
+            E.ESTIMATE_ID
+            , E.TOP_CONTR_ID
+            , E.COMP_ID
+            , E.ORDER_NO
+            , E.ESTIMATE_DIV
+            , (SELECT CC.CODE_NM FROM CMM_CODE CC WHERE CC.CODE = E.ESTIMATE_DIV AND CC.CODE_GROUP = 'ESTD') AS ESTIMATE_DIV_NM
+            , E.ESTIMATE_LOW_DIV
+            , (SELECT CC.CODE_NM FROM CMM_CODE CC WHERE CC.CODE = E.ESTIMATE_LOW_DIV AND CC.CODE_GROUP = 'ESTDL') AS ESTIMATE_LOW_DIV_NM
+            , E.ESTIMATE_FILE_ID
+            , E.CONFIRM_YN
+            , E.CONTR_YN
+            , DATE_FORMAT(E.REGIST_DATE, '%Y-%m-%d') AS REGIST_DATE
+            , E.REGIST_USER_NAME
+            , TC.TOP_CONTR_NM
+            , C.COMP_NM
+            , CN.CONTR_ID
+        FROM
+            ESTIMATE E
+            INNER JOIN TOP_CONTR TC ON TC.TOP_CONTR_ID = E.TOP_CONTR_ID
+            INNER JOIN COMP C ON C.COMP_ID = E.COMP_ID
+            LEFT OUTER JOIN CONTR CN ON CN.ESTIMATE_ID = E.ESTIMATE_ID
+        WHERE E.DEL_YN = 'N'
+        AND E.REGIST_USER_NAME = #{userName}
+        ORDER BY E.REGIST_DATE DESC
+        LIMIT 5
+    </select>
 </mapper>

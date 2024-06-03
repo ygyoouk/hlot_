@@ -37,4 +37,5 @@ public class TopContrVO {
     private String orignFileName;
     private String changeFileName;
     private String registUserName;  // 등록자
+    private String registDate;
 }

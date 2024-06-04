@@ -7,6 +7,7 @@ import org.mt.mms.contr.service.ContrService;
 import org.mt.mms.contr.vo.ContrVO;
 import org.mt.mms.estimate.service.EstimateService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,5 +49,10 @@ public class ContrServiceImpl implements ContrService {
         }
 
         return cnt;
+    }
+
+    @Override
+    public int updateContr(ContrVO data) throws Exception {
+        return contrMapper.updateContr(data);
     }
 }

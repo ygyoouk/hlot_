@@ -143,16 +143,16 @@
 
 
   const headers = [
-    { title: '원계약명', key:'topContrNm' },
-    { title: '원계약구분', key:'topContrDiv'},
-    { title: '발주처', key:'clientComp'},
-    { title: '원계약일자',  key:'topContrDate'},
-    { title: '계약시작일자',  key:'contrStDate'},
-    { title: '계약종료일자',  key:'contrEndDate'},
-    { title: '품명',  key:'prodNm'},
+    { title: '원계약명', align : 'start', key:'topContrNm' },
+    { title: '원계약구분', align : 'center', key:'topContrDiv'},
+    { title: '발주처', align : 'start', key:'clientComp'},
+    { title: '원계약일자'  , align : 'center', key:'topContrDate'},
+    { title: '계약시작일자', align : 'center', key:'contrStDate'},
+    { title: '계약종료일자', align : 'center', key:'contrEndDate'},
+    { title: '품명', align : 'start', key:'prodNm'},
     { title: '계약금액', align: 'end', key:'contrAmount'},
-    { title: '납품기한',  key:'deliveryDeadline'},
-    { title: '수요기관명',  key:'demandInst'},
+    { title: '납품기한', align : 'center', key:'deliveryDeadline'},
+    { title: '수요기관명', align : 'start',  key:'demandInst'},
   ];
 </script>
 

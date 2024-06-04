@@ -15,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.util.HashMap;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -48,21 +50,43 @@ public class ContrController {
     @PostMapping(value= "/newContr" ,consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Result> newContr(@RequestPart ContrVO data, @RequestPart(value = "file", required = false) MultipartFile file) throws Exception {
 
+        String registUserName = util.getLoginUserName();
+        data.setRegistUserName(registUserName);
+
         log.info("data : {}", data);
         log.info("file : {}", file);
 
-        AttachmentVO attachmentVO =  attachmentService.upload(file);
+        String fileId;
 
-        String fileId = attachmentVO.getFileId();
+        // 수정 인 경우
+        if(!data.getContrId().isEmpty()){
+            log.info("수정");
 
-        log.info("fileId : {}", fileId);
+            if(file != null){
+                AttachmentVO attachmentVO = attachmentService.upload(file);
 
-        data.setContrFileId(fileId);
+                fileId = attachmentVO.getFileId();
 
-        log.info("data_fileId : {}", data);
+                data.setContrFileId(fileId);
+            }
 
-        return ResponseEntity.ok()
-                .body(Result.resSuccess(contrService.newContr(data)));
+            return ResponseEntity.ok()
+                    .body(Result.resSuccess(contrService.updateContr(data)));
+        }else {
+
+            AttachmentVO attachmentVO = attachmentService.upload(file);
+
+            fileId = attachmentVO.getFileId();
+
+            log.info("fileId : {}", fileId);
+
+            data.setContrFileId(fileId);
+
+            log.info("data_fileId : {}", data);
+
+            return ResponseEntity.ok()
+                    .body(Result.resSuccess(contrService.newContr(data)));
+        }
     }
 
 }

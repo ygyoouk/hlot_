@@ -1,6 +1,8 @@
 <template>
   <ContrModal v-if="bContrModal"
-   @close="bContrModal = false"/>
+   @close="bContrModal = false"
+   @getContrs="getContrs(searchParam)" 
+   />
 
   <v-card class="table-container_mt">
     <div class="table-title_mt">
@@ -85,8 +87,6 @@
   import ContrModal from "@/components/modal/ContrtModal.vue";
   import {ITEMS_PER_PAGE_OPTIONS} from "@/util/config";
 
-
-
   const headers = [
     { title: '계약명', key:'contrNm' },
     { title: '계약금액', key:'contrAmount'},
@@ -98,8 +98,6 @@
 </script>
 
 <script>
-
-
 import store from "@/store/store";
 import axios from "axios";
 import {MODAL_MODE} from "@/util/config";
@@ -137,7 +135,7 @@ export default {
   methods: {
 
      async getContrs(searchParam){ // 계약 리스트 조회
-
+      
       this.searchParam.contrStDate = utils.saveDate(this.searchParam.contrStDate);
       this.searchParam.contrEndDate = utils.saveDate(this.searchParam.contrEndDate);
 

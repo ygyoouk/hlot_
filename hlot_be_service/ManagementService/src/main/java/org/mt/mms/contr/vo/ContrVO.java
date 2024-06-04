@@ -24,4 +24,5 @@ public class ContrVO {
     private String contrEndDate; // 계약종료일자
     private String contrFileId; // 계약첨부파일ID
     private String orignFileName; // 계약첨부파일 원본파일명
+    private String registUserName;
 }

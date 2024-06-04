@@ -21,6 +21,7 @@
             </v-col>
             <v-col v-if="contr.contrFileId != ''">
               <div style="padding: 10px; display: inline-block">
+                <v-icon icon="mdi-delete" @click="contr.contrFileId ='' "></v-icon>
                 <v-icon
                   icon="mdi-arrow-up-bold-box-outline"
                   size="large"
@@ -63,7 +64,7 @@
            <v-col>
               <v-text-field
               label="계약명"
-              :readonly="mode === 'R' || mode === 'D'"
+              :readonly="mode === 'R'"
               v-model="contr.contrNm"
               :rules="[utils.required]"
               variant="outlined"
@@ -85,7 +86,7 @@
             <v-col>
               <v-text-field
               label="지불조건"
-              :readonly="mode === 'R' || mode === 'D'"
+              :readonly="mode === 'R'"
               :rules="[utils.required]"
               variant="outlined"
               v-model="contr.paymentTerm">
@@ -98,7 +99,7 @@
               <v-text-field
                 label="계약시작일자"
                 type="date"
-                :readonly="mode === 'R' || mode === 'D'"
+                :readonly="mode === 'R'"
                 :rules="[utils.required]"
                 variant="outlined"
                 v-model="contrStDate"
@@ -111,7 +112,7 @@
               <v-text-field
                 label="계약종료일자"
                 type="date"
-                :readonly="mode === 'R' || mode === 'D'"
+                :readonly="mode === 'R'"
                 :rules="[utils.required]"
                 variant="outlined"
                 v-model="contrEndDate"
@@ -126,7 +127,7 @@
                label="특이사항"
                variant="outlined"
                rows="5"
-               :readonly="mode === 'R' || mode === 'D'"
+               :readonly="mode === 'R'"
                v-model="contr.specialNote"
                ></v-textarea>
             </v-col>
@@ -145,6 +146,11 @@
                   v-if="mode !== 'D'"
                   @click="newContr"
                 >확정</v-btn>
+                <v-btn
+                  color="blue"
+                  v-if="mode !== 'R'"
+                  @click="newContr"
+                >수정</v-btn>
             </div>
           </v-row>
       </v-container>
@@ -211,6 +217,7 @@ export default {
       pdfFileLink: '',
 
       contr : {
+        contrId :'',
         topContrNm : '',
         topContrId : '',
         estimateId : '',
@@ -270,7 +277,8 @@ export default {
       async newContr(){
 
 
-        if(utils.isNull(this.file)){
+
+        if(utils.isNull(this.file) && utils.isNull(this.contr.contrFileId)){
           alert("파일을 선택해주세요.");
           return false;
         }
@@ -292,17 +300,25 @@ export default {
 
         formData.append('data' ,blob);
 
+        if(this.MODE ==='R'){
+          if (!confirm("등록 하시겠습니까?")) return false;
+        }else{
+          if (!confirm("수정 하시겠습니까?")) return false;
+        }
+
+
         //계약 저장
         await contrApi.newContr(formData);
 
         this.$emit("close");
+        this.$emit("getContrs");
       },
 
       // 계약 단건조회
       async detailContr(){
 
         this.contr = await contrApi.contr(this.key);
-
+        
         this.contrStDate = this.contr.contrStDate; // 계약시작일자
         this.contrEndDate = this.contr.contrEndDate; // 계약종료일자
 

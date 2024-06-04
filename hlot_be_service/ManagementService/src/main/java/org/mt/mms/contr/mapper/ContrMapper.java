@@ -16,5 +16,7 @@ public interface ContrMapper {
 
     ContrVO one(String contrId);
 
-    int newContr(ContrVO data);
+    int newContr(ContrVO data) throws Exception;
+
+    int updateContr(ContrVO data) throws Exception;
 }

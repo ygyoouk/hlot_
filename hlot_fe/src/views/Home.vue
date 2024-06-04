@@ -30,7 +30,7 @@
                 </tr>
               </tbody>
             </table>
-            <hr>
+            <br>
             <div>최근 견적서</div>   
             <br>
             <table class="custom-table_mt" v-if="estimate != ''">
@@ -86,3 +86,6 @@ export default {
   },
 }
 </script>
+<style>
+  @import "@/assets/styles/customTable.css";
+</style>

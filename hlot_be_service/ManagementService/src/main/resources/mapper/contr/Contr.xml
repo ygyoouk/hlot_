@@ -3,8 +3,6 @@
 <mapper namespace="org.mt.mms.contr.mapper.ContrMapper">
 
     <select id="all" parameterType="map" resultType="org.mt.mms.contr.vo.ContrVO">
-
-
         SELECT
             CONTR_ID,
             CONTR_NM,
@@ -85,10 +83,27 @@
                 #{specialNote},
                 #{contrStDate},
                 #{contrEndDate},
-                'tester',
+                #{registUserName},
                 sysdate(),
                 'N',
                 #{contrFileId}
             )
     </insert>
+
+    <update id="updateContr" parameterType="org.mt.mms.contr.vo.ContrVO">
+        UPDATE CONTR
+        SET
+        CONTR_NM = #{contrNm},
+        CONTR_AMOUNT = #{contrAmount},
+        PAYMENT_TERM = #{paymentTerm},
+        SPECIAL_NOTE = #{specialNote},
+        CONTR_ST_DATE = #{contrStDate},
+        CONTR_END_DATE = #{contrEndDate},
+        MODIFY_USER_NAME = #{registUserName},
+        MODIFY_DATE = sysdate(),
+        DEL_YN = 'N',
+        CONTR_FILE_ID = #{contrFileId}
+        WHERE
+        CONTR_ID = #{contrId}
+    </update>
 </mapper>

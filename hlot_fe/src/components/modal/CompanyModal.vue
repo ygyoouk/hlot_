@@ -298,7 +298,7 @@ export default {
             this.address = data.jibunAddress;
             this.company.compAddr = data.jibunAddress;
           }
- 
+
         },
       }).open();
     },
@@ -312,8 +312,4 @@ export default {
   @import "@/assets/styles/modal.css";
   @import "@/assets/styles/customTable.css";
 
-  .child-modal{
-    width: 500px;
-    height: 320px;
-  }
 </style>

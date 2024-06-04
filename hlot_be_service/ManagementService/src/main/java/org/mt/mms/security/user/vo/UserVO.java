@@ -13,6 +13,7 @@ public class UserVO {
     private String userPassword;
     private String userName;
     private String userAuth;
+    private String userAuthNm;
     private String accessToken;
 
 }

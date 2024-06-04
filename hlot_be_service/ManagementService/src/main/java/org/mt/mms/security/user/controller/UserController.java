@@ -34,7 +34,7 @@ public class UserController {
                         new UsernamePasswordAuthenticationToken(userVO.getUserId(), userVO.getUserPassword()));
 
         if(authentication.isAuthenticated()){
-            String accessToken = jwtService.GenerateToken(userVO.getUserId());
+            String accessToken = jwtService.GenerateToken(userVO.getUserId(), userVO.getUserAuth(), userVO.getUserName());
 
             UserVO user = userDetailService.selectUserById(userVO.getUserId());
             user.setAccessToken(accessToken);;

@@ -73,6 +73,11 @@
                 class="sub-menu-item_mt"
                 @click="movePage('/cmmCode/cmmCodeList')"
               >공통코드관리</v-list-item-title>
+
+            <v-list-item-title
+              class="sub-menu-item_mt"
+              @click="movePage('/userManage/UserManage')"
+            >사용자관리</v-list-item-title>
             </v-list-item>
 
           </v-list>

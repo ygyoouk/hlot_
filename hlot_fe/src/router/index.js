@@ -39,6 +39,10 @@ export default createRouter({
     {
       path: '/estimate/prodList',
       component: () => import('@/views/estimate/prodList.vue')
+    },
+    {
+      path: '/userManage/UserManage',
+      component: () => import('@/views/userManage/UserManage.vue')
     }
   ],
 })

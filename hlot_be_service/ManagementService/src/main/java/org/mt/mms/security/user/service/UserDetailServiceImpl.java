@@ -21,7 +21,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         log.info("loadByUsername Method ..........");
 
-        UserVO user = userMapper.selectUser(userId);
+        UserVO user;
+        try{
+            user = userMapper.selectUser(userId);
+        } catch(Exception e) {
+            throw new UsernameNotFoundException(e.getMessage());
+        }
 
         if(user == null){
             throw new UsernameNotFoundException("해당 ID로 가입된 회원이 없습니다.");

@@ -53,15 +53,16 @@ public class JwtService {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public String GenerateToken(String username){
-        return createToken(username);
+    public String GenerateToken(String username, String userAuth, String userName){
+        return createToken(username, userAuth, userName);
     }
 
-    private String createToken(String username) {
+    private String createToken(String username, String userAuth, String userName) {
         Claims claims = Jwts.claims().setSubject(username);
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .claim("userAuth", userAuth)
+                .claim("userName", userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*30))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)

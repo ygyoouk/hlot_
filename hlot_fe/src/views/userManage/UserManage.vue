@@ -80,8 +80,8 @@ let bUserManageModal = ref(false);
 let selectedUserId = ref('');
 let userManageModalMode = ref('');
 const openModal = (event, row) => {
-  userManageModalMode = validUtil.isNull(row) ? MODAL_MODE.REG : MODAL_MODE.MOD;
-  selectedUserId = validUtil.isNull(row) ? '' : row.item.userId;
+  userManageModalMode.value = validUtil.isNull(row) ? MODAL_MODE.REG : MODAL_MODE.MOD;
+  selectedUserId.value = validUtil.isNull(row) ? '' : row.item.userId;
   bUserManageModal.value = true;
 }
 

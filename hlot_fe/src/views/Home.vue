@@ -12,7 +12,7 @@
           </v-sheet>
         </v-col>
         <v-col>
-          <div>최근 원계약</div>   
+          <div>최근 원계약</div>
           <br>
             <table class="custom-table_mt" v-if="topContr != ''">
               <thead>
@@ -31,7 +31,7 @@
               </tbody>
             </table>
             <br>
-            <div>최근 견적서</div>   
+            <div>최근 견적서</div>
             <br>
             <table class="custom-table_mt" v-if="estimate != ''">
               <thead>

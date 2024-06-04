@@ -63,6 +63,9 @@
                 :readonly="!estimate.possibleConfirm"
                 :rules="[validUtil.required]"
                 @update:modelValue="filterDiv"
+
+                variant="outlined"
+                color="primary"
                 ></v-select>
             </v-col>
             <v-col>
@@ -73,6 +76,9 @@
                 item-value="code"
                 v-model="estimate.estimateLowDiv"
                 :readonly="!estimate.possibleConfirm"
+
+                variant="outlined"
+                color="primary"
               ></v-select>
             </v-col>
           </v-row>
@@ -146,6 +152,8 @@
                       density="compact"
                       :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.required]"
+                      variant="outlined"
+                      color="primary"
                     />
                   </td>
                   <td style="width: 250px"> <!-- 세부품명 -->
@@ -154,6 +162,8 @@
                       density="compact"
                       :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.required]"
+                      variant="outlined"
+                      color="primary"
                     />
                   </td>
                   <td> <!-- 소비자단가 -->
@@ -162,6 +172,8 @@
                       density="compact"
                       :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.number]"
+                      variant="outlined"
+                      color="primary"
                     />
                   </td>
                   <td> <!-- 공급단가 -->
@@ -170,6 +182,8 @@
                       density="compact"
                       :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.number]"
+                      variant="outlined"
+                      color="primary"
                     />
                   </td>
                   <td> <!-- 할인율 -->
@@ -178,6 +192,8 @@
                       density="compact"
                       :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.number]"
+                      variant="outlined"
+                      color="primary"
                     />
                   </td>
                   <td> <!-- 수량 -->
@@ -186,6 +202,8 @@
                       density="compact"
                       :readonly="!estimate.possibleConfirm"
                       :rules="[validUtil.number]"
+                      variant="outlined"
+                      color="primary"
                     />
                   </td>
                   <td style="text-align: center; width: 30px">

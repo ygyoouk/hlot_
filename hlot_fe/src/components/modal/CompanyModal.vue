@@ -21,6 +21,9 @@
                   v-model="company.compDiv"
                   :readonly="mode === MODAL_MODE.DETAIL"
                   :rules="[validUtil.required]"
+
+                  variant="outlined"
+                  color="primary"
                 ></v-select>
 
               </v-col>
@@ -30,6 +33,9 @@
                   label="업체명"
                   :readonly="mode === MODAL_MODE.DETAIL"
                   :rules="[validUtil.required]"
+
+                  variant="outlined"
+                  color="primary"
                 />
               </v-col>
               <v-col>
@@ -38,6 +44,9 @@
                   label="사업자등록번호"
                   :readonly="mode === MODAL_MODE.DETAIL"
                   :rules="[validUtil.required, validUtil.number]"
+
+                  variant="outlined"
+                  color="primary"
                 />
               </v-col>
             </v-row>
@@ -48,6 +57,9 @@
                   v-model="company.compCeoNm"
                   :rules="[]"
                   label="업체대표"
+
+                  variant="outlined"
+                  color="primary"
                 />
               </v-col>
               <v-col>
@@ -56,6 +68,9 @@
                   v-model="company.compTel"
                   :rules="[validUtil.number]"
                   label="전화번호"
+
+                  variant="outlined"
+                  color="primary"
                 />
               </v-col>
               <v-col>
@@ -65,6 +80,9 @@
                   label="업체주소"
                   @click="execDaumPostcode()"
                   :rules="[validUtil.required]"
+
+                  variant="outlined"
+                  color="primary"
                 />
               </v-col>
           </v-row>
@@ -109,6 +127,9 @@
                           v-model="manager.compMngerDiv"
                           :readonly="mode === MODAL_MODE.DETAIL"
                           :rules="[validUtil.required]"
+
+                          variant="outlined"
+                          color="primary"
                         ></v-select>
                       </td>
                       <td style="width: 200px;">
@@ -117,6 +138,9 @@
                           density="compact"
                           :readonly="mode === MODAL_MODE.DETAIL"
                           :rules="[validUtil.required]"
+
+                          variant="outlined"
+                          color="primary"
                         />
                       </td>
                       <td style="width: 400px;">
@@ -125,6 +149,9 @@
                           density="compact"
                           :readonly="mode === MODAL_MODE.DETAIL"
                           :rules="[validUtil.required, validUtil.number]"
+
+                          variant="outlined"
+                          color="primary"
                         />
                       </td>
                       <td style="width: 400px;">
@@ -133,6 +160,9 @@
                           density="compact"
                           :rules="[]"
                           :readonly="mode === MODAL_MODE.DETAIL"
+
+                          variant="outlined"
+                          color="primary"
                         />
                       </td>
                       <td style="text-align: center; width: 30px">
@@ -286,6 +316,7 @@ export default {
     execDaumPostcode() {
       new window.daum.Postcode({
         oncomplete: (data) => {
+          console.log(data);
           if (this.extraAddress !== "") {
             this.extraAddress = "";
           }

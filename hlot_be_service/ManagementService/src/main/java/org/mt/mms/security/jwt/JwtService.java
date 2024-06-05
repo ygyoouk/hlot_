@@ -58,11 +58,9 @@ public class JwtService {
     }
 
     private String createToken(String username, String userAuth, String userName) {
-        Claims claims = Jwts.claims().setSubject(username);
+        // Claims claims = Jwts.claims().setSubject(username);
         return Jwts.builder()
-                .setClaims(claims)
-                .claim("userAuth", userAuth)
-                .claim("userName", userName)
+                .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*30))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)

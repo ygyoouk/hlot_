@@ -23,11 +23,11 @@ public class TopContrVO {
     private String prodNm;
     private String contrAmount;
     private String totalServBokAmount; // 총용역부기금액
-    private String amout1;
-    private String amout2;
-    private String amout3;
-    private String amout4;
-    private String amout5;
+    private String amount1;
+    private String amount2;
+    private String amount3;
+    private String amount4;
+    private String amount5;
     private String deliveryDeadline;
     private String demandInst;
     private String demandInstId;

@@ -93,17 +93,17 @@
     <update id="updateContr" parameterType="org.mt.mms.contr.vo.ContrVO">
         UPDATE CONTR
         SET
-        CONTR_NM = #{contrNm},
-        CONTR_AMOUNT = #{contrAmount},
-        PAYMENT_TERM = #{paymentTerm},
-        SPECIAL_NOTE = #{specialNote},
-        CONTR_ST_DATE = #{contrStDate},
-        CONTR_END_DATE = #{contrEndDate},
-        MODIFY_USER_NAME = #{registUserName},
-        MODIFY_DATE = sysdate(),
-        DEL_YN = 'N',
-        CONTR_FILE_ID = #{contrFileId}
+            CONTR_NM = #{contrNm},
+            CONTR_AMOUNT = #{contrAmount},
+            PAYMENT_TERM = #{paymentTerm},
+            SPECIAL_NOTE = #{specialNote},
+            CONTR_ST_DATE = #{contrStDate},
+            CONTR_END_DATE = #{contrEndDate},
+            MODIFY_USER_NAME = #{registUserName},
+            MODIFY_DATE = sysdate(),
+            DEL_YN = 'N',
+            CONTR_FILE_ID = #{contrFileId}
         WHERE
-        CONTR_ID = #{contrId}
+            CONTR_ID = #{contrId}
     </update>
 </mapper>

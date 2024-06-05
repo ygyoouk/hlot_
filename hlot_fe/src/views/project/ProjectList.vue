@@ -35,6 +35,7 @@
               item-title="codeNm"
               item-value="code"
               density="comfortable"
+              @keyup="enterKey()"
               v-model="searchParam.topContrDiv"
             />
         </v-col>

@@ -10,7 +10,7 @@
 
     <div class="modal-title">
       계약 관리{{ mode === MODAL_MODE.DETAIL ? '상세'
-                : mode === MODAL_MODE.REG ? '등록' : '수정' }}
+                : mode === MODAL_MODE.REG ? '등록' : '등록' }}
     </div>
 
     <div class="modal-content">
@@ -148,7 +148,7 @@
                 >확정</v-btn>
                 <v-btn
                   color="blue"
-                  v-if="mode !== 'R'"
+                  v-if="mode == 'D'"
                   @click="newContr"
                 >수정</v-btn>
             </div>
@@ -276,8 +276,6 @@ export default {
       */
       async newContr(){
 
-
-
         if(utils.isNull(this.file) && utils.isNull(this.contr.contrFileId)){
           alert("파일을 선택해주세요.");
           return false;
@@ -300,7 +298,7 @@ export default {
 
         formData.append('data' ,blob);
 
-        if(this.MODE ==='R'){
+        if(this.mode ==='R' || this.mode ==='M'){
           if (!confirm("등록 하시겠습니까?")) return false;
         }else{
           if (!confirm("수정 하시겠습니까?")) return false;
@@ -311,7 +309,7 @@ export default {
         await contrApi.newContr(formData);
 
         this.$emit("close");
-        this.$emit("getContrs");
+        this.$emit("getEstimates");
       },
 
       // 계약 단건조회

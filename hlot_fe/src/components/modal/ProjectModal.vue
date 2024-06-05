@@ -113,7 +113,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="amout.amout1">
+                v-model="topContr.amount1">
               </v-text-field>
             </v-col>
             <v-col>
@@ -123,7 +123,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="amout.amout2">
+                v-model="topContr.amount2">
               </v-text-field>
             </v-col>
             <v-col>
@@ -133,7 +133,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="amout.amout3">
+                v-model="topContr.amount3">
               </v-text-field>
             </v-col>
             <v-col>
@@ -143,7 +143,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="amout.amout4">
+                v-model="topContr.amount4">
               </v-text-field>
             </v-col>
             <v-col>
@@ -153,7 +153,7 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="amout.amout5">
+                v-model="topContr.amount5">
               </v-text-field>
             </v-col>
           </v-row>
@@ -305,6 +305,7 @@ export default {
   name: "ProjectModal",
 
   async beforeMount(){
+    console.log("what mode : " + this.mode);
     this.topContrDivs = await commonApi.cmmCodeComp('TCTR');
 
     //상세조회
@@ -336,9 +337,9 @@ export default {
   computed:{
     // 차수금액 합 계산
     total : function(){
-      return Number(this.amout.amout1) + Number(this.amout.amout2) +
-             Number(this.amout.amout3) + Number(this.amout.amout4) +
-             Number(this.amout.amout5);
+      return Number(this.topContr.amount1) + Number(this.topContr.amount2) +
+             Number(this.topContr.amount3) + Number(this.topContr.amount4) +
+             Number(this.topContr.amount5);
     },
   },
 
@@ -377,11 +378,11 @@ export default {
         prodNm: '', // 품명
         totalServBokAmount : '', // 총용역부기금액
         contrAmount: '', // 계약금액
-        amout1: '', // 1차수 금액
-        amout2: '', // 2차수 금액
-        amout3: '', // 3차수 금액
-        amout4: '', // 4차수 금액
-        amout5: '', // 5차수 금액
+        amount1: '', // 1차수 금액
+        amount2: '', // 2차수 금액
+        amount3: '', // 3차수 금액
+        amount4: '', // 4차수 금액
+        amount5: '', // 5차수 금액
         deliveryDeadline: '', // 납품기한
         demandInst: '', // 수요기관명
         demandInstId: '', // 수요기관ID
@@ -393,13 +394,6 @@ export default {
 
       image: '',
       
-      amout : {
-         amout1 : '',
-         amout2 : '',
-         amout3 : '',
-         amout4 : '',
-         amout5 : '', 
-      },
     }
   },
 
@@ -407,20 +401,18 @@ export default {
 
     // 프로젝트 정보 등록
     async newProject() {
-      
-      
-
+      console.log(this.mode)
       const formData = new FormData();
       formData.append('file', this.image);
-
-      const blob = new Blob([JSON.stringify(this.topContr)], {type: 'application/json'});
-
-      formData.append('data', blob);
 
       this.topContr.contrStDate = utils.saveDate(this.contrStDate);
       this.topContr.contrEndDate = utils.saveDate(this.contrEndDate);
       this.topContr.topContrDate = utils.saveDate(this.topContrDate);
       this.topContr.deliveryDeadline = utils.saveDate(this.deliveryDeadline);
+
+      const blob = new Blob([JSON.stringify(this.topContr)], {type: 'application/json'});
+
+      formData.append('data', blob);
 
       // 총용역부기금액
       const totalServBokAmout = this.topContr.totalServBokAmount;
@@ -435,10 +427,9 @@ export default {
       const {valid} = await this.$refs.form.validate();
       if (!valid) return false;
 
-      if(this.MODE ==='R'){
+      if(this.mode =='R'){
         if (!confirm("등록 하시겠습니까?")) return false;
       }else{
-        
         if (!confirm("수정 하시겠습니까?")) return false;
       }
       

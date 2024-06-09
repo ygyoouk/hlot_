@@ -140,16 +140,8 @@
         CONTR_ST_DATE 	    = #{contrStDate},
         CONTR_END_DATE 	    = #{contrEndDate},
         PROD_NM 		    = #{prodNm},
-        CONTR_AMOUNT 	    = #{contrAmount},
-        TOTAL_SERV_BOK_AMOUNT 	= #{totalServBokAmount},
-        AMOUNT1             = #{amount1},
-        AMOUNT2             = #{amount2},
-        AMOUNT3             = #{amount3},
-        AMOUNT4             = #{amount4},
-        AMOUNT5             = #{amount5},
         DELIVERY_DEADLINE   = #{deliveryDeadline},
         DEMAND_INST_ID 	    = #{demandInstId},
-        TOP_CONTR_FILE_ID   = #{topContrFileId},
         MODIFY_DATE         = SYSDATE(),
         MODIFY_USER_NAME    = #{registUserName}
         WHERE

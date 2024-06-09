@@ -143,11 +143,22 @@ const idDupCheck = async () => {
   }
 
   const validUser = await userManageApi.user(user.value.userId);
+
+  if(validUtil.isNull(validUser)){
+    alert('사용 가능한 ID 입니다.');
+  }else {
+    alert('중복된 ID 입니다.');
+  }
   validation.bIdDupCheck = validUtil.isNull(validUser) ? true : '중복된 ID 입니다.';
 }
 
 /* PASSWORD 확인 검사 */
 const passwordChk = () => {
+  if(user.value.userPassword !== user.value.userPasswordChk){
+    alert('비밀번호가 일치하지 않습니다.')
+  } else {
+    alert('비밀번호가 일치합니다.');
+  }
   validation.bPasswordChk = user.value.userPassword !== user.value.userPasswordChk ? '비밀번호가 일치하지 않습니다.' : true;
 }
 

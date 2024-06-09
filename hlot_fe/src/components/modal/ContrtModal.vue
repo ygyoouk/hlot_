@@ -22,12 +22,14 @@
             <v-col v-if="contr.contrFileId != ''">
               <div style="padding: 10px; display: inline-block">
                 <v-icon icon="mdi-delete" @click="contr.contrFileId ='' "></v-icon>
-                <v-icon
-                  icon="mdi-arrow-up-bold-box-outline"
-                  size="large"
-                ></v-icon>
-                <a :href="`${REQUEST_URL}/common/download/${contr.contrFileId}`">{{contr.orignFileName}}</a>
-                &nbsp;&nbsp;
+                <a :href="`${REQUEST_URL}/common/download/${contr.contrFileId}`">
+                  <v-icon
+                    icon="mdi-arrow-up-bold-box-outline"
+                    size="large"
+                  ></v-icon>
+                  {{contr.orignFileName}}
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <v-btn
                   v-if="contr.contrFileId != ''"
                   color="green"
@@ -35,6 +37,11 @@
                   @click="openPdfPrevModal"
                 >미리보기</v-btn>
               </div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <br>
             </v-col>
           </v-row>
 
@@ -316,7 +323,7 @@ export default {
       async detailContr(){
 
         this.contr = await contrApi.contr(this.key);
-        
+
         this.contrStDate = this.contr.contrStDate; // 계약시작일자
         this.contrEndDate = this.contr.contrEndDate; // 계약종료일자
 

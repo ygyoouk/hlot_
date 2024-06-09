@@ -277,8 +277,8 @@ export default {
 
       await companyApi.newCompany(this.company);
       this.$emit('update');
-      await this.getCompany();
-      // this.$emit('close');
+      // await this.getCompany();
+      this.$emit('close');
 
     },
     /* company 삭제 */

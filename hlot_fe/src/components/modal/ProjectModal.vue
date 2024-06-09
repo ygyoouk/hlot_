@@ -1,7 +1,7 @@
 <template>
  <ModalLayout
     @close="this.$emit('close')">
-    
+
   <CompnaySearchModal
     v-if="bCompanySearchModal"
     :compDiv="compDiv"
@@ -235,7 +235,7 @@
             </v-col>
             <v-col v-else>
               <div style="padding: 10px; display: inline-block">
-              
+
                 <v-icon icon="mdi-delete" @click="topContr.fileId ='' "></v-icon>
 
                 <a :href="`${REQUEST_URL}/common/download/${topContr.fileId}`">
@@ -244,15 +244,16 @@
                     size="large"
                   ></v-icon>
                   {{ topContr.orignFileName }}
-                  &nbsp;&nbsp;
-                  <v-btn v-if="topContr.fileId !== '' && topContr.fileId !=null"
-                         density="compact"
-                         color="green"
-                         @click="openPdfPrevModal"
-                  >
-                    미리보기
-                  </v-btn>
+
                 </a>
+                &nbsp;&nbsp;
+                <v-btn v-if="topContr.fileId !== '' && topContr.fileId !=null"
+                       density="compact"
+                       color="green"
+                       @click="openPdfPrevModal"
+                >
+                  미리보기
+                </v-btn>
               </div>
             </v-col>
           </v-row>
@@ -269,7 +270,7 @@
                 v-if="mode ==='R'"
                 color="green"
                 @click="tempProject"
-              >임시저장</v-btn> 
+              >임시저장</v-btn>
               <v-btn
                 v-if="mode ==='D'"
                 color="green"
@@ -314,7 +315,7 @@ export default {
     }
 
     if(this.mode === 'R'){
-       
+
        if(localStorage.length>0 && localStorage.getItem("topContr") != null){
           console.log(JSON.parse(window.localStorage.getItem('topContr')));
           await this.readTempProject();
@@ -393,7 +394,7 @@ export default {
       },
 
       image: '',
-      
+
     }
   },
 
@@ -416,14 +417,14 @@ export default {
 
       // 총용역부기금액
       const totalServBokAmout = this.topContr.totalServBokAmount;
-      
+
       if(this.total >0){
         if(this.total != totalServBokAmout){
           alert("총용역부기금액과 차수금액 합이 맞지않습니다.");
           return false;
         }
       }
-      
+
       const {valid} = await this.$refs.form.validate();
       if (!valid) return false;
 
@@ -432,7 +433,7 @@ export default {
       }else{
         if (!confirm("수정 하시겠습니까?")) return false;
       }
-      
+
 
       await projectApi.newProject(formData);
 
@@ -452,9 +453,9 @@ export default {
       this.topContr.deliveryDeadline = utils.saveDate(this.deliveryDeadline);
 
       window.localStorage.setItem("topContr",JSON.stringify(this.topContr));
-      
+
       alert("임시저장되었습니다");
-      
+
     },
 
     /*임시저장 뿌려주기*/
@@ -462,15 +463,15 @@ export default {
        if(!confirm("임시저장된 내용을 사용하시겠습니까?")){
         localStorage.removeItem("topContr");
         return false;
-       } 
+       }
 
       this.topContr = JSON.parse(window.localStorage.getItem('topContr'));
 
       this.contrStDate = utils.formatDate(this.topContr.contrStDate); // 원계약시작일자
       this.contrEndDate = utils.formatDate(this.topContr.contrEndDate); // 원계약종료일자
       this.topContrDate = utils.formatDate(this.topContr.topContrDate);  // 원계약일자
-      this.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한      
-      
+      this.deliveryDeadline = utils.formatDate(this.topContr.deliveryDeadline); // 납품기한
+
     },
 
     /**

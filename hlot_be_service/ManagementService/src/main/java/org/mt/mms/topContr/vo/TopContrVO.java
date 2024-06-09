@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor // 모든 필드값을 파라미터로 받는 생성자 생성
+@NoArgsConstructor // 파라미터 없는 디폴트 생성자 생성
 @Data
 public class TopContrVO {
 

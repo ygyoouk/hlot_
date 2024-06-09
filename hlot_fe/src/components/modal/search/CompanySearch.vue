@@ -101,6 +101,7 @@ import companyApi from "@/api/company.js";
       /* 업체구분 공통코드 조회 */
       this.compDivs = await commonApi.cmmCodeComp("COMP");
       this.searchCondition.compDiv = this.compDiv;
+      console.log(this.compDiv);
     },
 
     data() {

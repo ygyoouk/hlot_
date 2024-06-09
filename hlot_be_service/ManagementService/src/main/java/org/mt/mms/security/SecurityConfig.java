@@ -43,7 +43,7 @@ public class SecurityConfig {
         return security.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/login").permitAll();
-                    auth.requestMatchers("/common/**").permitAll(); // TODO: 추후 새탭으로 이동할때 쿠키값을 같이 전송시킬 방법을 찾아야함
+                    auth.requestMatchers("/common/**").permitAll();
                     auth.requestMatchers("/api/**").authenticated();
                 })
                 .sessionManagement(session -> {

@@ -9,7 +9,7 @@
   />
 
   <SubModalLayout
-    @close="this.$emit('close')"
+    @close="$emit('close')"
   >
     <div class="modal-title">
       원계약 검색

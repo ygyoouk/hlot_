@@ -86,8 +86,13 @@
                 density="comfortable"
                 :readonly="mode === 'D'"
                 :rules="[utils.required, utils.number]"
-                v-model="topContr.totalServBokAmount">
-              </v-text-field>
+                v-model="topContr.totalServBokAmount"
+
+                @input="validUtil.addComma"
+                @focusin="validUtil.addComma"
+                @focusout="validUtil.addComma"
+              />
+
             </v-col>
           </v-row>
 
@@ -100,8 +105,13 @@
                 density="comfortable"
                 :readonly="mode === 'D'"
                 :rules="[utils.required, utils.number]"
-                v-model="topContr.contrAmount">
-              </v-text-field>
+                v-model="topContr.contrAmount"
+
+                @input="validUtil.addComma"
+                @focusin="validUtil.addComma"
+                @focusout="validUtil.addComma"
+              />
+
             </v-col>
           </v-row>
 
@@ -113,8 +123,12 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amount1">
-              </v-text-field>
+                v-model="topContr.amount1"
+
+                @input="validUtil.addComma"
+                @focusin="validUtil.addComma"
+                @focusout="validUtil.addComma"
+              />
             </v-col>
             <v-col>
               <v-text-field
@@ -123,8 +137,12 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amount2">
-              </v-text-field>
+                v-model="topContr.amount2"
+
+                @input="validUtil.addComma"
+                @focusin="validUtil.addComma"
+                @focusout="validUtil.addComma"
+              />
             </v-col>
             <v-col>
               <v-text-field
@@ -133,8 +151,12 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amount3">
-              </v-text-field>
+                v-model="topContr.amount3"
+
+                @input="validUtil.addComma"
+                @focusin="validUtil.addComma"
+                @focusout="validUtil.addComma"
+              />
             </v-col>
             <v-col>
               <v-text-field
@@ -143,8 +165,12 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amount4">
-              </v-text-field>
+                v-model="topContr.amount4"
+
+                @input="validUtil.addComma"
+                @focusin="validUtil.addComma"
+                @focusout="validUtil.addComma"
+              />
             </v-col>
             <v-col>
               <v-text-field
@@ -153,8 +179,12 @@
                 color="primary"
                 density="comfortable"
                 :readonly="mode === 'D'"
-                v-model="topContr.amount5">
-              </v-text-field>
+                v-model="topContr.amount5"
+
+                @input="validUtil.addComma"
+                @focusin="validUtil.addComma"
+                @focusout="validUtil.addComma"
+              />
             </v-col>
           </v-row>
 
@@ -289,6 +319,7 @@
 import ModalLayout from "@/layouts/ModalLayout.vue";
 import CompnaySearchModal from "@/components/modal/search/CompanySearch.vue";
 import PdfPrevModal from "@/components/modal/PdfPrevModal.vue";
+import validUtil from "@/util/validUtil";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
 const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;

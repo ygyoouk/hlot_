@@ -174,6 +174,10 @@
                       :rules="[validUtil.number]"
                       variant="outlined"
                       color="primary"
+
+                      @input="validUtil.addComma"
+                      @focusin="validUtil.addComma"
+                      @focusout="validUtil.addComma"
                     />
                   </td>
                   <td> <!-- 공급단가 -->
@@ -184,6 +188,10 @@
                       :rules="[validUtil.number]"
                       variant="outlined"
                       color="primary"
+
+                      @input="validUtil.addComma"
+                      @focusin="validUtil.addComma"
+                      @focusout="validUtil.addComma"
                     />
                   </td>
                   <td> <!-- 할인율 -->
@@ -434,7 +442,7 @@ export default {
     modalClose(){
       this.$emit('update');
       this.$emit('close');
-    },
+    }
 
 
   }

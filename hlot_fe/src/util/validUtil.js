@@ -1,6 +1,13 @@
 const ValidUtil = {
   name: "ValidUtil",
 
+  addComma(evt) {
+    let n = evt.target.value;
+    n = n.replace(/[^0-9]/g, '');
+
+    evt.target.value = new Intl.NumberFormat('en-US').format(parseInt(n, 10));
+  },
+
   /**
    * 공백, Null, undefined 체크
    * @param text

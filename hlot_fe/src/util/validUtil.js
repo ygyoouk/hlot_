@@ -3,6 +3,9 @@ const ValidUtil = {
 
   addComma(evt) {
     let n = evt.target.value;
+
+    if(ValidUtil.isNull(n)) return false;
+
     n = n.replace(/[^0-9]/g, '');
 
     evt.target.value = new Intl.NumberFormat('en-US').format(parseInt(n, 10));

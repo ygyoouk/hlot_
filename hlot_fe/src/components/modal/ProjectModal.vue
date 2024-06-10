@@ -87,12 +87,11 @@
                 :readonly="mode === 'D'"
                 :rules="[utils.required, utils.number]"
                 v-model="topContr.totalServBokAmount"
-
-                @input="validUtil.addComma"
-                @focusin="validUtil.addComma"
-                @focusout="validUtil.addComma"
-              />
-
+                @input="utils.addComma"
+                @focusin="utils.addComma"
+                @focusout="utils.addComma"
+                >
+              </v-text-field>
             </v-col>
           </v-row>
 
@@ -106,12 +105,10 @@
                 :readonly="mode === 'D'"
                 :rules="[utils.required, utils.number]"
                 v-model="topContr.contrAmount"
-
-                @input="validUtil.addComma"
-                @focusin="validUtil.addComma"
-                @focusout="validUtil.addComma"
-              />
-
+                @input="utils.addComma"
+                @focusin="utils.addComma"
+                @focusout="utils.addComma">
+              </v-text-field>
             </v-col>
           </v-row>
 
@@ -124,11 +121,10 @@
                 density="comfortable"
                 :readonly="mode === 'D'"
                 v-model="topContr.amount1"
-
-                @input="validUtil.addComma"
-                @focusin="validUtil.addComma"
-                @focusout="validUtil.addComma"
-              />
+                @input="utils.addComma"
+                @focusin="utils.addComma"
+                @focusout="utils.addComma">
+              </v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -138,11 +134,10 @@
                 density="comfortable"
                 :readonly="mode === 'D'"
                 v-model="topContr.amount2"
-
-                @input="validUtil.addComma"
-                @focusin="validUtil.addComma"
-                @focusout="validUtil.addComma"
-              />
+                @input="utils.addComma"
+                @focusin="utils.addComma"
+                @focusout="utils.addComma">
+              </v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -152,11 +147,11 @@
                 density="comfortable"
                 :readonly="mode === 'D'"
                 v-model="topContr.amount3"
-
-                @input="validUtil.addComma"
-                @focusin="validUtil.addComma"
-                @focusout="validUtil.addComma"
-              />
+                @input="utils.addComma"
+                @focusin="utils.addComma"
+                @focusout="utils.addComma"
+                >
+              </v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -166,11 +161,11 @@
                 density="comfortable"
                 :readonly="mode === 'D'"
                 v-model="topContr.amount4"
-
-                @input="validUtil.addComma"
-                @focusin="validUtil.addComma"
-                @focusout="validUtil.addComma"
-              />
+                @input="utils.addComma"
+                @focusin="utils.addComma"
+                @focusout="utils.addComma"
+                >
+              </v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -180,11 +175,11 @@
                 density="comfortable"
                 :readonly="mode === 'D'"
                 v-model="topContr.amount5"
-
-                @input="validUtil.addComma"
-                @focusin="validUtil.addComma"
-                @focusout="validUtil.addComma"
-              />
+                @input="utils.addComma"
+                @focusin="utils.addComma"
+                @focusout="utils.addComma"
+                >
+              </v-text-field>
             </v-col>
           </v-row>
 
@@ -274,16 +269,15 @@
                     size="large"
                   ></v-icon>
                   {{ topContr.orignFileName }}
-
+                  &nbsp;&nbsp;
+                  <v-btn v-if="topContr.fileId !== '' && topContr.fileId !=null"
+                         density="compact"
+                         color="green"
+                         @click="openPdfPrevModal"
+                  >
+                    미리보기
+                  </v-btn>
                 </a>
-                &nbsp;&nbsp;
-                <v-btn v-if="topContr.fileId !== '' && topContr.fileId !=null"
-                       density="compact"
-                       color="green"
-                       @click="openPdfPrevModal"
-                >
-                  미리보기
-                </v-btn>
               </div>
             </v-col>
           </v-row>
@@ -319,7 +313,6 @@
 import ModalLayout from "@/layouts/ModalLayout.vue";
 import CompnaySearchModal from "@/components/modal/search/CompanySearch.vue";
 import PdfPrevModal from "@/components/modal/PdfPrevModal.vue";
-import validUtil from "@/util/validUtil";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BE_MANAGEMENT_PORT = import.meta.env.VITE_BE_MANAGEMENT_PORT;
 const REQUEST_URL = `${BASE_URL}:${BE_MANAGEMENT_PORT}`;
@@ -369,9 +362,9 @@ export default {
   computed:{
     // 차수금액 합 계산
     total : function(){
-      return Number(this.topContr.amount1) + Number(this.topContr.amount2) +
-             Number(this.topContr.amount3) + Number(this.topContr.amount4) +
-             Number(this.topContr.amount5);
+      return Number(this.topContr.amount1.replace(',','')) + Number(this.topContr.amount2.replace(',','')) +
+             Number(this.topContr.amount3.replace(',','')) + Number(this.topContr.amount4.replace(',','')) +
+             Number(this.topContr.amount5.replace(',',''));
     },
   },
 
@@ -433,7 +426,7 @@ export default {
 
     // 프로젝트 정보 등록
     async newProject() {
-      console.log(this.mode)
+      
       const formData = new FormData();
       formData.append('file', this.image);
 
@@ -447,8 +440,8 @@ export default {
       formData.append('data', blob);
 
       // 총용역부기금액
-      const totalServBokAmout = this.topContr.totalServBokAmount;
-
+      const totalServBokAmout = this.topContr.totalServBokAmount.replace(',', '');
+      
       if(this.total >0){
         if(this.total != totalServBokAmout){
           alert("총용역부기금액과 차수금액 합이 맞지않습니다.");
@@ -475,7 +468,7 @@ export default {
 
     /*임시저장*/
     tempProject(){
-
+      console.log(JSON.stringify(this.topContr));
       if(!confirm("임시저장하시겠습니까?")) return false;
 
       this.topContr.contrStDate = utils.saveDate(this.contrStDate);
@@ -510,9 +503,9 @@ export default {
      * 시작일자 > 종료일자
      */
     checkDateValid() {
-      if (utils.isNull(this.topContr.contrEndDate)) return false;
-
-      if (!utils.validDateChk(this.topContr.contrStDate, this.topContr.contrEndDate)) return false;
+      if (utils.isNull(this.contrEndDate)) return false;
+      
+      if (!utils.validDateChk(this.contrStDate, this.contrEndDate)) return false;
     },
 
     /**

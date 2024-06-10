@@ -4,27 +4,32 @@
 
     <select id="selectProds" resultType="org.mt.mms.prod.vo.ProdVO" parameterType="hashmap">
         SELECT /* org.mt.mms.company.mapper.ProdMapper.selectProds : PROD 목록조회 */
-            ESTIMATE_ID
-             , ORDER_NO
+            P.ESTIMATE_ID
+             , P.ORDER_NO
              , PROD_NM
+             , C.COMP_NM
              , DETAIL_PROD_NM
              , FORMAT(CLIENT_UNIT_PRICE, ',') AS CLIENT_UNIT_PRICE
              , FORMAT(PROV_PROD_PRICE, ',') AS PROV_PROD_PRICE
              , DC_PER
              , QUANTITY
-             , REGIST_USER_NAME
-             , REGIST_DATE
-             , DEL_YN
-        FROM PROD
+             , P.REGIST_USER_NAME
+             , P.REGIST_DATE
+             , P.DEL_YN
+        FROM  PROD P INNER JOIN ESTIMATE E ON P.ESTIMATE_ID = E.ESTIMATE_ID
+                     INNER JOIN COMP C ON C.COMP_ID = E.COMP_ID
         WHERE 1=1
         <if test="id != null and id != '' ">
-            AND ESTIMATE_ID = #{id}
+            AND P.ESTIMATE_ID = #{id}
         </if>
         <if test="prodNm != null and prodNm !='' ">
             AND PROD_NM LIKE '%' #{prodNm} '%'
             OR DETAIL_PROD_NM LIKE '%' #{prodNm} '%'
         </if>
-        ORDER BY ORDER_NO, REGIST_DATE DESC
+        <if test="compNm != null and compNm != '' ">
+            AND C.COMP_NM LIKE '%' #{compNm} '%'
+        </if>
+        ORDER BY P.ORDER_NO, P.REGIST_DATE DESC
 
     </select>
 

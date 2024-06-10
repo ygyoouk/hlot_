@@ -14,6 +14,7 @@ public class ProdVO {
     private String estimateId;
     private String orderNo;
     private String prodNm;
+    private String compNm;
     private String detailProdNm;
     private String clientUnitPrice;
     private String provProdPrice;

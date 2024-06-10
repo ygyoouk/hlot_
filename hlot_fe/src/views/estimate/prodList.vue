@@ -20,6 +20,15 @@
             density="compact"
           ></v-text-field>
         </v-col>
+
+        <v-col cols="3">
+          <v-text-field
+            label="업체명"
+            v-model="searchCondition.compNm"
+            @keyup="enterKey()"
+            density="compact"
+          ></v-text-field>
+        </v-col>
       </v-row>
 
       <v-btn
@@ -54,6 +63,7 @@ import {ITEMS_PER_PAGE_OPTIONS, MODAL_MODE} from "@/util/config";
 import EstimateModal from "@/components/modal/EstimateModal.vue";
 
 const headers = [
+  {title: '업체명', key: 'compNm'},
   {title: '품명', key: 'prodNm'},
   {title: '세부품명', key: 'detailProdNm'},
   {title: '소비자단가', key: 'clientUnitPrice'},
@@ -75,8 +85,8 @@ export default {
   data() {
     return {
       searchCondition: {
-        prodNm: '',
-        
+        prodNm : '',
+        compNm : '',
       },
 
       bEstimateModal: false,
@@ -86,7 +96,7 @@ export default {
     };
   },
   methods: {
-   
+
     /* ESTIMATE 목록 조회 */
     async getProds() {
       this.prods = await prodApi.prods(this.id, this.searchCondition);
@@ -98,7 +108,7 @@ export default {
 
     enterKey(){
       if(window.event.keyCode == 13){
-        
+
         this.getProds();
       }
     },
